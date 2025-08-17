@@ -252,11 +252,11 @@ exports/
 # 图表和可视化
 plots/
 figures/
-*.png
+# *.png
 # *.jpg
-*.jpeg
-*.gif
-*.svg
+# *.jpeg
+# *.gif
+# *.svg
 # *.pdf
 
 # ==================== 文档生成 ====================

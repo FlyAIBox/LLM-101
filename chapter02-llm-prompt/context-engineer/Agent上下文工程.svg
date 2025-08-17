@@ -1,0 +1,129 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: '宋体', SimSun, serif; font-size: 24px; font-weight: bold; fill: #2c3e50; }
+      .subtitle { font-family: '宋体', SimSun, serif; font-size: 18px; font-weight: bold; fill: #34495e; }
+      .english { font-family: 'Times New Roman', serif; font-size: 14px; fill: #2c3e50; }
+      .chinese { font-family: '宋体', SimSun, serif; font-size: 14px; fill: #2c3e50; }
+      .formula { font-family: 'Times New Roman', serif; font-size: 12px; font-style: italic; fill: #e74c3c; }
+      .box { fill: #ecf0f1; stroke: #3498db; stroke-width: 2; rx: 8; }
+      .process { fill: #e8f5e8; stroke: #27ae60; stroke-width: 2; rx: 8; }
+      .problem { fill: #fdf2e9; stroke: #e67e22; stroke-width: 2; rx: 8; }
+      .solution { fill: #eaf2ff; stroke: #2980b9; stroke-width: 2; rx: 8; }
+      .arrow { stroke: #7f8c8d; stroke-width: 2; marker-end: url(#arrowhead); }
+      .connection { stroke: #95a5a6; stroke-width: 1; stroke-dasharray: 5,5; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7f8c8d" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="600" y="35" class="title" text-anchor="middle">Agent上下文工程 (Context Engineering for Agents)</text>
+  
+  <!-- Core Concept -->
+  <rect x="450" y="60" width="300" height="80" class="box"/>
+  <text x="600" y="85" class="subtitle" text-anchor="middle">核心概念</text>
+  <text x="600" y="105" class="chinese" text-anchor="middle">上下文窗口 = 工作内存 (RAM)</text>
+  <text x="600" y="125" class="formula" text-anchor="middle">Context Window ≈ f(Instructions, Knowledge, Tools)</text>
+
+  <!-- Problems -->
+  <g transform="translate(50, 180)">
+    <rect x="0" y="0" width="280" height="120" class="problem"/>
+    <text x="140" y="25" class="subtitle" text-anchor="middle">上下文问题</text>
+    <text x="20" y="50" class="chinese">• 上下文污染 (Context Poisoning)</text>
+    <text x="20" y="70" class="chinese">• 上下文分散 (Context Distraction)</text>
+    <text x="20" y="90" class="chinese">• 上下文混乱 (Context Confusion)</text>
+    <text x="20" y="110" class="chinese">• 上下文冲突 (Context Clash)</text>
+  </g>
+
+  <!-- Solutions Overview -->
+  <rect x="420" y="180" width="360" height="120" class="solution"/>
+  <text x="600" y="205" class="subtitle" text-anchor="middle">四大策略框架</text>
+  <text x="600" y="230" class="formula" text-anchor="middle">Strategy = {Write, Select, Compress, Isolate}</text>
+  <text x="450" y="255" class="chinese">写入 (Write) - 保存到上下文窗口外</text>
+  <text x="450" y="275" class="chinese">选择 (Select) - 拉取到上下文窗口内</text>
+  <text x="450" y="295" class="chinese">压缩 (Compress) - 保留必要令牌</text>
+
+  <!-- Write Strategy -->
+  <g transform="translate(50, 350)">
+    <rect x="0" y="0" width="250" height="140" class="process"/>
+    <text x="125" y="25" class="subtitle" text-anchor="middle">写入策略 (Write)</text>
+    <rect x="20" y="40" width="210" height="30" class="box"/>
+    <text x="125" y="60" class="chinese" text-anchor="middle">草稿本 (Scratchpads)</text>
+    <rect x="20" y="80" width="210" height="30" class="box"/>
+    <text x="125" y="100" class="chinese" text-anchor="middle">记忆存储 (Memories)</text>
+    <text x="125" y="130" class="formula" text-anchor="middle">Memory = Σ(Sessions × Reflections)</text>
+  </g>
+
+  <!-- Select Strategy -->
+  <g transform="translate(350, 350)">
+    <rect x="0" y="0" width="250" height="140" class="process"/>
+    <text x="125" y="25" class="subtitle" text-anchor="middle">选择策略 (Select)</text>
+    <rect x="20" y="40" width="210" height="20" class="box"/>
+    <text x="125" y="55" class="chinese" text-anchor="middle">工具选择 (Tools)</text>
+    <rect x="20" y="70" width="210" height="20" class="box"/>
+    <text x="125" y="85" class="chinese" text-anchor="middle">知识检索 (Knowledge)</text>
+    <rect x="20" y="100" width="210" height="20" class="box"/>
+    <text x="125" y="115" class="chinese" text-anchor="middle">记忆选择 (Memory Selection)</text>
+    <text x="125" y="135" class="formula" text-anchor="middle">Relevance = cos(θ) × Embedding_similarity</text>
+  </g>
+
+  <!-- Compress Strategy -->
+  <g transform="translate(650, 350)">
+    <rect x="0" y="0" width="250" height="140" class="process"/>
+    <text x="125" y="25" class="subtitle" text-anchor="middle">压缩策略 (Compress)</text>
+    <rect x="20" y="40" width="210" height="30" class="box"/>
+    <text x="125" y="60" class="chinese" text-anchor="middle">上下文摘要 (Summarization)</text>
+    <rect x="20" y="80" width="210" height="30" class="box"/>
+    <text x="125" y="100" class="chinese" text-anchor="middle">上下文修剪 (Trimming)</text>
+    <text x="125" y="130" class="formula" text-anchor="middle">Compression_ratio = Tokens_out / Tokens_in</text>
+  </g>
+
+  <!-- Isolate Strategy -->
+  <g transform="translate(950, 350)">
+    <rect x="0" y="0" width="230" height="140" class="process"/>
+    <text x="115" y="25" class="subtitle" text-anchor="middle">隔离策略 (Isolate)</text>
+    <rect x="15" y="40" width="200" height="20" class="box"/>
+    <text x="115" y="55" class="chinese" text-anchor="middle">多代理 (Multi-agent)</text>
+    <rect x="15" y="70" width="200" height="20" class="box"/>
+    <text x="115" y="85" class="chinese" text-anchor="middle">环境隔离 (Environment)</text>
+    <rect x="15" y="100" width="200" height="20" class="box"/>
+    <text x="115" y="115" class="chinese" text-anchor="middle">状态管理 (State)</text>
+    <text x="115" y="135" class="formula" text-anchor="middle">Isolation = Σ(Sub_contexts) / N_agents</text>
+  </g>
+
+  <!-- Context Window Representation -->
+  <g transform="translate(420, 530)">
+    <rect x="0" y="0" width="360" height="100" class="box"/>
+    <text x="180" y="20" class="subtitle" text-anchor="middle">上下文窗口管理</text>
+    <rect x="20" y="30" width="100" height="20" fill="#3498db" opacity="0.7"/>
+    <text x="70" y="45" class="chinese" text-anchor="middle" fill="white">指令</text>
+    <rect x="130" y="30" width="100" height="20" fill="#e74c3c" opacity="0.7"/>
+    <text x="180" y="45" class="chinese" text-anchor="middle" fill="white">知识</text>
+    <rect x="240" y="30" width="100" height="20" fill="#f39c12" opacity="0.7"/>
+    <text x="290" y="45" class="chinese" text-anchor="middle" fill="white">工具反馈</text>
+    <text x="180" y="70" class="formula" text-anchor="middle">Context_efficiency = Relevant_tokens / Total_tokens</text>
+    <text x="180" y="90" class="chinese" text-anchor="middle">目标：在正确时间提供正确信息</text>
+  </g>
+
+  <!-- Arrows -->
+  <line x1="190" y1="300" x2="190" y2="350" class="arrow"/>
+  <line x1="600" y1="300" x2="475" y2="350" class="arrow"/>
+  <line x1="600" y1="300" x2="600" y2="530" class="arrow"/>
+  <line x1="600" y1="300" x2="775" y2="350" class="arrow"/>
+  <line x1="600" y1="300" x2="1065" y2="350" class="arrow"/>
+
+  <!-- Performance Impact -->
+  <g transform="translate(50, 650)">
+    <rect x="0" y="0" width="1100" height="60" class="solution"/>
+    <text x="550" y="25" class="subtitle" text-anchor="middle">性能影响评估</text>
+    <text x="100" y="45" class="formula">Cost_reduction = (Original_tokens - Optimized_tokens) / Original_tokens × 100%</text>
+    <text x="650" y="45" class="formula">Latency_improvement = Context_compression_ratio × Response_time_factor</text>
+  </g>
+
+  <!-- Connection lines -->
+  <line x1="190" y1="240" x2="350" y2="240" class="connection"/>
+  <line x1="600" y1="140" x2="600" y2="180" class="arrow"/>
+
+</svg>
