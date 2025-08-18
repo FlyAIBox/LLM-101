@@ -1,0 +1,153 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 箭头样式 -->
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto-start-reverse">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#555"/>
+    </marker>
+    <!-- 通用阴影 -->
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.15"/>
+    </filter>
+    <!-- 栏目背景渐变 -->
+    <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EAF2FF"/>
+      <stop offset="100%" stop-color="#F7FAFF"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EAFBF3"/>
+      <stop offset="100%" stop-color="#F7FFFB"/>
+    </linearGradient>
+    <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF2EA"/>
+      <stop offset="100%" stop-color="#FFFAF7"/>
+    </linearGradient>
+    <!-- 卡片通用样式 -->
+    <style>
+      .en { font-family: "Times New Roman", Times, serif; }
+      .cn { font-family: "SimSun", "Songti SC", serif; }
+      .math { font-family: "Cambria Math","STIX Two Math","STIXGeneral","Times New Roman", serif; }
+      .title { font-size: 26px; font-weight: 700; fill: #222; }
+      .subtitle { font-size: 18px; font-weight: 600; fill: #333; }
+      .label { font-size: 16px; fill: #333; }
+      .small { font-size: 14px; fill: #444; }
+      .chip { font-size: 14px; fill: #0b5; }
+      .flow { stroke: #555; stroke-width: 2; marker-end: url(#arrow); }
+      .box { fill: #fff; stroke: #c9d2e0; stroke-width: 1.2; rx: 10; filter: url(#softShadow); }
+      .laneTitle { font-size: 22px; font-weight: 700; fill: #111; }
+      .laneHead { font-size: 16px; font-weight: 600; fill: #222; }
+    </style>
+  </defs>
+
+  <!-- 主标题 -->
+  <text x="600" y="48" text-anchor="middle" class="en title">Software 1.0 → 2.0 → 3.0</text>
+  <text x="600" y="78" text-anchor="middle" class="cn subtitle">软件范式演进结构图（代码 → 权重 → 提示词）</text>
+
+  <!-- 三列背景 -->
+  <rect x="40"  y="100" width="344" height="640" fill="url(#g1)" rx="16"/>
+  <rect x="428" y="100" width="344" height="640" fill="url(#g2)" rx="16"/>
+  <rect x="816" y="100" width="344" height="640" fill="url(#g3)" rx="16"/>
+
+  <!-- 1.0 栏标题 -->
+  <text x="212" y="132" text-anchor="middle" class="en laneTitle">Software 1.0</text>
+  <text x="212" y="158" text-anchor="middle" class="cn laneHead">核心：计算机代码（computer code）</text>
+
+  <!-- 1.0 盒子：Code -->
+  <rect x="72" y="190" width="280" height="90" class="box"/>
+  <text x="212" y="220" text-anchor="middle" class="en subtitle">Computer Code</text>
+  <text x="212" y="244" text-anchor="middle" class="cn small">显式规则：人类编写可读可解释的指令</text>
+
+  <!-- 1.0 箭头 Code → Program -->
+  <line x1="212" y1="280" x2="212" y2="305" class="flow"/>
+
+  <!-- 1.0 盒子：Program -->
+  <rect x="72" y="305" width="280" height="90" class="box"/>
+  <text x="212" y="335" text-anchor="middle" class="en subtitle">Programs</text>
+  <text x="212" y="359" text-anchor="middle" class="cn small">编译 / 解释后可执行产物</text>
+
+  <!-- 1.0 箭头 Program → Computer -->
+  <line x1="212" y1="395" x2="212" y2="420" class="flow"/>
+
+  <!-- 1.0 盒子：Computer -->
+  <rect x="72" y="420" width="280" height="90" class="box"/>
+  <text x="212" y="450" text-anchor="middle" class="en subtitle">Computer</text>
+  <text x="212" y="474" text-anchor="middle" class="cn small">按规则确定性执行</text>
+
+  <!-- 1.0 小型公式 -->
+  <rect x="72" y="530" width="280" height="90" class="box"/>
+  <text x="212" y="558" text-anchor="middle" class="math small">y = f_code(x)</text>
+  <text x="212" y="584" text-anchor="middle" class="math small">T(n) = O(n log n)</text>
+
+  <!-- 2.0 栏标题 -->
+  <text x="600" y="132" text-anchor="middle" class="en laneTitle">Software 2.0</text>
+  <text x="600" y="158" text-anchor="middle" class="cn laneHead">核心：权重（weights）</text>
+
+  <!-- 2.0 盒子：Weights -->
+  <rect x="460" y="190" width="280" height="90" class="box"/>
+  <text x="600" y="220" text-anchor="middle" class="en subtitle">Weights</text>
+  <text x="600" y="244" text-anchor="middle" class="cn small">从数据中学习到的参数</text>
+
+  <!-- 2.0 箭头 Weights → Programs -->
+  <line x1="600" y1="280" x2="600" y2="305" class="flow"/>
+
+  <!-- 2.0 盒子：Programs -->
+  <rect x="460" y="305" width="280" height="90" class="box"/>
+  <text x="600" y="335" text-anchor="middle" class="en subtitle">Programs</text>
+  <text x="600" y="359" text-anchor="middle" class="cn small">推理/服务代码 + 模型调用</text>
+
+  <!-- 2.0 箭头 Programs → Neural Net -->
+  <line x1="600" y1="395" x2="600" y2="420" class="flow"/>
+
+  <!-- 2.0 盒子：Neural Net -->
+  <rect x="460" y="420" width="280" height="90" class="box"/>
+  <text x="600" y="450" text-anchor="middle" class="en subtitle">Neural Net</text>
+  <text x="600" y="474" text-anchor="middle" class="cn small">特征→表征→任务输出</text>
+
+  <!-- 2.0 小型公式 -->
+  <rect x="460" y="530" width="280" height="120" class="box"/>
+  <text x="600" y="556" text-anchor="middle" class="cn small">训练目标： 最小化损失函数 L(f_w(x), y)</text>
+  <text x="600" y="582" text-anchor="middle" class="cn small">参数更新： w ← w - η ∇L</text>
+  <text x="600" y="608" text-anchor="middle" class="cn small">交叉熵损失：L = -Σ y·log(ŷ)</text>
+
+  <!-- 3.0 栏标题 -->
+  <text x="988" y="132" text-anchor="middle" class="en laneTitle">Software 3.0</text>
+  <text x="988" y="158" text-anchor="middle" class="cn laneHead">核心：提示词（prompts）</text>
+
+  <!-- 3.0 盒子：Prompts -->
+  <rect x="848" y="190" width="280" height="90" class="box"/>
+  <text x="988" y="220" text-anchor="middle" class="en subtitle">Prompts</text>
+  <text x="988" y="244" text-anchor="middle" class="cn small">自然语言/系统指令/工具描述</text>
+
+  <!-- 3.0 箭头 Prompts → Programs -->
+  <line x1="988" y1="280" x2="988" y2="305" class="flow"/>
+
+  <!-- 3.0 盒子：Programs -->
+  <rect x="848" y="305" width="280" height="90" class="box"/>
+  <text x="988" y="335" text-anchor="middle" class="en subtitle">Programs</text>
+  <text x="988" y="359" text-anchor="middle" class="cn small">编排器/代理/函数调用/评估</text>
+
+  <!-- 3.0 箭头 Programs → LLM -->
+  <line x1="988" y1="395" x2="988" y2="420" class="flow"/>
+
+  <!-- 3.0 盒子：LLM -->
+  <rect x="848" y="420" width="280" height="90" class="box"/>
+  <text x="988" y="450" text-anchor="middle" class="en subtitle">LLM</text>
+  <text x="988" y="474" text-anchor="middle" class="cn small">大规模预训练与对齐的通用程序</text>
+
+  <!-- 3.0 小型公式 -->
+  <rect x="848" y="530" width="280" height="140" class="box"/>
+  <text x="988" y="556" text-anchor="middle" class="cn small">条件概率：p(t | C, prompt) = softmax(z)</text>
+  <text x="988" y="582" text-anchor="middle" class="cn small">Softmax： e^(z_i/τ) / Σ_j e^(z_j/τ)</text>
+  <text x="988" y="608" text-anchor="middle" class="cn small">困惑度：PP = exp{-(1/N) Σ log p(w_i)}</text>
+
+  <!-- 底部对照条 -->
+  <rect x="40" y="720" width="344" height="24" rx="6" fill="#dbe8ff"/>
+  <rect x="428" y="720" width="344" height="24" rx="6" fill="#d8f5e7"/>
+  <rect x="816" y="720" width="344" height="24" rx="6" fill="#ffe5d6"/>
+
+  <text x="212" y="737" text-anchor="middle" class="en small">Deterministic Rules</text>
+  <text x="600" y="737" text-anchor="middle" class="en small">Data-Driven Parameters</text>
+  <text x="988" y="737" text-anchor="middle" class="en small">Natural-Language Programming</text>
+
+  <!-- 角标：版本信息 -->
+  <text x="1160" y="50" text-anchor="end" class="en small" fill="#666">萤火AI百宝箱</text>
+</svg>
