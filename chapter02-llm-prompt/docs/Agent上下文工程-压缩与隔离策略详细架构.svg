@@ -1,0 +1,279 @@
+<svg viewBox="0 0 1500 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: '宋体', SimSun, serif; font-size: 22px; font-weight: bold; fill: #2c3e50; }
+      .subtitle { font-family: '宋体', SimSun, serif; font-size: 16px; font-weight: bold; fill: #34495e; }
+      .english { font-family: 'Times New Roman', serif; font-size: 13px; fill: #2c3e50; }
+      .chinese { font-family: '宋体', SimSun, serif; font-size: 13px; fill: #2c3e50; }
+      .formula { font-family: 'Times New Roman', serif; font-size: 11px; font-style: italic; fill: #e74c3c; }
+      .box { fill: #ecf0f1; stroke: #3498db; stroke-width: 2; rx: 6; }
+      .compress-box { fill: #fdf2e9; stroke: #e67e22; stroke-width: 2; rx: 6; }
+      .isolate-box { fill: #f4e6ff; stroke: #8e44ad; stroke-width: 2; rx: 6; }
+      .summary-box { fill: #fff3e0; stroke: #ff9800; stroke-width: 2; rx: 6; }
+      .agent-box { fill: #e1f5fe; stroke: #00bcd4; stroke-width: 2; rx: 6; }
+      .environment-box { fill: #f1f8e9; stroke: #689f38; stroke-width: 2; rx: 6; }
+      .arrow { stroke: #7f8c8d; stroke-width: 2; marker-end: url(#arrowhead); }
+      .compress-flow { stroke: #e67e22; stroke-width: 2; marker-end: url(#orangehead); }
+      .isolate-flow { stroke: #8e44ad; stroke-width: 2; marker-end: url(#purplehead); }
+      .clean-line { stroke: #95a5a6; stroke-width: 1; stroke-dasharray: 5,3; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7f8c8d" />
+    </marker>
+    <marker id="orangehead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#e67e22" />
+    </marker>
+    <marker id="purplehead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#8e44ad" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="750" y="35" class="title" text-anchor="middle">压缩与隔离策略详细架构 (Compress And  Isolate Strategies)</text>
+  
+  <!-- Compress Strategy Section -->
+  <g transform="translate(50, 80)">
+    <rect x="0" y="0" width="650" height="340" class="compress-box" opacity="0.1"/>
+    <text x="325" y="25" class="subtitle" text-anchor="middle">压缩策略 (Compress Context)</text>
+    <text x="325" y="45" class="english" text-anchor="middle">Retaining only tokens required to perform tasks</text>
+    
+    <!-- Context Summarization -->
+    <g transform="translate(50, 70)">
+      <rect x="0" y="0" width="260" height="240" class="summary-box"/>
+      <text x="130" y="20" class="subtitle" text-anchor="middle">上下文摘要</text>
+      <text x="130" y="35" class="english" text-anchor="middle">(Summarization)</text>
+      
+      <!-- Summarization Types -->
+      <rect x="20" y="50" width="220" height="30" class="box"/>
+      <text x="130" y="68" class="chinese" text-anchor="middle">递归摘要 (Recursive)</text>
+      
+      <rect x="20" y="90" width="220" height="30" class="box"/>
+      <text x="130" y="108" class="chinese" text-anchor="middle">分层摘要 (Hierarchical)</text>
+      
+      <rect x="20" y="130" width="220" height="30" class="box"/>
+      <text x="130" y="148" class="chinese" text-anchor="middle">轨迹摘要 (Trajectory)</text>
+      
+      <!-- Formula -->
+      <rect x="20" y="170" width="220" height="30" class="compress-box"/>
+      <text x="130" y="188" class="formula" text-anchor="middle">Summary = f(Context_history, Relevance)</text>
+      
+      <!-- Application -->
+      <rect x="20" y="210" width="220" height="25" class="summary-box"/>
+      <text x="130" y="227" class="chinese" text-anchor="middle">Claude Code 自动压缩 (95%触发)</text>
+    </g>
+    
+    <!-- Context Trimming -->
+    <g transform="translate(340, 70)">
+      <rect x="0" y="0" width="260" height="240" class="compress-box"/>
+      <text x="130" y="20" class="subtitle" text-anchor="middle">上下文修剪</text>
+      <text x="130" y="35" class="english" text-anchor="middle">(Trimming)</text>
+      
+      <!-- Trimming Methods -->
+      <rect x="20" y="50" width="220" height="30" class="box"/>
+      <text x="130" y="68" class="chinese" text-anchor="middle">硬编码启发式过滤</text>
+      
+      <rect x="20" y="90" width="220" height="30" class="box"/>
+      <text x="130" y="108" class="chinese" text-anchor="middle">时间序列修剪</text>
+      
+      <rect x="20" y="130" width="220" height="30" class="box"/>
+      <text x="130" y="148" class="chinese" text-anchor="middle">训练式修剪器</text>
+      
+      <!-- Formula -->
+      <rect x="20" y="170" width="220" height="30" class="compress-box"/>
+      <text x="130" y="188" class="formula" text-anchor="middle">Prune_score = Relevance × Recency</text>
+      
+      <!-- Performance -->
+      <rect x="20" y="210" width="220" height="25" class="summary-box"/>
+      <text x="130" y="227" class="chinese" text-anchor="middle">压缩比：80% 令牌减少</text>
+    </g>
+  </g>
+
+  <!-- Isolate Strategy Section -->
+  <g transform="translate(750, 80)">
+    <rect x="0" y="0" width="700" height="340" class="isolate-box" opacity="0.1"/>
+    <text x="350" y="25" class="subtitle" text-anchor="middle">隔离策略 (Isolate Context)</text>
+    <text x="350" y="45" class="english" text-anchor="middle">Splitting context to help agents perform tasks</text>
+    
+    <!-- Multi-agent -->
+    <g transform="translate(50, 70)">
+      <rect x="0" y="0" width="280" height="150" class="agent-box"/>
+      <text x="140" y="20" class="subtitle" text-anchor="middle">多代理系统</text>
+      <text x="140" y="35" class="english" text-anchor="middle">(Multi-agent)</text>
+      
+      <!-- Agent Architecture -->
+      <rect x="20" y="50" width="70" height="35" class="box"/>
+      <text x="55" y="65" class="chinese" text-anchor="middle">主代理</text>
+      <text x="55" y="78" class="formula" text-anchor="middle">Master</text>
+      
+      <rect x="105" y="50" width="70" height="35" class="box"/>
+      <text x="140" y="65" class="chinese" text-anchor="middle">子代理A</text>
+      <text x="140" y="78" class="formula" text-anchor="middle">Agent_A</text>
+      
+      <rect x="190" y="50" width="70" height="35" class="box"/>
+      <text x="225" y="65" class="chinese" text-anchor="middle">子代理B</text>
+      <text x="225" y="78" class="formula" text-anchor="middle">Agent_B</text>
+      
+      <!-- Benefits -->
+      <rect x="20" y="95" width="240" height="45" class="agent-box"/>
+      <text x="140" y="112" class="chinese" text-anchor="middle">并行处理 + 专门化上下文</text>
+      <text x="140" y="127" class="formula" text-anchor="middle">Performance ↑, Token_usage ↑ (15×)</text>
+    </g>
+    
+    <!-- Environment Isolation -->
+    <g transform="translate(350, 70)">
+      <rect x="0" y="0" width="300" height="100" class="environment-box"/>
+      <text x="150" y="20" class="subtitle" text-anchor="middle">环境隔离</text>
+      <text x="150" y="35" class="english" text-anchor="middle">(Environment)</text>
+      
+      <!-- Components -->
+      <rect x="20" y="50" width="100" height="25" class="box"/>
+      <text x="70" y="65" class="chinese" text-anchor="middle">代码代理</text>
+      
+      <rect x="140" y="50" width="100" height="25" class="box"/>
+      <text x="190" y="65" class="chinese" text-anchor="middle">沙盒环境</text>
+      
+      <text x="150" y="87" class="formula" text-anchor="middle">Isolated_objects = {image, audio, data}</text>
+    </g>
+    
+    <!-- State Management -->
+    <g transform="translate(350, 190)">
+      <rect x="0" y="0" width="300" height="120" class="isolate-box"/>
+      <text x="150" y="20" class="subtitle" text-anchor="middle">状态管理</text>
+      <text x="150" y="35" class="english" text-anchor="middle">(State Management)</text>
+      
+      <rect x="20" y="50" width="120" height="25" class="summary-box"/>
+      <text x="80" y="65" class="chinese" text-anchor="middle">暴露字段</text>
+      
+      <rect x="160" y="50" width="120" height="25" class="compress-box"/>
+      <text x="220" y="65" class="chinese" text-anchor="middle">隔离字段</text>
+      
+      <rect x="20" y="85" width="260" height="25" class="isolate-box"/>
+      <text x="150" y="100" class="chinese" text-anchor="middle">Pydantic 模式定义</text>
+    </g>
+  </g>
+
+  <!-- Strategy Comparison -->
+  <g transform="translate(100, 460)">
+    <rect x="0" y="0" width="1300" height="140" class="box" opacity="0.1"/>
+    <text x="650" y="25" class="subtitle" text-anchor="middle">策略效果对比 (Strategy Effectiveness Comparison)</text>
+    
+    <!-- Compression Results -->
+    <g transform="translate(50, 40)">
+      <rect x="0" y="0" width="580" height="80" class="compress-box"/>
+      <text x="290" y="20" class="subtitle" text-anchor="middle">压缩策略效果</text>
+      
+      <rect x="20" y="30" width="120" height="40" class="summary-box"/>
+      <text x="80" y="45" class="chinese" text-anchor="middle">原始上下文</text>
+      <text x="80" y="60" class="formula" text-anchor="middle">10,000 tokens</text>
+      
+      <rect x="160" y="30" width="120" height="40" class="compress-box"/>
+      <text x="220" y="45" class="chinese" text-anchor="middle">摘要压缩</text>
+      <text x="220" y="60" class="formula" text-anchor="middle">→ 2,000 tokens</text>
+      
+      <rect x="300" y="30" width="120" height="40" class="box"/>
+      <text x="360" y="45" class="chinese" text-anchor="middle">修剪优化</text>
+      <text x="360" y="60" class="formula" text-anchor="middle">→ 1,500 tokens</text>
+      
+      <rect x="440" y="30" width="120" height="40" class="environment-box"/>
+      <text x="500" y="45" class="chinese" text-anchor="middle">效果</text>
+      <text x="500" y="60" class="formula" text-anchor="middle">85% 减少</text>
+    </g>
+    
+    <!-- Isolation Results -->
+    <g transform="translate(670, 40)">
+      <rect x="0" y="0" width="580" height="80" class="isolate-box"/>
+      <text x="290" y="20" class="subtitle" text-anchor="middle">隔离策略效果</text>
+      
+      <rect x="20" y="30" width="100" height="40" class="box"/>
+      <text x="70" y="45" class="chinese" text-anchor="middle">任务分解</text>
+      <text x="70" y="60" class="formula" text-anchor="middle">Task split</text>
+      
+      <rect x="140" y="30" width="100" height="40" class="agent-box"/>
+      <text x="190" y="45" class="chinese" text-anchor="middle">并行处理</text>
+      <text x="190" y="60" class="formula" text-anchor="middle">3× agents</text>
+      
+      <rect x="260" y="30" width="100" height="40" class="environment-box"/>
+      <text x="310" y="45" class="chinese" text-anchor="middle">环境隔离</text>
+      <text x="310" y="60" class="formula" text-anchor="middle">Sandbox</text>
+      
+      <rect x="380" y="30" width="100" height="40" class="isolate-box"/>
+      <text x="430" y="45" class="chinese" text-anchor="middle">性能提升</text>
+      <text x="430" y="60" class="formula" text-anchor="middle">2.5× faster</text>
+      
+      <rect x="500" y="30" width="60" height="40" class="agent-box"/>
+      <text x="530" y="45" class="chinese" text-anchor="middle">成本</text>
+      <text x="530" y="60" class="formula" text-anchor="middle">15× tokens</text>
+    </g>
+  </g>
+
+  <!-- Performance Analysis -->
+  <g transform="translate(100, 640)">
+    <rect x="0" y="0" width="1300" height="180" class="box" opacity="0.1"/>
+    <text x="650" y="25" class="subtitle" text-anchor="middle">性能分析与最佳实践 (Performance Analysis And  Best Practices)</text>
+    
+    <!-- Metrics -->
+    <g transform="translate(50, 40)">
+      <rect x="0" y="0" width="280" height="120" class="compress-box"/>
+      <text x="140" y="20" class="subtitle" text-anchor="middle">压缩策略指标</text>
+      <text x="20" y="40" class="formula">Compression_ratio = Compressed/Original</text>
+      <text x="20" y="55" class="formula">Quality_retention = Performance_after/Performance_before</text>
+      <text x="20" y="70" class="formula">Latency_reduction = Δ(Processing_time)</text>
+      <text x="20" y="85" class="chinese">适用：长对话、令牌密集任务</text>
+      <text x="20" y="100" class="chinese">风险：信息丢失、摘要质量依赖</text>
+    </g>
+    
+    <g transform="translate(350, 40)">
+      <rect x="0" y="0" width="280" height="120" class="isolate-box"/>
+      <text x="140" y="20" class="subtitle" text-anchor="middle">隔离策略指标</text>
+      <text x="20" y="40" class="formula">Parallel_efficiency = Sequential_time/Parallel_time</text>
+      <text x="20" y="55" class="formula">Specialization_gain = Context_relevance ↑</text>
+      <text x="20" y="70" class="formula">Coordination_cost = Communication_overhead</text>
+      <text x="20" y="85" class="chinese">适用：复杂任务、专业分工</text>
+      <text x="20" y="100" class="chinese">风险：协调复杂、令牌增加</text>
+    </g>
+    
+    <g transform="translate(650, 40)">
+      <rect x="0" y="0" width="280" height="120" class="environment-box"/>
+      <text x="140" y="20" class="subtitle" text-anchor="middle">混合策略优化</text>
+      <text x="20" y="40" class="formula">Hybrid_score = α×Compress + β×Isolate</text>
+      <text x="20" y="55" class="formula">Optimal_α,β = argmax(Performance/Cost)</text>
+      <text x="20" y="70" class="formula">Adaptive_threshold = f(task_complexity)</text>
+      <text x="20" y="85" class="chinese">动态选择最优策略组合</text>
+      <text x="20" y="100" class="chinese">实时调整参数权重</text>
+    </g>
+    
+    <g transform="translate(950, 40)">
+      <rect x="0" y="0" width="300" height="120" class="agent-box"/>
+      <text x="150" y="20" class="subtitle" text-anchor="middle">实施决策框架</text>
+      <text x="20" y="40" class="chinese">1. 评估：任务复杂度 + 令牌预算</text>
+      <text x="20" y="55" class="chinese">2. 选择：单一策略 vs 混合策略</text>
+      <text x="20" y="70" class="chinese">3. 实施：渐进部署 + 性能监控</text>
+      <text x="20" y="85" class="chinese">4. 优化：基于反馈的参数调整</text>
+      <text x="20" y="100" class="chinese">5. 扩展：根据业务需求迭代</text>
+    </g>
+  </g>
+
+  <!-- Clean directional arrows -->
+  <!-- Compression flow -->
+  <line x1="180" y1="350" x2="280" y2="350" class="compress-flow"/>
+  <line x1="420" y1="350" x2="520" y2="350" class="compress-flow"/>
+  <line x1="140" y1="500" x2="160" y2="500" class="compress-flow"/>
+  <line x1="280" y1="500" x2="300" y2="500" class="compress-flow"/>
+  <line x1="420" y1="500" x2="440" y2="500" class="compress-flow"/>
+  
+  <!-- Isolation flow -->
+  <line x1="980" y1="350" x2="1100" y2="350" class="isolate-flow"/>
+  <line x1="810" y1="500" x2="830" y2="500" class="isolate-flow"/>
+  <line x1="930" y1="500" x2="950" y2="500" class="isolate-flow"/>
+  <line x1="1050" y1="500" x2="1070" y2="500" class="isolate-flow"/>
+  <line x1="1170" y1="500" x2="1190" y2="500" class="isolate-flow"/>
+  
+  <!-- Strategy connection -->
+  <line x1="375" y1="420" x2="375" y2="460" class="clean-line"/>
+  <line x1="1100" y1="420" x2="1100" y2="460" class="clean-line"/>
+  
+  <!-- To analysis -->
+  <line x1="375" y1="600" x2="375" y2="640" class="clean-line"/>
+  <line x1="1100" y1="600" x2="1100" y2="640" class="clean-line"/>
+
+</svg>

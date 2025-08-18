@@ -1,0 +1,227 @@
+<svg viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: '宋体', SimSun, serif; font-size: 22px; font-weight: bold; fill: #2c3e50; }
+      .subtitle { font-family: '宋体', SimSun, serif; font-size: 16px; font-weight: bold; fill: #34495e; }
+      .english { font-family: 'Times New Roman', serif; font-size: 13px; fill: #2c3e50; }
+      .chinese { font-family: '宋体', SimSun, serif; font-size: 13px; fill: #2c3e50; }
+      .formula { font-family: 'Times New Roman', serif; font-size: 11px; font-style: italic; fill: #e74c3c; }
+      .box { fill: #ecf0f1; stroke: #3498db; stroke-width: 2; rx: 6; }
+      .write-box { fill: #e8f5e8; stroke: #27ae60; stroke-width: 2; rx: 6; }
+      .select-box { fill: #eaf2ff; stroke: #2980b9; stroke-width: 2; rx: 6; }
+      .memory-box { fill: #fef9e7; stroke: #f1c40f; stroke-width: 2; rx: 6; }
+      .tool-box { fill: #f8f1ff; stroke: #9b59b6; stroke-width: 2; rx: 6; }
+      .arrow { stroke: #7f8c8d; stroke-width: 2; marker-end: url(#arrowhead); }
+      .bidirectional { stroke: #e74c3c; stroke-width: 2; marker-end: url(#redhead); marker-start: url(#redhead); }
+      .data-flow { stroke: #27ae60; stroke-width: 2; stroke-dasharray: 8,4; marker-end: url(#greenhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7f8c8d" />
+    </marker>
+    <marker id="redhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#e74c3c" />
+    </marker>
+    <marker id="greenhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#27ae60" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="700" y="35" class="title" text-anchor="middle">写入与选择策略详细架构 (Write And  Select Strategies)</text>
+  
+  <!-- Write Strategy Section -->
+  <g transform="translate(50, 80)">
+    <rect x="0" y="0" width="600" height="380" class="write-box" opacity="0.1"/>
+    <text x="300" y="25" class="subtitle" text-anchor="middle">写入策略 (Write Context)</text>
+    <text x="300" y="45" class="english" text-anchor="middle">Saving context outside the context window</text>
+    
+    <!-- Scratchpads -->
+    <g transform="translate(50, 70)">
+      <rect x="0" y="0" width="220" height="140" class="write-box"/>
+      <text x="110" y="20" class="subtitle" text-anchor="middle">草稿本 (Scratchpads)</text>
+      
+      <rect x="20" y="35" width="180" height="25" class="box"/>
+      <text x="110" y="52" class="chinese" text-anchor="middle">工具调用写入</text>
+      
+      <rect x="20" y="70" width="180" height="25" class="box"/>
+      <text x="110" y="87" class="chinese" text-anchor="middle">运行时状态对象</text>
+      
+      <rect x="20" y="105" width="180" height="25" class="box"/>
+      <text x="110" y="122" class="chinese" text-anchor="middle">文件系统存储</text>
+      
+      <text x="110" y="140" class="formula" text-anchor="middle">Write_operation = f(session_state, task_info)</text>
+    </g>
+    
+    <!-- Memories -->
+    <g transform="translate(330, 70)">
+      <rect x="0" y="0" width="220" height="280" class="memory-box"/>
+      <text x="110" y="20" class="subtitle" text-anchor="middle">记忆系统 (Memories)</text>
+      
+      <!-- Memory Types -->
+      <rect x="20" y="40" width="180" height="30" class="box"/>
+      <text x="110" y="55" class="chinese" text-anchor="middle">语义记忆 (Semantic)</text>
+      <text x="110" y="68" class="formula" text-anchor="middle">Facts, Knowledge Base</text>
+      
+      <rect x="20" y="80" width="180" height="30" class="box"/>
+      <text x="110" y="95" class="chinese" text-anchor="middle">情节记忆 (Episodic)</text>
+      <text x="110" y="108" class="formula" text-anchor="middle">Examples, Experiences</text>
+      
+      <rect x="20" y="120" width="180" height="30" class="box"/>
+      <text x="110" y="135" class="chinese" text-anchor="middle">程序记忆 (Procedural)</text>
+      <text x="110" y="148" class="formula" text-anchor="middle">Instructions, Rules</text>
+      
+      <!-- Memory Formation Process -->
+      <rect x="20" y="165" width="180" height="45" class="write-box"/>
+      <text x="110" y="180" class="chinese" text-anchor="middle">记忆生成过程</text>
+      <text x="110" y="195" class="formula" text-anchor="middle">Memory = Reflection(Interaction)</text>
+      <text x="110" y="206" class="formula" text-anchor="middle">+ Synthesis(Past_experiences)</text>
+      
+      <!-- Examples -->
+      <rect x="20" y="220" width="180" height="50" class="box"/>
+      <text x="110" y="235" class="chinese" text-anchor="middle">实际应用</text>
+      <text x="25" y="250" class="chinese">• ChatGPT 自动记忆</text>
+      <text x="25" y="263" class="chinese">• Cursor 用户交互</text>
+    </g>
+  </g>
+
+  <!-- Select Strategy Section -->
+  <g transform="translate(750, 80)">
+    <rect x="0" y="0" width="600" height="380" class="select-box" opacity="0.1"/>
+    <text x="300" y="25" class="subtitle" text-anchor="middle">选择策略 (Select Context)</text>
+    <text x="300" y="45" class="english" text-anchor="middle">Pulling context into the context window</text>
+    
+    <!-- Memory Selection -->
+    <g transform="translate(50, 70)">
+      <rect x="0" y="0" width="240" height="180" class="memory-box"/>
+      <text x="120" y="20" class="subtitle" text-anchor="middle">记忆选择</text>
+      
+      <rect x="20" y="35" width="200" height="25" class="box"/>
+      <text x="120" y="52" class="chinese" text-anchor="middle">嵌入向量匹配</text>
+      
+      <rect x="20" y="70" width="200" height="25" class="box"/>
+      <text x="120" y="87" class="chinese" text-anchor="middle">知识图谱检索</text>
+      
+      <rect x="20" y="105" width="200" height="25" class="box"/>
+      <text x="120" y="122" class="chinese" text-anchor="middle">语义相似度计算</text>
+      
+      <text x="120" y="145" class="formula" text-anchor="middle">Similarity = cos(θ) = (A·B)/(||A||||B||)</text>
+      <text x="120" y="160" class="formula" text-anchor="middle">Relevance_score = Σ(weights × features)</text>
+    </g>
+    
+    <!-- Tool Selection -->
+    <g transform="translate(310, 70)">
+      <rect x="0" y="0" width="240" height="120" class="tool-box"/>
+      <text x="120" y="20" class="subtitle" text-anchor="middle">工具选择</text>
+      
+      <rect x="20" y="35" width="200" height="25" class="box"/>
+      <text x="120" y="52" class="chinese" text-anchor="middle">RAG 工具描述</text>
+      
+      <rect x="20" y="70" width="200" height="25" class="box"/>
+      <text x="120" y="87" class="chinese" text-anchor="middle">语义相似度排序</text>
+      
+      <text x="120" y="110" class="formula" text-anchor="middle">Accuracy_improvement = 3×</text>
+    </g>
+    
+    <!-- Knowledge Retrieval -->
+    <g transform="translate(310, 210)">
+      <rect x="0" y="0" width="240" height="140" class="select-box"/>
+      <text x="120" y="20" class="subtitle" text-anchor="middle">知识检索</text>
+      
+      <rect x="20" y="35" width="200" height="20" class="box"/>
+      <text x="120" y="48" class="chinese" text-anchor="middle">AST 解析</text>
+      
+      <rect x="20" y="60" width="200" height="20" class="box"/>
+      <text x="120" y="73" class="chinese" text-anchor="middle">语义边界分块</text>
+      
+      <rect x="20" y="85" width="200" height="20" class="box"/>
+      <text x="120" y="98" class="chinese" text-anchor="middle">多技术组合</text>
+      
+      <text x="25" y="115" class="chinese">• Grep/文件搜索</text>
+      <text x="25" y="128" class="chinese">• 知识图谱检索</text>
+    </g>
+  </g>
+
+  <!-- Context Window Visualization -->
+  <g transform="translate(300, 500)">
+    <rect x="0" y="0" width="800" height="150" class="box"/>
+    <text x="400" y="25" class="subtitle" text-anchor="middle">上下文窗口动态管理</text>
+    
+    <!-- Before -->
+    <g transform="translate(50, 40)">
+      <rect x="0" y="0" width="150" height="80" class="write-box"/>
+      <text x="75" y="18" class="chinese" text-anchor="middle">外部存储</text>
+      <rect x="15" y="25" width="120" height="15" fill="#27ae60" opacity="0.7"/>
+      <text x="75" y="37" class="chinese" text-anchor="middle" fill="white">草稿本/记忆</text>
+      <rect x="15" y="45" width="120" height="15" fill="#f1c40f" opacity="0.7"/>
+      <text x="75" y="57" class="chinese" text-anchor="middle">工具描述</text>
+      <rect x="15" y="65" width="120" height="15" fill="#9b59b6" opacity="0.7"/>
+      <text x="75" y="77" class="chinese" text-anchor="middle">知识库</text>
+    </g>
+    
+    <!-- Context Window -->
+    <g transform="translate(350, 40)">
+      <rect x="0" y="0" width="300" height="80" class="select-box"/>
+      <text x="150" y="18" class="chinese" text-anchor="middle">上下文窗口</text>
+      <rect x="20" y="25" width="80" height="12" fill="#3498db" opacity="0.7"/>
+      <text x="60" y="35" class="chinese" text-anchor="middle" fill="white">选中记忆</text>
+      <rect x="110" y="25" width="80" height="12" fill="#e74c3c" opacity="0.7"/>
+      <text x="150" y="35" class="chinese" text-anchor="middle" fill="white">相关工具</text>
+      <rect x="200" y="25" width="80" height="12" fill="#f39c12" opacity="0.7"/>
+      <text x="240" y="35" class="chinese" text-anchor="middle" fill="white">检索知识</text>
+      
+      <text x="150" y="55" class="formula" text-anchor="middle">Context_utilization = Relevant_content / Window_size</text>
+      <text x="150" y="70" class="formula" text-anchor="middle">Selection_efficiency = Selected_tokens / Available_tokens</text>
+    </g>
+    
+    <!-- After -->
+    <g transform="translate(700, 40)">
+      <rect x="0" y="0" width="80" height="80" class="box"/>
+      <text x="40" y="18" class="chinese" text-anchor="middle">输出结果</text>
+      <rect x="10" y="25" width="60" height="50" fill="#2ecc71" opacity="0.7"/>
+      <text x="40" y="45" class="chinese" text-anchor="middle" fill="white">优化的</text>
+      <text x="40" y="58" class="chinese" text-anchor="middle" fill="white">代理响应</text>
+    </g>
+  </g>
+
+  <!-- Arrows and Data Flow -->
+  <line x1="200" y1="300" x2="200" y2="500" class="arrow"/>
+  <line x1="650" y1="380" x2="500" y2="500" class="arrow"/>
+  <line x1="950" y1="300" x2="950" y2="500" class="arrow"/>
+  
+  <!-- Bidirectional flow between write and select -->
+  <line x1="650" y1="240" x2="750" y2="240" class="bidirectional"/>
+  
+  <!-- Data flow within context window -->
+  <line x1="450" y1="540" x2="700" y2="540" class="data-flow"/>
+
+  <!-- Challenge Box -->
+  <g transform="translate(50, 700)">
+    <rect x="0" y="0" width="1300" height="120" class="memory-box" opacity="0.2"/>
+    <text x="650" y="25" class="subtitle" text-anchor="middle">关键挑战与解决方案</text>
+    
+    <g transform="translate(50, 40)">
+      <rect x="0" y="0" width="380" height="70" class="box"/>
+      <text x="190" y="18" class="chinese" text-anchor="middle">写入策略挑战</text>
+      <text x="20" y="35" class="chinese">• 会话间信息持久化</text>
+      <text x="20" y="50" class="chinese">• 大规模记忆管理</text>
+      <text x="20" y="65" class="chinese">• 状态同步与一致性</text>
+    </g>
+    
+    <g transform="translate(460, 40)">
+      <rect x="0" y="0" width="380" height="70" class="box"/>
+      <text x="190" y="18" class="chinese" text-anchor="middle">选择策略挑战</text>
+      <text x="20" y="35" class="chinese">• 相关性评估准确性</text>
+      <text x="20" y="50" class="chinese">• 意外记忆注入问题</text>
+      <text x="20" y="65" class="chinese">• 工具描述重叠混乱</text>
+    </g>
+    
+    <g transform="translate(870, 40)">
+      <rect x="0" y="0" width="380" height="70" class="box"/>
+      <text x="190" y="18" class="chinese" text-anchor="middle">性能优化</text>
+      <text x="20" y="35" class="formula">Precision = True_positives / (True_positives + False_positives)</text>
+      <text x="20" y="50" class="formula">Recall = True_positives / (True_positives + False_negatives)</text>
+      <text x="20" y="65" class="formula">F1_score = 2 × (Precision × Recall) / (Precision + Recall)</text>
+    </g>
+  </g>
+
+</svg>
