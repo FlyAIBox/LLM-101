@@ -1,0 +1,267 @@
+{
+  "name": "OCR",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "上传图片",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "images",
+              "fieldType": "file",
+              "acceptFileTypes": ".jpg,.png"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -480,
+        220
+      ],
+      "id": "7c3cd707-4b45-4775-aab2-baf293e91557",
+      "name": "Batch Image Upload",
+      "webhookId": "b2c44ad4-75e5-462d-980b-35db11060745"
+    },
+    {
+      "parameters": {
+        "jsCode": "let results = [];\nfor (const item of $input.all()) {\n    // 获取 binary 中的所有文件\n    for (const [key, binaryData] of Object.entries(item.binary)) {\n        results.push({\n            json: {\n                ...item.json,\n                currentFile: key, // 添加当前处理的文件标识\n                filename: binaryData.fileName || key,\n                fileSize: binaryData.fileSize\n            },\n            binary: { \n                data: binaryData  // 只包含当前文件的 binary 数据\n            }\n        });\n    }\n}\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        220
+      ],
+      "id": "05427da1-d4bd-4793-af7e-6e90e68d6605",
+      "name": "Split Files to Items"
+    },
+    {
+      "parameters": {
+        "content": "### 将多个文件分割成独立的 items \n",
+        "height": 240,
+        "width": 280,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        160
+      ],
+      "id": "0808e9fb-7da4-45c1-8429-986e3fed6312",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyB9jWMPsHY6kV71jCogbpeswzOEL-dvgHg",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"请提取图片中的全部文本内容，严格保持原有格式和排版。要求：保持原始的行间距、段落结构和缩进，保留表格、列表等特殊格式，不添加任何解释、说明或额外符号，如遇不清晰文字用[?]标记，直接输出提取结果无需前言后语。\"\n        },\n        {\n          \"inline_data\": {\n            \"mime_type\": \"image/jpeg\",\n            \"data\": \"{{ $('Convert to Base64').item.json.data }}\"\n          }\n        }\n      ]\n    }\n  ],\n  \"generationConfig\": {\n    \"temperature\": 1,\n    \"maxOutputTokens\": 65536\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        820,
+        100
+      ],
+      "id": "075ad19f-3fc2-4389-8103-16321467afa2",
+      "name": "Gemini OCR API"
+    },
+    {
+      "parameters": {
+        "content": "## 📋 批量 OCR 处理流程\n🔄 对每张上传的图片执行：\n1. 转换为 Base64 格式\n2. 发送至 Google Gemini API\n3. 识别并提取文本内容\n4. 收集 OCR 结果同步到飞书多维表格\n\n💡 循环会自动处理所有上传的图片文件\n\n",
+        "height": 480,
+        "width": 1240,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -20
+      ],
+      "id": "5932d166-03f0-4246-9ca9-94efda33b326",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {
+          "keepSource": "both"
+        }
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        380,
+        220
+      ],
+      "id": "7a790c83-a782-4dde-8eb9-a03ecce1e9e8",
+      "name": "Convert to Base64"
+    },
+    {
+      "parameters": {
+        "resource": "bitable",
+        "operation": "bitable:table:record:add",
+        "app_toke": "VMoXbh9aMav6L4sWeRkcpmfynLd",
+        "table_id": "tblhoyqA6BGOLnVH",
+        "body": "={\n  \"fields\":{\n      \"文件名\": \"{{ $('Convert to Base64').item.json.filename }}\",\n      \"上传时间\":\"{{ $now.format('yyyy-MM-dd HH:mm:ssa')  }}\",\n      \"识别文本\": {{ JSON.stringify($json.candidates[0].content.parts[0].text) }},\n      \"原图片\": [\n        {\n          \"file_token\": \"{{ $('Upload to Feishu Drive').item.json.data.file_token }}\"\n        }\n      ],\n      \"文件大小\": \"{{ $('Convert to Base64').item.json.fileSize }}\"\n    }\n}"
+      },
+      "type": "n8n-nodes-feishu-lite.feishuNode",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        220
+      ],
+      "id": "1c7f77ce-f795-42f2-b18b-9bc6b47ccd67",
+      "name": "Save to Feishu Sheet",
+      "credentials": {
+        "feishuCredentialsApi": {
+          "id": "BOKKsnzx1dTScsi9",
+          "name": "Feishu Credentials account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        80,
+        220
+      ],
+      "id": "ecd34bd3-a7ed-4bff-a107-398fb69a496d",
+      "name": "Process Each Image"
+    },
+    {
+      "parameters": {
+        "resource": "space",
+        "operation": "space:upload",
+        "parent_type": "bitable_image",
+        "parent_node": "VMoXbh9aMav6L4sWeRkcpmfynLd",
+        "fileFieldName": "=data",
+        "file_name": "={{ $json.filename }}"
+      },
+      "type": "n8n-nodes-feishu-lite.feishuNode",
+      "typeVersion": 1,
+      "position": [
+        600,
+        220
+      ],
+      "id": "b2d906a1-12cd-4b54-9be5-a66d3dc5cf0d",
+      "name": "Upload to Feishu Drive",
+      "credentials": {
+        "feishuCredentialsApi": {
+          "id": "BOKKsnzx1dTScsi9",
+          "name": "Feishu Credentials account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Batch Image Upload": {
+      "main": [
+        [
+          {
+            "node": "Split Files to Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Files to Items": {
+      "main": [
+        [
+          {
+            "node": "Process Each Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Each Image": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Convert to Base64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to Base64": {
+      "main": [
+        [
+          {
+            "node": "Upload to Feishu Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to Feishu Drive": {
+      "main": [
+        [
+          {
+            "node": "Gemini OCR API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini OCR API": {
+      "main": [
+        [
+          {
+            "node": "Save to Feishu Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Feishu Sheet": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4e159621-7ad1-4be5-9924-d2229c2eceac",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "65f35d0ae4b05236aca367064e568cbb1b37a05c0f8b1714de557aef0becbe95"
+  },
+  "id": "wXDFVRWQLafMQwgu",
+  "tags": [
+    {
+      "createdAt": "2025-07-15T07:28:23.497Z",
+      "updatedAt": "2025-07-15T07:28:23.497Z",
+      "id": "JJ7MXl6bL0HM32F4",
+      "name": "Gemini"
+    },
+    {
+      "createdAt": "2025-07-15T07:28:23.514Z",
+      "updatedAt": "2025-07-15T07:28:23.514Z",
+      "id": "V1PmSlniEGIv9M3I",
+      "name": "OCR"
+    }
+  ]
+}

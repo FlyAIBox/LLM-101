@@ -1,0 +1,1429 @@
+{
+  "id": "8tusZTTtcyaiznEG",
+  "meta": {
+    "instanceId": "31e69f7f4a77bf465b805824e303232f0227212ae922d12133a0f96ffeab4fef",
+    "templateCredsSetupCompleted": true
+  },
+  "name": "🤖 AI驱动的RAG聊天机器人 - 文档 + Google Drive + Gemini + Qdrant",
+  "tags": [],
+  "nodes": [
+    {
+      "id": "7ad5796b-d1a0-4cc1-bed6-105ff499beeb",
+      "name": "数据加载器",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "position": [
+        620,
+        720
+      ],
+      "parameters": {
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "file_id",
+                "value": "={{ $json.id }}"
+              },
+              {
+                "name": "pubkey",
+                "value": "={{ $json.name }}"
+              },
+              {
+                "name": "=overarching_theme",
+                "value": "={{ $('提取元数据').item.json.output.overarching_theme }}"
+              },
+              {
+                "name": "recurring_topics",
+                "value": "={{ $('提取元数据').item.json.output.recurring_topics }}"
+              },
+              {
+                "name": "pain_points",
+                "value": "={{ $('提取元数据').item.json.output.pain_points }}"
+              },
+              {
+                "name": "analytical_insights",
+                "value": "={{ $('提取元数据').item.json.output.analytical_insights }}"
+              },
+              {
+                "name": "conclusion",
+                "value": "={{ $('提取元数据').item.json.output.conclusion }}"
+              },
+              {
+                "name": "keywords",
+                "value": "={{ $('提取元数据').item.json.output.keywords }}"
+              }
+            ]
+          }
+        },
+        "dataType": "binary",
+        "binaryMode": "specificField"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "84986ee2-4d79-49e8-8778-b8a955cf2174",
+      "name": "令牌分割器",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterTokenSplitter",
+      "position": [
+        720,
+        860
+      ],
+      "parameters": {
+        "chunkSize": 3000
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "82aa7016-f3af-4de8-a410-b1c802041213",
+      "name": "Qdrant向量存储",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "onError": "continueRegularOutput",
+      "position": [
+        540,
+        520
+      ],
+      "parameters": {
+        "mode": "insert",
+        "options": {},
+        "qdrantCollection": {
+          "__rl": true,
+          "mode": "id",
+          "value": "=nostr-damus-user-profiles"
+        }
+      },
+      "credentials": {
+        "qdrantApi": {
+          "id": "DJQ4hVAVdWZytjr2",
+          "name": "QdrantApi account"
+        }
+      },
+      "executeOnce": false,
+      "retryOnFail": true,
+      "typeVersion": 1
+    },
+    {
+      "id": "07f4d14a-1864-406b-946b-09c776e3038b",
+      "name": "循环处理项目",
+      "type": "n8n-nodes-base.splitInBatches",
+      "onError": "continueRegularOutput",
+      "position": [
+        180,
+        -140
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "b0f9b066-62de-41bc-afce-dcb4d20d100c",
+      "name": "等待",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        1020,
+        840
+      ],
+      "webhookId": "237d7f8a-aead-479a-b813-f407d1f37fa5",
+      "parameters": {},
+      "typeVersion": 1.1
+    },
+    {
+      "id": "2a883003-f5ec-409e-97e4-809360ca11ed",
+      "name": "点击'测试工作流'时",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -1160,
+        -280
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "id": "cfbb6b77-142f-4689-b051-436f40ababe6",
+      "name": "Google Gemini聊天模型",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        1120,
+        -20
+      ],
+      "parameters": {
+        "options": {
+          "temperature": 0.4
+        },
+        "modelName": "models/gemini-2.0-flash-exp"
+      },
+      "credentials": {
+        "googlePalmApi": {
+          "id": "L9UNQHflYlyF9Ngd",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "c9c50387-64a3-473f-9ea7-509a301836a3",
+      "name": "合并",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        820,
+        200
+      ],
+      "parameters": {
+        "mode": "combine",
+        "options": {},
+        "combineBy": "combineAll"
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "ea143b9f-9bd8-4f3f-8979-5a0fd2691e9d",
+      "name": "提取元数据",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "position": [
+        1020,
+        -180
+      ],
+      "parameters": {
+        "text": "={{ $json.data }}",
+        "options": {
+          "systemPromptTemplate": "您是一个专业的信息提取算法。\n只从文本中提取相关信息。\n如果您不知道要提取的属性值，可以省略该属性的值。"
+        },
+        "attributes": {
+          "attributes": [
+            {
+              "name": "overarching_theme",
+              "description": "总结“总体主题”部分讨论的主要主题。"
+            },
+            {
+              "name": "recurring_topics",
+              "description": "列出“共同话题”部分提到的重复话题，以字符串数组形式。"
+            },
+            {
+              "name": "pain_points",
+              "description": "总结“痛点”部分提到的用户挫折或挑战，以字符串数组形式。"
+            },
+            {
+              "name": "analytical_insights",
+              "description": "从“分析洞察”部分提取关键分析观察列表，包括语调或行为的变化。"
+            },
+            {
+              "name": "conclusion",
+              "description": "总结关于用户话题及其整体关注点的结论。"
+            },
+            {
+              "name": "keywords",
+              "description": "生成10个关键词列表，捕捉文档的精髓（例如：“askNostr”、“去中心化”、“垃圾邮件过滤”）。"
+            }
+          ]
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "2ddd778f-6676-4a4b-b592-536401831bc8",
+      "name": "获取文件内容",
+      "type": "n8n-nodes-base.extractFromFile",
+      "position": [
+        820,
+        -180
+      ],
+      "parameters": {
+        "options": {},
+        "operation": "text"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "cdbb8bbc-967c-4f01-b844-4d31328153df",
+      "name": "从Google Drive下载文件",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        500,
+        -180
+      ],
+      "parameters": {
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.id }}"
+        },
+        "options": {},
+        "operation": "download"
+      },
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "UhdXGYLTAJbsa0xX",
+          "name": "Google Drive account"
+        }
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "399e196c-76ec-4077-aacc-f669173b0229",
+      "name": "在Google Drive文件夹中查找文件ID",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        -620,
+        -160
+      ],
+      "parameters": {
+        "filter": {
+          "driveId": {
+            "mode": "list",
+            "value": "My Drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $json.folder_id }}"
+          }
+        },
+        "options": {},
+        "resource": "fileFolder",
+        "returnAll": true
+      },
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "UhdXGYLTAJbsa0xX",
+          "name": "Google Drive account"
+        }
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "3bc4f005-c6c8-4f73-816a-1573d6dfb62f",
+      "name": "text-embeddings-3-large",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "position": [
+        480,
+        720
+      ],
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "jEMSvKmtYfzAkhe6",
+          "name": "OpenAi account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "5d42b34a-7156-4163-a2c4-a9cb3c984c96",
+      "name": "Google文件夹ID",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -820,
+        -160
+      ],
+      "parameters": {
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e6f6188f-c895-4c8c-b39a-0ef55b490fd6",
+              "name": "folder_id",
+              "type": "string",
+              "value": "[Your-Google-Folder-ID]"
+            }
+          ]
+        }
+      },
+      "typeVersion": 3.4
+    },
+    {
+      "id": "7be310c2-d30f-42a2-8f57-33c7b184e429",
+      "name": "gpt-4o-mini1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -400,
+        940
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "jEMSvKmtYfzAkhe6",
+          "name": "OpenAi account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "18aacfd9-3f6e-4fba-9f68-d8cc95bc667b",
+      "name": "根据文件ID删除Qdrant点",
+      "type": "@n8n/n8n-nodes-langchain.code",
+      "position": [
+        -500,
+        800
+      ],
+      "parameters": {
+        "code": {
+          "execute": {
+            "code": "const { QdrantVectorStore } = require(\"@langchain/qdrant\");\nconst { OpenAIEmbeddings } = require(\"@langchain/openai\");\n\n// Qdrant连接详情\nconst url = \"http://localhost:6333/\";\nconst apiKey = \"\";\n\n// OpenAI API配置\nconst openAIApiKey = \"[Your-OpenAI-API-Key]\";\n\n// 获取输入数据\nconst items = this.getInputData()[0];\n// console.log(items)\n\nconst collectionName =  items.json.qdrant_collection_name;\n// console.log(collectionName)\n\nasync function deleteDocumentsFromQdrant() {\n  try {\n    // 初始化OpenAI嵌入\n    const embeddings = new OpenAIEmbeddings({\n      model: \"text-embedding-3-large\",\n      openAIApiKey: openAIApiKey\n    });\n\n    // 连接到现有的Qdrant集合\n    const vectorStore = await QdrantVectorStore.fromExistingCollection(embeddings, {\n      url: url,\n      apiKey: apiKey,\n      collectionName: collectionName,\n    });\n\n    const fileIds = items.json.appended_id.map(item => item);\n\n    console.log(fileIds)\n\n    // 根据fileId删除点\n    const deletionResults = await Promise.all(fileIds.map(async (file_id) => {\n      const filter = {\n        must: [\n          {\n            key: \"metadata.file_id\",\n            match: { value: file_id }\n          }\n        ]\n      };\n\n      try {\n        // 访问底层Qdrant客户端执行删除\n        await vectorStore.client.delete(collectionName, { filter });\n        return { file_id, status: \"deleted\" };\n      } catch (error) {\n        console.error(`删除文件ID ${file_id} 的文档时出错:`, error);\n        return { file_id, status: \"error\", message: error.message };\n      }\n    }));\n\n    return deletionResults;\n  } catch (error) {\n    console.error(\"删除过程中发生错误:\", error);\n    return error.message;\n  }\n}\n\n// 执行删除过程\ntry {\n  const result = await deleteDocumentsFromQdrant();\n  console.log(\"删除过程完成:\", result);\n  return [];\n} catch (error) {\n  console.error(\"执行删除过程失败:\", error);\n  return [{ json: { error } }];\n}\n\n"
+          }
+        },
+        "inputs": {
+          "input": [
+            {
+              "type": "main",
+              "required": true,
+              "maxConnections": 1
+            },
+            {
+              "type": "ai_languageModel",
+              "required": true,
+              "maxConnections": 1
+            }
+          ]
+        },
+        "outputs": {
+          "output": [
+            {
+              "type": "main"
+            }
+          ]
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "329cec97-aac1-4714-97ce-add5915b1078",
+      "name": "Qdrant集合名称",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -700,
+        100
+      ],
+      "parameters": {
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "11fa71e9-6cbc-4183-9439-e3379b2b970e",
+              "name": "qdrant_collection_name",
+              "type": "string",
+              "value": "nostr-damus-user-profiles"
+            }
+          ]
+        }
+      },
+      "typeVersion": 3.4
+    },
+    {
+      "id": "82e98da8-530d-4a3c-97e6-5e91ad644a46",
+      "name": "文件ID列表",
+      "type": "n8n-nodes-base.summarize",
+      "position": [
+        -700,
+        280
+      ],
+      "parameters": {
+        "options": {},
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "field": "id",
+              "aggregation": "append"
+            }
+          ]
+        }
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "f3def614-2709-4847-831d-d6a80c86ec1c",
+      "name": "合并1",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        -340,
+        340
+      ],
+      "parameters": {
+        "mode": "combine",
+        "options": {},
+        "combineBy": "combineByPosition"
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "cfe399fb-8560-4ac4-98f7-4f539ae6a52c",
+      "name": "合并2",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        -80,
+        -140
+      ],
+      "parameters": {},
+      "typeVersion": 3
+    },
+    {
+      "id": "1059da47-2abd-4884-b9c2-6b7d1623e31d",
+      "name": "便签",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1280,
+        560
+      ],
+      "parameters": {
+        "color": 3,
+        "width": 1180,
+        "height": 760,
+        "content": "## 准备Qdrant向量存储"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "2616e08f-070e-45b5-906f-40e832519aa2",
+      "name": "确认Qdrant删除点",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        -1060,
+        760
+      ],
+      "webhookId": "29aac1ac-9345-4e44-babf-ebcfae701d88",
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "message": "=警告 - Qdrant向量存储集合\"{{ $json.qdrant_collection_name }}\"中的{{ $json.appended_id.length }}条记录将被删除。您确定要继续吗？此操作无法撤销！",
+        "options": {
+          "limitWaitTime": {
+            "values": {
+              "resumeUnit": "minutes",
+              "resumeAmount": 15
+            }
+          }
+        },
+        "operation": "sendAndWait",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "id": "pAIFhguJlkO3c7aQ",
+          "name": "Telegram account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "9d167192-e87b-41be-87f2-d7ddf866bb8d",
+      "name": "如果",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        -1060,
+        1000
+      ],
+      "parameters": {
+        "options": {},
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "20f530d6-fd55-420d-b8a9-70e5303f688e",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": ""
+            }
+          ]
+        }
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "1178f8cf-ece0-4b11-942d-18dd025da366",
+      "name": "便签1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        320,
+        420
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 920,
+        "height": 640,
+        "content": "## 执行Qdrant向量存储操作"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "cbf17a08-2f4c-4605-8418-5bf93ade7cf4",
+      "name": "发送拒绝消息",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        -740,
+        1120
+      ],
+      "webhookId": "382a3b43-b83f-47b1-a276-67c6b98a441a",
+      "parameters": {
+        "text": "Qdrant向量存储更新被拒绝",
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "id": "pAIFhguJlkO3c7aQ",
+          "name": "Telegram account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "890f478a-e000-418d-8582-4fef946e44d8",
+      "name": "便签2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -900,
+        -380
+      ],
+      "parameters": {
+        "width": 480,
+        "height": 840,
+        "content": "## 🌟工作流配置\n\n- Google Drive文件夹ID\n- Qdrant集合名称\n- Google Drive文件ID列表"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "d2bc2fed-c134-4e54-bd9d-69996be966a3",
+      "name": "便签3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        740,
+        -280
+      ],
+      "parameters": {
+        "color": 6,
+        "width": 640,
+        "height": 420,
+        "content": "## 为Qdrant混合搜索提取元数据"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "61f3c21e-bc2a-47bc-8ab1-678b1f425ee3",
+      "name": "便签4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        400,
+        -280
+      ],
+      "parameters": {
+        "color": 2,
+        "width": 300,
+        "height": 320,
+        "content": "## Google Drive"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "61e608e4-ac6a-4131-9ca8-c46a5134bff9",
+      "name": "便签5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        -360
+      ],
+      "parameters": {
+        "color": 5,
+        "width": 1360,
+        "height": 1480,
+        "content": "## ✨ 将文档保存到Qdrant向量存储"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "410681cb-e757-42c0-89de-902edbe998e3",
+      "name": "便签6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -580,
+        680
+      ],
+      "parameters": {
+        "color": 5,
+        "width": 420,
+        "height": 400,
+        "content": "## 从Qdrant向量存储删除\n此操作无法撤销！！！"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "238469ce-3710-4681-b1b2-200c1b699d5e",
+      "name": "便签7",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1200,
+        640
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 380,
+        "height": 520,
+        "content": "## 人工干预\n用户必须验证从Qdrant向量存储删除点"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "0b2f6ff4-dd02-4f0e-b2eb-60b1ce736cf5",
+      "name": "便签8",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1280,
+        -380
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 340,
+        "height": 460,
+        "content": "## 👍从这里开始！"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "abde545b-1a23-4b3e-8046-335b9d0fa445",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "disabled": true,
+      "position": [
+        -1160,
+        -100
+      ],
+      "webhookId": "3a30557f-9264-4bc8-a253-a9356677c791",
+      "parameters": {
+        "path": "upsert",
+        "options": {}
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "897d29af-719d-4fe7-93a9-44c693cc6547",
+      "name": "AI代理",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -600,
+        -1200
+      ],
+      "parameters": {
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "您是一个专门使用Nostr用户档案回答用户问题的智能助手。您的主要目标是基于可用的工具和资源提供精确、上下文相关且简洁的答案。\n\n### 工具\n使用\"nostr_damus_user_profiles\"工具来：\n- 执行语义相似性搜索并检索与用户查询相关的Nostr用户档案信息。\n- 在需要额外上下文或具体信息时访问Nostr和/或Damus用户的详细信息。\n\n### 关键指令\n1. **响应指南**：\n   - 清楚地解释检索到的信息如何解决用户的查询（如果适用）。\n   - 如果没有找到相关信息，请回复：\"我无法在可用资源中找到答案。\"\n\n2. **焦点和相关性**：\n   - 确保所有响应都直接与用户的问题保持一致。\n   - 避免包含无关细节或仅依赖内部知识。\n"
+        },
+        "promptType": "define"
+      },
+      "typeVersion": 1.7
+    },
+    {
+      "id": "316b0d8d-bbc7-4c40-b6d0-d0c762554fca",
+      "name": "窗口缓冲记忆",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -580,
+        -1000
+      ],
+      "parameters": {
+        "contextWindowLength": 40
+      },
+      "typeVersion": 1.3
+    },
+    {
+      "id": "f1e342a8-d50e-48a8-9d7a-850f8be93cff",
+      "name": "当收到聊天消息时",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        -1160,
+        -1200
+      ],
+      "webhookId": "5f1c0c82-0ff9-40c7-9e2e-b1a96ffe24cd",
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "12902fa9-5bcb-4e8b-ac13-7f4cb6e7e1d0",
+      "name": "Google Gemini聊天模型1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -760,
+        -1000
+      ],
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 8192
+        },
+        "modelName": "models/gemini-2.0-flash-exp"
+      },
+      "credentials": {
+        "googlePalmApi": {
+          "id": "L9UNQHflYlyF9Ngd",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "1c5818d4-6251-4d14-8b4f-d1f3ddfbed38",
+      "name": "text-embeddings-3-large1",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "position": [
+        -320,
+        -840
+      ],
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "jEMSvKmtYfzAkhe6",
+          "name": "OpenAi account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "80056067-5d2b-4ac7-8e69-e75bd66a1ad4",
+      "name": "便签9",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -900,
+        -1300
+      ],
+      "parameters": {
+        "color": 5,
+        "width": 860,
+        "height": 680,
+        "content": "## 🤖从Qdrant向量存储检索内容"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "b45b18e4-7773-4eec-837b-f43fc0eeb90c",
+      "name": "便签10",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1280,
+        -1300
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 340,
+        "height": 320,
+        "content": "## 🗣️ 与您的文档聊天"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "8fe891dd-dee6-4abb-bc09-d90e6d7bf3cb",
+      "name": "便签11",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1360,
+        -480
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 2880,
+        "height": 1880,
+        "content": "# 步骤1 - 将文档保存到Qdrant向量存储"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "4a9bf716-3fc3-4ccc-b831-19a1afdb4588",
+      "name": "便签12",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1360,
+        -1420
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 1780,
+        "height": 880,
+        "content": "# 步骤2 - 与Qdrant向量存储中的文档聊天"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "fccedfde-c5aa-4237-9d1c-feb9ebabf4f3",
+      "name": "Google Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "disabled": true,
+      "position": [
+        120,
+        -780
+      ],
+      "parameters": {
+        "name": "=Nostr聊天机器人 - 头像 - {{ $now }}",
+        "content": "={{ $json.output }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "options": {},
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (根文件夹)"
+        },
+        "operation": "createFromText"
+      },
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "UhdXGYLTAJbsa0xX",
+          "name": "Google Drive account"
+        }
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "6d6813f6-4f2e-499a-9e5c-fe15624a91ef",
+      "name": "响应用户",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        120,
+        -960
+      ],
+      "parameters": {
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cd8f88e1-19c0-4b9e-914d-e2e7ba21d9fa",
+              "name": "output",
+              "type": "string",
+              "value": "={{ $json.output }}"
+            }
+          ]
+        }
+      },
+      "typeVersion": 3.4
+    },
+    {
+      "id": "1c73bae9-2bdd-4383-a6f8-3cf43d3c15be",
+      "name": "便签13",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        -1300
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 340,
+        "height": 300,
+        "content": "## 保存聊天历史"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "db3dcc69-d1d0-48a1-b949-37f2de802b4a",
+      "name": "更新聊天历史",
+      "type": "n8n-nodes-base.googleDocs",
+      "position": [
+        120,
+        -1200
+      ],
+      "parameters": {
+        "actionsUi": {
+          "actionFields": [
+            {
+              "text": "=\n-------------------------------\n\n{{ $now }}\n\n{{ $('当收到聊天消息时').item.json.chatInput  }}\n\n{{ $json.output }}",
+              "action": "insert"
+            }
+          ]
+        },
+        "operation": "update",
+        "documentURL": "1ej_qLolUFp1h4eZkrb99T3DWQ3JOwXVEMS3VUjWyVf0"
+      },
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "YWEHuG28zOt532MQ",
+          "name": "Google Docs account"
+        }
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "2dd28eed-b71b-44fb-bb78-8cb50b0d0c93",
+      "name": "Qdrant向量存储工具",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "position": [
+        -420,
+        -1000
+      ],
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "topK": 20,
+        "options": {},
+        "toolName": "nostr_damus_user_profiles",
+        "toolDescription": "检索关于Nostr或Damus用户的信息",
+        "qdrantCollection": {
+          "__rl": true,
+          "mode": "list",
+          "value": "nostr-damus-user-profiles",
+          "cachedResultName": "nostr-damus-user-profiles"
+        }
+      },
+      "credentials": {
+        "qdrantApi": {
+          "id": "DJQ4hVAVdWZytjr2",
+          "name": "QdrantApi account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "3b130cf8-ab8e-4001-a3d0-a129194aee98",
+      "name": "OpenAI聊天模型",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "disabled": true,
+      "position": [
+        -760,
+        -820
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "jEMSvKmtYfzAkhe6",
+          "name": "OpenAi account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "ccc64645-ad14-4b6b-a507-0b5fb0ac945f",
+      "name": "发送完成消息",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        500,
+        200
+      ],
+      "webhookId": "382a3b43-b83f-47b1-a276-67c6b98a441a",
+      "parameters": {
+        "text": "Qdrant向量存储更新完成",
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "id": "pAIFhguJlkO3c7aQ",
+          "name": "Telegram account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "885fef53-2246-45b1-a122-ab5b82374585",
+      "name": "便签14",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2120,
+        -480
+      ],
+      "parameters": {
+        "width": 700,
+        "height": 1240,
+        "content": "# 🤖 AI驱动的RAG聊天机器人与Google Drive集成\n\n此工作流创建了一个强大的RAG（检索增强生成）聊天机器人，可以使用Qdrant向量存储和Google的Gemini AI处理、存储和与Google Drive中的文档进行交互。\n\n## 工作原理\n\n### 文档处理和存储 📚\n- 从指定的Google Drive文件夹检索文档\n- 处理文档并将其分割成可管理的块\n- 使用AI提取元数据以增强搜索能力\n- 在Qdrant中存储文档向量以实现高效检索\n\n### 智能聊天界面 💬\n- 提供由Google Gemini驱动的对话界面\n- 使用RAG从存储的文档中检索相关上下文\n- 在Google Docs中维护聊天历史以供参考\n- 提供准确、上下文感知的响应\n\n### 向量存储管理 🗄️\n- 具有人工验证的安全删除操作\n- 包含重要操作的Telegram通知\n- 通过适当的版本控制维护数据完整性\n- 支持文档的批量处理\n\n## 设置步骤\n\n1. 配置API凭据：\n   - 设置Google Drive和Docs访问\n   - 配置Gemini AI API\n   - 设置Qdrant向量存储连接\n   - 添加Telegram机器人进行通知\n\n2. 配置文档源：\n   - 设置Google Drive文件夹ID\n   - 定义Qdrant集合名称\n   - 设置文档处理参数\n\n3. 测试和部署：\n   - 验证文档处理\n   - 测试聊天功能\n   - 确认向量存储操作\n   - 检查通知系统\n\n\n此工作流非常适合需要创建智能聊天机器人的组织，这些机器人可以访问和理解大型文档存储库，同时通过RAG技术保持上下文并提供准确响应。\n"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "pinData": {},
+  "settings": {
+    "timezone": "America/Vancouver",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionOrder": "v1"
+  },
+  "versionId": "0c0d90e5-02f9-4169-b477-fd90c52ce44e",
+  "connections": {
+    "如果": {
+      "main": [
+        [
+          {
+            "node": "根据文件ID删除Qdrant点",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "发送拒绝消息",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "等待": {
+      "main": [
+        [
+          {
+            "node": "循环处理项目",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "合并": {
+      "main": [
+        [
+          {
+            "node": "Qdrant向量存储",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "合并1": {
+      "main": [
+        [
+          {
+            "node": "确认Qdrant删除点",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "合并2": {
+      "main": [
+        [
+          {
+            "node": "循环处理项目",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI代理": {
+      "main": [
+        [
+          {
+            "node": "更新聊天历史",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "响应用户",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "数据加载器": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant向量存储",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "文件ID列表": {
+      "main": [
+        [
+          {
+            "node": "合并1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "令牌分割器": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "数据加载器",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "循环处理项目": {
+      "main": [
+        [
+          {
+            "node": "发送完成消息",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "从Google Drive下载文件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google文件夹ID": {
+      "main": [
+        [
+          {
+            "node": "在Google Drive文件夹中查找文件ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "提取元数据": {
+      "main": [
+        [
+          {
+            "node": "合并",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "获取文件内容": {
+      "main": [
+        [
+          {
+            "node": "提取元数据",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant向量存储": {
+      "main": [
+        [
+          {
+            "node": "等待",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "窗口缓冲记忆": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI代理",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant集合名称": {
+      "main": [
+        [
+          {
+            "node": "合并1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "text-embeddings-3-large": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant向量存储",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini聊天模型": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "提取元数据",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "text-embeddings-3-large1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant向量存储工具",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini聊天模型1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI代理",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "当收到聊天消息时": {
+      "main": [
+        [
+          {
+            "node": "AI代理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "确认Qdrant删除点": {
+      "main": [
+        [
+          {
+            "node": "如果",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "根据文件ID删除Qdrant点": {
+      "main": [
+        [
+          {
+            "node": "合并2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "从Google Drive下载文件": {
+      "main": [
+        [
+          {
+            "node": "获取文件内容",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "合并",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "点击'测试工作流'时": {
+      "main": [
+        [
+          {
+            "node": "Google文件夹ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "在Google Drive文件夹中查找文件ID": {
+      "main": [
+        [
+          {
+            "node": "文件ID列表",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Qdrant集合名称",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "合并2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant向量存储工具": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI代理",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ],
+      "ai_vectorStore": [
+        []
+      ]
+    },
+    "gpt-4o-mini1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "根据文件ID删除Qdrant点",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "响应用户": {
+      "main": [
+        []
+      ]
+    },
+    "更新聊天历史": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI聊天模型": {
+      "ai_languageModel": [
+        []
+      ]
+    }
+  }
+}

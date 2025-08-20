@@ -1,0 +1,156 @@
+{
+  "814a485d": {
+    "id": "814a485d",
+    "name": "文本摘要",
+    "description": "对长文本进行摘要",
+    "template": "请对以下文本进行摘要，要求：\n1. 保留关键信息\n2. 控制在{{ max_words }}字以内\n3. 使用{{ style }}风格\n\n文本内容：\n{{ text }}\n\n摘要：",
+    "variables": [
+      "style",
+      "text",
+      "max_words"
+    ],
+    "category": "文本处理",
+    "tags": [
+      "摘要",
+      "NLP"
+    ],
+    "version": "1.0.0",
+    "created_at": "2025-07-08T15:15:01.921311",
+    "updated_at": "2025-07-08T15:15:01.921313",
+    "author": "示例用户",
+    "usage_count": 0,
+    "avg_rating": 0.0
+  },
+  "c5a41e79": {
+    "id": "c5a41e79",
+    "name": "代码审查",
+    "description": "审查代码质量和提供建议",
+    "template": "请审查以下{{ language }}代码，重点关注：\n1. 代码质量和规范\n2. 性能优化建议\n3. 安全性问题\n4. 可维护性\n\n代码：\n```{{ language }}\n{{ code }}\n```\n\n审查报告：",
+    "variables": [
+      "language",
+      "code"
+    ],
+    "category": "编程",
+    "tags": [
+      "代码审查",
+      "质量"
+    ],
+    "version": "1.0.0",
+    "created_at": "2025-07-08T15:15:01.921746",
+    "updated_at": "2025-07-08T15:15:01.921748",
+    "author": "示例用户",
+    "usage_count": 0,
+    "avg_rating": 0.0
+  },
+  "fb4ebdf8": {
+    "id": "fb4ebdf8",
+    "name": "文本摘要",
+    "description": "对长文本进行摘要",
+    "template": "请对以下文本进行摘要，要求：\n1. 保留关键信息\n2. 控制在{{ max_words }}字以内\n3. 使用{{ style }}风格\n\n文本内容：\n{{ text }}\n\n摘要：",
+    "variables": [
+      "style",
+      "text",
+      "max_words"
+    ],
+    "category": "文本处理",
+    "tags": [
+      "摘要",
+      "NLP"
+    ],
+    "version": "1.0.0",
+    "created_at": "2025-07-08T15:15:01.922211",
+    "updated_at": "2025-07-08T15:15:01.922213",
+    "author": "示例用户",
+    "usage_count": 0,
+    "avg_rating": 0.0
+  },
+  "e78c7fc1": {
+    "id": "e78c7fc1",
+    "name": "代码审查",
+    "description": "审查代码质量和提供建议",
+    "template": "请审查以下{{ language }}代码，重点关注：\n1. 代码质量和规范\n2. 性能优化建议\n3. 安全性问题\n4. 可维护性\n\n代码：\n```{{ language }}\n{{ code }}\n```\n\n审查报告：",
+    "variables": [
+      "language",
+      "code"
+    ],
+    "category": "编程",
+    "tags": [
+      "代码审查",
+      "质量"
+    ],
+    "version": "1.0.0",
+    "created_at": "2025-07-08T15:15:01.922811",
+    "updated_at": "2025-07-08T15:15:01.922813",
+    "author": "示例用户",
+    "usage_count": 0,
+    "avg_rating": 0.0
+  },
+  "ec3b5a76": {
+    "id": "ec3b5a76",
+    "name": "文本摘要",
+    "description": "对长文本进行摘要",
+    "template": "请对以下文本进行摘要，要求：\n1. 保留关键信息\n2. 控制在{{ max_words }}字以内\n3. 使用{{ style }}风格\n\n文本内容：\n{{ text }}\n\n摘要：",
+    "variables": [
+      "style",
+      "text",
+      "max_words"
+    ],
+    "category": "文本处理",
+    "tags": [
+      "摘要",
+      "NLP"
+    ],
+    "version": "1.0.0",
+    "created_at": "2025-07-08T15:15:01.923356",
+    "updated_at": "2025-07-08T15:15:01.923358",
+    "author": "示例用户",
+    "usage_count": 0,
+    "avg_rating": 0.0
+  },
+  "0da2f854": {
+    "id": "0da2f854",
+    "name": "代码审查",
+    "description": "审查代码质量和提供建议",
+    "template": "请审查以下{{ language }}代码，重点关注：\n1. 代码质量和规范\n2. 性能优化建议\n3. 安全性问题\n4. 可维护性\n\n代码：\n```{{ language }}\n{{ code }}\n```\n\n审查报告：",
+    "variables": [
+      "language",
+      "code"
+    ],
+    "category": "编程",
+    "tags": [
+      "代码审查",
+      "质量"
+    ],
+    "version": "1.0.0",
+    "created_at": "2025-07-08T15:15:01.923941",
+    "updated_at": "2025-07-08T15:15:01.923943",
+    "author": "示例用户",
+    "usage_count": 0,
+    "avg_rating": 0.0
+  },
+  "50f49d91": {
+    "id": "50f49d91",
+    "name": "API接口文档",
+    "description": "生成标准的API接口文档",
+    "template": "\n请为{{ api_name }}接口生成详细的API文档：\n\n【接口基本信息】\n接口名称：{{ api_name }}\n请求方法：{{ method }}\n接口路径：{{ endpoint }}\n功能描述：{{ description }}\n\n【请求参数】\n{{ parameters }}\n\n【响应格式】\n{{ response_format }}\n\n请生成包含以下部分的完整API文档：\n1. 接口概述\n2. 请求参数详细说明\n3. 响应数据结构\n4. 错误码说明\n5. 请求示例\n6. 响应示例\n\n要求：格式标准、信息完整、示例清晰\n",
+    "variables": [
+      "parameters",
+      "api_name",
+      "method",
+      "endpoint",
+      "description",
+      "response_format"
+    ],
+    "category": "技术文档",
+    "tags": [
+      "API",
+      "文档"
+    ],
+    "version": "1.0.0",
+    "created_at": "2025-07-08T15:22:51.205442",
+    "updated_at": "2025-07-08T15:22:51.205445",
+    "author": "演示用户",
+    "usage_count": 1,
+    "avg_rating": 0.0
+  }
+}

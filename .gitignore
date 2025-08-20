@@ -72,7 +72,7 @@ venv.bak/
 # Conda 环境
 .conda/
 conda-env/
-environment.yml
+# environment.yml
 
 # Pipenv
 Pipfile.lock
@@ -105,7 +105,7 @@ pretrained/
 data/
 datasets/
 *.csv
-*.json
+# *.json
 *.jsonl
 *.parquet
 *.feather
