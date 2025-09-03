@@ -1,0 +1,1167 @@
+{
+  "name": "N8N：个人旅游规划助手",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Plan Your Perfect Trip",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Departure City",
+              "placeholder": "Enter your departure city (e.g., Jakarta, Indonesia)"
+            },
+            {
+              "fieldLabel": "Destination City",
+              "placeholder": "Enter your destination (e.g., Tokyo, Japan)"
+            },
+            {
+              "fieldLabel": "Email Address",
+              "fieldType": "email",
+              "placeholder": "Enter your email address"
+            },
+            {
+              "fieldLabel": "Departure Date",
+              "fieldType": "date",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Return Date",
+              "fieldType": "date"
+            },
+            {
+              "fieldLabel": "Number of Adults",
+              "fieldType": "number",
+              "placeholder": "Enter number of adults (age 13+)",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Children",
+              "fieldType": "number",
+              "placeholder": "Enter number of children (ages 2–12)",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Infants",
+              "fieldType": "number",
+              "placeholder": "Enter number of infants (under age 2)",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Pets",
+              "fieldType": "number",
+              "placeholder": "Enter number of pets",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Rooms",
+              "fieldType": "number",
+              "placeholder": "Enter number of rooms needed"
+            },
+            {
+              "fieldLabel": "Travel Preferences",
+              "fieldType": "textarea",
+              "placeholder": "Tell us about your trip (e.g., preferred accommodation type, activities, or special requests)"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -912,
+        288
+      ],
+      "id": "6aa2a7e6-1255-4563-bc8c-dcf7eee93a95",
+      "name": "On form submission",
+      "webhookId": "e07b905d-832e-474a-804e-ea65285712be"
+    },
+    {
+      "parameters": {
+        "operation": "google_flights",
+        "departure_id": "={{ $json.google_flights.departure_id }}",
+        "arrival_id": "={{ $json.google_flights.arrival_id }}",
+        "outbound_date": "={{ $json.google_flights.outbound_date }}",
+        "return_date": "={{ $json.google_flights.return_date }}",
+        "type": "={{ $json.google_flights.type }}",
+        "additionalFields": {
+          "travel_class": "={{ $json.google_flights.travel_class }}",
+          "adults": "={{ $json.google_flights.adults }}",
+          "children": "={{ $json.google_flights.children }}",
+          "infants_in_seat": "={{ $json.google_flights.infants_in_seat }}"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApi",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "61826bca-bbe4-4173-a6d9-4a6abbafe0fb",
+      "name": "Google_flights search",
+      "credentials": {
+        "serpApi": {
+          "id": "wCNryTzqLxK5N8t8",
+          "name": "SerpApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "webScrapper",
+        "operation": "downloadSnapshot",
+        "snapshot_id": "={{ $json.snapshot_id }}",
+        "requestOptions": {}
+      },
+      "type": "@brightdata/n8n-nodes-brightdata.brightData",
+      "typeVersion": 1,
+      "position": [
+        1936,
+        240
+      ],
+      "id": "5546d12f-aa99-4c58-94e7-a606b406025c",
+      "name": "Download the snapshot content",
+      "credentials": {
+        "brightdataApi": {
+          "id": "l65cHd8G2adHt8EF",
+          "name": "BrightData account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "05660868-de08-46e3-b771-78cd1bbf3296",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "ready",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1408,
+        400
+      ],
+      "id": "3d393259-8a3f-4e1f-907b-9bd288d13bc2",
+      "name": "StatusCheck"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.0-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.0-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Below is data from form submission\n{{$json.toJsonString()}}"
+            },
+            {
+              "content": "You are given a travel form submission in JSON format from the n8n Form Trigger node.\nYour task is to transform this input into two JSON objects:\n\n- Google Flights SERP API (n8n verified node)\n- A Home Stay (Airbnb, Booking.com)"
+            },
+            {
+              "content": "=Input Fields from Form Submission Node\n- \"Departure City\" → Origin city/airport (string)\n- \"Destination City\" → Destination city/airport (string)\n- \"Departure Date\" → Departure date (date, required)\n- \"Return Date\" → Return date (date, optional)\n- \"Number of Adults\" → Number of adults (integer, required)\n- \"Number of Children\" → Number of children aged 13+ (integer, required)\n- \"Number of Infants\" → Number of children aged 2–12 (integer, required)\n- \"Number of Pets\" → Number of pets (integer, required — use only in Airbnb)\n- \"Travel Preferences\" → Free text description (string, optional, not used in output)"
+            },
+            {
+              "content": "=Transformation Rules\n\nGoogle Flights Object :\n- \"departure_id\" = Convert {{ $json[\"Departure City\"] }} city/airport → IATA code of main international airport.\n- \"arrival_id\" = Convert {{ $json[\"Destination City\"] }} city/airport → IATA code of main international airport.\n- \"outbound_date\" = {{ $json[\"Departure Date\"] }} (YYYY-MM-DD).\n- \"return_date\" = {{ $json[\"Return Date\"] }} (YYYY-MM-DD).\n- \"type\" values:\n  - 1 = roundtrip (if Return Date exists).\n  - 2 = one-way (if only Departure Date exists).\n  - 3 = multi-city (if multiple destinations are given).\n- \"travel_class\": always 1 (economy) unless stated otherwise.\n- \"currency\" = \"USD\".\n- \"adults\" = {{ $json[\"Number of Adults\"] }}.\n- \"children\" = {{ $json[\"Number of Children\"] }}.\n- \"infants_in_seat\" = {{ $json[\"Number of Infants\"] }}.\n- \"hl\" = \"en\".\n\n\nHome Stay Object :\n- \"location\" = {{ $json[\"Destination City\"] }}.\n- \"check_in\" = {{ $json[\"Departure Date\"] }} in full ISO format (YYYY-MM-DDT00:00:00.000Z).\n- \"check_out\" = {{ $json[\"Return Date\"] }} in full ISO format (YYYY-MM-DDT00:00:00.000Z).\n- \"num_of_adults\" = {{ $json[\"Number of Adults\"] }}.\n- \"num_of_children\" = {{ $json[\"Number of Children\"] }}.\n- \"num_of_infants\" = {{ $json[\"Number of Infants\"] }}.\n- \"num_of_pets\" = {{ $json[\"Number of Pets\"] }}.\n- \"num_of_rooms\" = {{ $json[\"Number of Rooms\"] }}.\n- \"country\" = \"US\"."
+            },
+            {
+              "content": "Output Format\n\nReturn the final answer as only JSON in the following structure (no explanation, no extra text):\n{\n  \"google_flights\": {\n    \"departure_id\": \"string(IATA code departure_id)\",\n    \"arrival_id\": \"string(IATA code arrival_id)\",\n    \"outbound_date\": \"string(outbound_date)\",\n    \"return_date\": \"string(return_date)\",\n    \"type\": number(type),\n    \"currency\": \"string(currency)\",\n    \"adults\": number(adults),\n    \"children\": number(children),\n    \"infants_in_seat\": number(infants_in_seat),\n    \"travel_class\": number(travel_class),\n    \"hl\": \"string(hl)\"\n  },\n  \"homestay_preferences\": {\n    \"location\": \"string(location)\",\n    \"check_in\": \"string(check_in)\",\n    \"check_out\": \"string(check_out)\",\n    \"num_of_adults\": number(num_of_adults),\n    \"num_of_children\": number(num_of_children),\n    \"num_of_infants\": number(num_of_infants),\n    \"num_of_pets\": number(num_of_pets),\n    \"num_of_rooms\": number(num_of_rooms),\n    \"country\": \"string(country)\"\n  }\n}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        -656,
+        288
+      ],
+      "id": "b6675a11-1ef8-4ed0-bbba-b41e0d66c2b8",
+      "name": "Extract form submission to JSON",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "12KiryYsMrX43jr6",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return JSON.parse($input.first().json.content.parts[0].text)"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        288
+      ],
+      "id": "e5280dde-ee83-433e-b2e4-fd7f4ca490dc",
+      "name": "Parse JSON"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_ld7ll037kqy322v05&include_errors=true&type=discover_new&discover_by=location&limit_per_input=3",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "brightdataApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "location",
+              "value": "={{ $json.homestay_preferences.location }}"
+            },
+            {
+              "name": "=check_in",
+              "value": "={{ $json.homestay_preferences.check_in }}"
+            },
+            {
+              "name": "check_out",
+              "value": "={{ $json.homestay_preferences.check_out }}"
+            },
+            {
+              "name": "num_of_adults",
+              "value": "={{ $json.homestay_preferences.num_of_adults }}"
+            },
+            {
+              "name": "=num_of_infants",
+              "value": "={{ $json.homestay_preferences.num_of_infants }}"
+            },
+            {
+              "name": "num_of_children",
+              "value": "={{ $json.homestay_preferences.num_of_children }}"
+            },
+            {
+              "name": "num_of_pets",
+              "value": "={{ $json.homestay_preferences.num_of_pets }}"
+            },
+            {
+              "name": "country",
+              "value": "={{ $json.homestay_preferences.country }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        176
+      ],
+      "id": "41abfee9-4dbe-46b6-a417-bf49d04b153b",
+      "name": "Bright data : Airbnb Properties Information - discover by location",
+      "credentials": {
+        "brightdataApi": {
+          "id": "l65cHd8G2adHt8EF",
+          "name": "BrightData account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_mdy9ld3p1e0oqlj9g4&include_errors=true&type=discover_new&discover_by=search_input&limit_per_input=3",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "brightdataApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "=https://www.booking.com"
+            },
+            {
+              "name": "location",
+              "value": "={{ $json.homestay_preferences.location }}"
+            },
+            {
+              "name": "check_in",
+              "value": "={{ $json.homestay_preferences.check_in }}"
+            },
+            {
+              "name": "adults",
+              "value": "={{ $json.homestay_preferences.num_of_adults }}"
+            },
+            {
+              "name": "children",
+              "value": "={{ $json.homestay_preferences.num_of_children }}"
+            },
+            {
+              "name": "country",
+              "value": "={{ $json.homestay_preferences.country }}"
+            },
+            {
+              "name": "rooms",
+              "value": "={{ $json.homestay_preferences.num_of_rooms }}"
+            },
+            {
+              "name": "check_out",
+              "value": "={{ $json.homestay_preferences.check_out }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        384
+      ],
+      "id": "7d94bd12-fd8c-40b6-bad3-dd9ba4c578be",
+      "name": "Bright Data : Booking Hotel Listings with Pricing - discover by search input",
+      "credentials": {
+        "brightdataApi": {
+          "id": "l65cHd8G2adHt8EF",
+          "name": "BrightData account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": true
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        832,
+        384
+      ],
+      "id": "ee6ec435-625d-4376-a2f9-1a608bd7d505",
+      "name": "Sequential polling with loop"
+    },
+    {
+      "parameters": {
+        "resource": "webScrapper",
+        "operation": "monitorProgressSnapshot",
+        "snapshot_id": "={{ $json.snapshot_id }}",
+        "requestOptions": {}
+      },
+      "type": "@brightdata/n8n-nodes-brightdata.brightData",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        400
+      ],
+      "id": "1b7dc3f3-8516-4e8d-b863-ba5b221a9f8a",
+      "name": "Check the status snapshot",
+      "credentials": {
+        "brightdataApi": {
+          "id": "l65cHd8G2adHt8EF",
+          "name": "BrightData account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_mdyifvvo181pcrpew6&include_errors=true&type=discover_new&discover_by=search_input&limit_per_input=3",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "brightdataApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "=https://www.agoda.com"
+            },
+            {
+              "name": "location",
+              "value": "={{ $json.homestay_preferences.location }}"
+            },
+            {
+              "name": "check_in",
+              "value": "={{ $json.homestay_preferences.check_in }}"
+            },
+            {
+              "name": "adults",
+              "value": "={{ $json.homestay_preferences.num_of_adults }}"
+            },
+            {
+              "name": "children",
+              "value": "={{ $json.homestay_preferences.num_of_children }}"
+            },
+            {
+              "name": "country",
+              "value": "={{ $json.homestay_preferences.country }}"
+            },
+            {
+              "name": "check_out",
+              "value": "={{ $json.homestay_preferences.check_out }}"
+            }
+          ]
+        },
+        "options": {
+          "lowercaseHeaders": false
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        592
+      ],
+      "id": "6b25538b-d4ec-486d-9985-40efd2b43aa1",
+      "name": "Bright Data : Agoda Properties Listings with Pricing - discover by search input",
+      "credentials": {
+        "brightdataApi": {
+          "id": "l65cHd8G2adHt8EF",
+          "name": "BrightData account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        304,
+        368
+      ],
+      "id": "c895ad6a-3d21-4562-bbfd-6181ad34b035",
+      "name": "Combine to get a snapshot first"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      source: 'airbnb',\n      snapshot_id: items[0].json.snapshot_id\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        176
+      ],
+      "id": "1fabdaf1-395d-460b-9823-7ca5dd06b342",
+      "name": "Put airbnb snapshot_id"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      source: 'booking',\n      snapshot_id: items[1].json.snapshot_id\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        384
+      ],
+      "id": "7e65c3f7-7831-4412-84c2-c7901f32fbdf",
+      "name": "Put booking snapshot_id"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      source: 'agoda',\n      snapshot_id: items[2].json.snapshot_id\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        592
+      ],
+      "id": "57d2ff4e-687c-4631-ba33-971957042a52",
+      "name": "Put agoda snapshot_id"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Check snapshot again for success",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        736
+      ],
+      "id": "3f6f0b8a-fa0a-4879-9882-81e31ecca55c"
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1712,
+        512
+      ],
+      "id": "d51f7ac2-c955-4b48-b7b3-fd2fce6ed1a9",
+      "name": "Wait loop",
+      "webhookId": "32aa0c7c-6c62-487b-b733-5b0ff8870434"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a professional travel advisor AI. Analyze the provided hotel data and user preferences to create the TOP 3 hotel recommendations in HTML email format.\n"
+            },
+            {
+              "content": "=Traveler preferences :\nWhere From : {{ $('On form submission').first().json[\"Departure City\"] }}\nWhere To : {{ $('On form submission').first().json[\"Destination City\"] }}\nDeparture Date : {{ $('On form submission').first().json[\"Departure Date\"] }}\nReturn Date : {{ $('On form submission').first().json[\"Return Date\"] }}\nAdults : {{ $('On form submission').first().json[\"Number of Adults\"] }}\nChildren : {{ $('On form submission').first().json[\"Number of Children\"] }}\nInfants : {{ $('On form submission').first().json[\"Number of Infants\"] }}\nPets : {{ $('On form submission').first().json[\"Number of Pets\"] }}\nDescribe your travel : {{ $('On form submission').first().json[\"Travel Preferences\"] }}\n"
+            },
+            {
+              "content": "=List of hotels :\n{{ $json.toJsonString() }}\n\n*Note: Hotel data may come from multiple sources including Airbnb, Booking.com, and Agoda*"
+            },
+            {
+              "content": "## Task:\n1. **Analyze & Match**: Score each hotel based on:\n   - Budget compatibility (within min/max range)\n   - Location match\n   - Amenity preferences\n   - Dates availability\n   - Special requirements\n\n2. **Select Best Match**: Choose the single best hotel that perfectly matches their needs\n\n3. **Generate HTML Email**: Create complete HTML email with:"
+            },
+            {
+              "content": "### Email Structure:\n- **Subject**: \"Your Perfect Hotel for {{$json.user_submission.destination}} - The Best Match for You!\"\n- **Greeting**: \"Dear {{$json.user_submission.user_info.name}},\"\n- **Intro**: Reference their trip ({{$json.user_submission.check_in}} to {{$json.user_submission.check_out}}, {{$json.user_submission.guests}} guests)\n\n### Featured Hotel Card:\n<div style=\"border:2px solid #2c5aa0;margin:20px 0;padding:25px;border-radius:12px;max-width:580px;background:linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);\">\n  <div style=\"text-align:center;margin-bottom:20px;\">\n    <h2 style=\"color:#2c5aa0;margin:0 0 5px 0;font-size:24px;\">🏆 Our Top Recommendation</h2>\n    <h3 style=\"color:#2c5aa0;margin:0 0 10px 0;font-size:20px;\">[HOTEL NAME]</h3>\n  </div>\n  <p style=\"color:#888;font-size:12px;margin:0 0 15px 0;text-align:center;\">⭐ Recommended from [PLATFORM_NAME] • Best match for your needs</p>\n  <p style=\"color:#666;margin:8px 0;\"><strong>📍 Location:</strong> [LOCATION]</p>\n  <p style=\"color:#666;margin:8px 0;\"><strong>💰 Price:</strong> $[PRICE]/night | Total: $[TOTAL_COST]</p>\n  <p style=\"color:#666;margin:8px 0;\"><strong>⭐ Rating:</strong> [STARS] ([RATING]/5)</p>\n  <p style=\"color:#666;margin:8px 0;\"><strong>✨ Amenities:</strong> [KEY_AMENITIES]</p>\n  <p style=\"margin:15px 0;font-size:16px;line-height:1.6;\">[DETAILED_DESCRIPTION + WHY_THIS_IS_THE_PERFECT_MATCH]</p>\n  <div style=\"text-align:center;margin:20px 0;\">\n    <a href=\"[BOOKING_URL]\" style=\"background:#2c5aa0;color:white;padding:15px 30px;text-decoration:none;border-radius:8px;display:inline-block;font-size:16px;font-weight:bold;\">🔗 Book Now on [PLATFORM]</a>\n  </div>\n</div>"
+            },
+            {
+              "content": "<!DOCTYPE html>\n<html>\n<head><meta charset=\"UTF-8\"><title>Hotel Recommendations</title></head>\n<body style=\"font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px;\">\n[COMPLETE EMAIL CONTENT HERE]\n</body>\n</html>"
+            },
+            {
+              "content": "Email Footer:\n\nProfessional closing\nYour contact information\n\"Reply to this email with questions\"\n\nOutput Format:\nReturn ONLY the complete HTML email content (no explanations, no markdown code blocks). Start directly with the HTML."
+            },
+            {
+              "content": "Styling Requirements:\n\n- Inline CSS only (email-safe)\n- Max-width: 600px\n- Mobile-friendly\n- Professional blue/gray color scheme\n- Clear typography (Arial/Helvetica)\n- 20px padding/margins"
+            },
+            {
+              "content": "Remember:\n\n- Be specific about WHY each hotel matches their needs\n- Include total cost calculations\n- Select the single BEST hotel that matches their criteria most closely\n- Provide detailed explanation of why this is the perfect choice\n- Include prominent direct booking link to the original platform\n- Make it ready to send via Gmail"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        2176,
+        240
+      ],
+      "id": "dd1ebace-414e-478e-a636-16f9c39b78d0",
+      "name": "Extract from scrape to email ready to send",
+      "retryOnFail": true,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "12KiryYsMrX43jr6",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "content.parts[0].text",
+              "renameField": true,
+              "outputFieldName": "hotel_recommendation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2560,
+        240
+      ],
+      "id": "dceaa9ea-f0e4-419c-a96d-5009357dcf1c",
+      "name": "Take AI result"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "17f93348-b3cd-416b-8748-2d3fd1507a4c",
+              "leftValue": "={{$input.all()}}",
+              "rightValue": "={{ Number(3) }}",
+              "operator": {
+                "type": "array",
+                "operation": "lengthEquals",
+                "rightType": "number"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2160,
+        528
+      ],
+      "id": "9d8ed471-412a-4a33-92ec-295700e66772",
+      "name": "Checking loop finish"
+    },
+    {
+      "parameters": {
+        "jsCode": "let results = [],\n  i = 0;\n\ndo {\n  try {\n    results = results.concat($('Take AI result').all(0, i));\n  } catch (error) {\n    return results;\n  }\n  i++;\n} while (true);\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1968,
+        528
+      ],
+      "id": "eb50f824-4be0-42f3-a582-a912e34d340e",
+      "name": "Combine all AI result"
+    },
+    {
+      "parameters": {
+        "jsCode": "let allHotels = [];\nitems.forEach(item => {\n  if (item.json.hotel_recommendation) {\n    allHotels.push(...item.json.hotel_recommendation);\n  }\n});\n\nreturn [{\n  json: {\n    emailBody: allHotels.join(\"\\n\\n---\\n\\n\")\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        512
+      ],
+      "id": "97811680-b19f-4b6e-b6c1-92b2fc4c8c47",
+      "name": "Take hotel_recommendation in JSON to before send to email"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').first().json[\"Email Address\"] }}",
+        "subject": "Your Hotel Recommendation",
+        "message": "={{ $json.emailBody }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2608,
+        512
+      ],
+      "id": "59b149b0-f89d-4dc7-bb04-4946aa3b5c70",
+      "name": "Send hotel recommendation",
+      "webhookId": "5852d21c-bf4d-4668-81be-f3959dc15ccd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zq2VO4836Nm8fvsH",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').first().json[\"Email Address\"] }}",
+        "subject": "Your Flight Recommendation",
+        "message": "={{ $json.emailBody[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1184,
+        0
+      ],
+      "id": "75b71bd3-58a7-4bcd-8c19-2c8175cca8bc",
+      "name": "Send Flight Recommendation",
+      "webhookId": "5852d21c-bf4d-4668-81be-f3959dc15ccd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zq2VO4836Nm8fvsH",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 45
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1712,
+        240
+      ],
+      "id": "86af3528-d9de-4fcf-bb6c-a44c543b88cb",
+      "name": "Wait before download the snapshot",
+      "webhookId": "93b56a7d-0839-4747-869f-b6561eba0131"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bdb98b8b-8933-4703-b922-6e210886b981",
+              "name": "google_flights_url",
+              "value": "={{ $json.search_metadata.google_flights_url }}",
+              "type": "string"
+            },
+            {
+              "id": "adf4aabd-c788-4dba-b75d-37fcdd93fbd0",
+              "name": "parameters",
+              "value": "={{ $json.search_parameters }}",
+              "type": "object"
+            },
+            {
+              "id": "b6553536-8e6a-434b-862f-3497523b4a10",
+              "name": "best_flights",
+              "value": "={{ $json.best_flights }}",
+              "type": "array"
+            },
+            {
+              "id": "dad93317-f61a-47ef-aab5-c57bc04a55bc",
+              "name": "other_flights",
+              "value": "={{ $json.other_flights }}",
+              "type": "array"
+            },
+            {
+              "id": "c59c67ec-e417-461f-9ccf-20bd737184e1",
+              "name": "airports",
+              "value": "={{ $json.airports }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        0
+      ],
+      "id": "72d886fa-5e17-4736-b85c-9aa1e5098165",
+      "name": "Take JSON key"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a professional travel advisor AI. Analyze the provided flight data and user preferences to create the TOP 1 flight recommendation in HTML email format."
+            },
+            {
+              "content": "=## Input Data:\n**Flights Available:** {{$json}}\n**User Preferences:** \nWhere From : {{ $('On form submission').first().json[\"Departure City\"] }}\nWhere To : {{ $('On form submission').first().json[\"Destination City\"] }}\nDeparture Date : {{ $('On form submission').first().json[\"Departure Date\"] }}\nReturn Date : {{ $('On form submission').first().json[\"Return Date\"] }}\nAdults : {{ $('On form submission').first().json[\"Number of Adults\"] }}\nChildren : {{ $('On form submission').first().json['Number of Children'] }}\nInfants : {{ $('On form submission').first().json['Number of Infants'] }}\nPets : {{ $('On form submission').first().json['Number of Pets'] }}\nDescribe your travel : {{ $('On form submission').first().json[\"Travel Preferences\"] }}\n**Google flights url:**\n{{ $json.google_flights_url }}\n\n*Note: Flight data comes from Google Flights*"
+            },
+            {
+              "content": "## Task:\n1. **Analyze & Match**: Score each flight based on:\n   - Price compatibility (within budget range)\n   - Schedule preferences (departure/arrival times)\n   - Duration and layovers\n   - Airline preferences\n   - Travel class requirements\n   - Connection convenience\n\n2. **Select Best Match**: Choose the single best flight option that perfectly matches their needs\n\n3. **Generate HTML Email**: Create complete HTML email with:"
+            },
+            {
+              "content": "### Email Structure:\n- **Subject**: \"Your Perfect Flight to {{$json.user_submission.destination}} - Best Option Found!\"\n- **Greeting**: \"Dear {{$json.user_submission.user_info.name}},\"\n- **Intro**: Reference their travel dates and preferences"
+            },
+            {
+              "content": "### Featured Flight Card:\n<div style=\"border:2px solid #1e88e5;margin:20px 0;padding:25px;border-radius:12px;max-width:580px;background:linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);\">\n  <div style=\"text-align:center;margin-bottom:20px;\">\n    <h2 style=\"color:#1e88e5;margin:0 0 5px 0;font-size:24px;\">✈️ Our Top Flight Recommendation</h2>\n    <h3 style=\"color:#1e88e5;margin:0 0 10px 0;font-size:18px;\">[DEPARTURE_CITY] → [ARRIVAL_CITY]</h3>\n  </div>\n  \n  <!-- Outbound Flight -->\n  <div style=\"background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;\">\n    <h4 style=\"color:#1e88e5;margin:0 0 10px 0;\">🛫 Outbound Flight - [OUTBOUND_DATE]</h4>\n    <p style=\"margin:5px 0;\"><strong>Airline:</strong> [AIRLINE_NAME] • Flight [FLIGHT_NUMBER]</p>\n    <p style=\"margin:5px 0;\"><strong>Departure:</strong> [DEPARTURE_TIME] from [DEPARTURE_AIRPORT] ([AIRPORT_CODE])</p>\n    <p style=\"margin:5px 0;\"><strong>Arrival:</strong> [ARRIVAL_TIME] at [ARRIVAL_AIRPORT] ([AIRPORT_CODE])</p>\n    <p style=\"margin:5px 0;\"><strong>Duration:</strong> [FLIGHT_DURATION]</p>\n    <p style=\"margin:5px 0;\"><strong>Stops:</strong> [STOPS_INFO]</p>\n  </div>\n  \n  <!-- Return Flight (if round trip) -->\n  <div style=\"background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;\">\n    <h4 style=\"color:#1e88e5;margin:0 0 10px 0;\">🛬 Return Flight - [RETURN_DATE]</h4>\n    <p style=\"margin:5px 0;\"><strong>Airline:</strong> [RETURN_AIRLINE_NAME] • Flight [RETURN_FLIGHT_NUMBER]</p>\n    <p style=\"margin:5px 0;\"><strong>Departure:</strong> [RETURN_DEPARTURE_TIME] from [RETURN_DEPARTURE_AIRPORT] ([AIRPORT_CODE])</p>\n    <p style=\"margin:5px 0;\"><strong>Arrival:</strong> [RETURN_ARRIVAL_TIME] at [RETURN_ARRIVAL_AIRPORT] ([AIRPORT_CODE])</p>\n    <p style=\"margin:5px 0;\"><strong>Duration:</strong> [RETURN_FLIGHT_DURATION]</p>\n    <p style=\"margin:5px 0;\"><strong>Stops:</strong> [RETURN_STOPS_INFO]</p>\n  </div>\n  \n  <div style=\"text-align:center;margin:20px 0;padding:15px;background:#fff3cd;border-radius:8px;\">\n    <p style=\"margin:0 0 10px 0;font-size:18px;\"><strong>💰 Total Price: $[TOTAL_PRICE]</strong></p>\n    <p style=\"margin:0;color:#666;\">for [ADULT_COUNT] adults + [CHILDREN_COUNT] children</p>\n  </div>\n  \n  <p style=\"margin:15px 0;font-size:16px;line-height:1.6;\">[DETAILED_EXPLANATION_WHY_THIS_IS_THE_BEST_CHOICE]</p>\n  \n  <div style=\"text-align:center;margin:20px 0;\">\n    <a href=\"[GOOGLE_FLIGHTS_URL]\" style=\"background:#1e88e5;color:white;padding:15px 30px;text-decoration:none;border-radius:8px;display:inline-block;font-size:16px;font-weight:bold;\">✈️ Book This Flight on Google Flights</a>\n  </div>\n</div>"
+            },
+            {
+              "content": "Email Footer:\n\nProfessional closing\nYour contact information\nTravel tips or booking reminders\n\nOutput Format:\nReturn ONLY the complete HTML email content (no explanations, no markdown code blocks). Start directly with the HTML.\nAnalysis Guidelines:\n\nConsider total travel time vs price balance\nEvaluate layover convenience and duration\nFactor in departure/arrival times preference\nAccount for airline reliability and reputation\nConsider baggage policies if mentioned\nHighlight why this specific flight beats alternatives\nAccount for time zone differences\nConsider airport accessibility\n\nStyling Requirements:\n\nInline CSS only (email-safe)\nMax-width: 600px\nMobile-friendly\nProfessional blue color scheme (#1e88e5)\nClear flight information hierarchy\nEasy-to-scan timeline format\nProminent pricing display"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        560,
+        0
+      ],
+      "id": "fdb8b838-3edc-454f-ab17-1236ea721764",
+      "name": "Extract JSON to  flight recommendation email",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "12KiryYsMrX43jr6",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "content.parts[0].text",
+              "renameField": true,
+              "outputFieldName": "emailBody"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        944,
+        0
+      ],
+      "id": "a172e4da-ef2e-4edf-8af0-5ef9cdcdac1c",
+      "name": "Take AI result1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Extract form submission to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google_flights search": {
+      "main": [
+        [
+          {
+            "node": "Take JSON key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download the snapshot content": {
+      "main": [
+        [
+          {
+            "node": "Extract from scrape to email ready to send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "StatusCheck": {
+      "main": [
+        [
+          {
+            "node": "Wait before download the snapshot",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract form submission to JSON": {
+      "main": [
+        [
+          {
+            "node": "Parse JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse JSON": {
+      "main": [
+        [
+          {
+            "node": "Google_flights search",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Bright data : Airbnb Properties Information - discover by location",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Bright Data : Booking Hotel Listings with Pricing - discover by search input",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Bright Data : Agoda Properties Listings with Pricing - discover by search input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bright data : Airbnb Properties Information - discover by location": {
+      "main": [
+        [
+          {
+            "node": "Combine to get a snapshot first",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bright Data : Booking Hotel Listings with Pricing - discover by search input": {
+      "main": [
+        [
+          {
+            "node": "Combine to get a snapshot first",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Sequential polling with loop": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Check the status snapshot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check the status snapshot": {
+      "main": [
+        [
+          {
+            "node": "StatusCheck",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bright Data : Agoda Properties Listings with Pricing - discover by search input": {
+      "main": [
+        [
+          {
+            "node": "Combine to get a snapshot first",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Combine to get a snapshot first": {
+      "main": [
+        [
+          {
+            "node": "Put airbnb snapshot_id",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Put booking snapshot_id",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Put agoda snapshot_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Put airbnb snapshot_id": {
+      "main": [
+        [
+          {
+            "node": "Sequential polling with loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Put booking snapshot_id": {
+      "main": [
+        [
+          {
+            "node": "Sequential polling with loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Put agoda snapshot_id": {
+      "main": [
+        [
+          {
+            "node": "Sequential polling with loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check snapshot again for success": {
+      "main": [
+        [
+          {
+            "node": "Sequential polling with loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait loop": {
+      "main": [
+        [
+          {
+            "node": "Check snapshot again for success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from scrape to email ready to send": {
+      "main": [
+        [
+          {
+            "node": "Take AI result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Take AI result": {
+      "main": [
+        [
+          {
+            "node": "Combine all AI result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Checking loop finish": {
+      "main": [
+        [
+          {
+            "node": "Take hotel_recommendation in JSON to before send to email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine all AI result": {
+      "main": [
+        [
+          {
+            "node": "Checking loop finish",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Take hotel_recommendation in JSON to before send to email": {
+      "main": [
+        [
+          {
+            "node": "Send hotel recommendation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait before download the snapshot": {
+      "main": [
+        [
+          {
+            "node": "Download the snapshot content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Take JSON key": {
+      "main": [
+        [
+          {
+            "node": "Extract JSON to  flight recommendation email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract JSON to  flight recommendation email": {
+      "main": [
+        [
+          {
+            "node": "Take AI result1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Take AI result1": {
+      "main": [
+        [
+          {
+            "node": "Send Flight Recommendation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fb9c6379-9c3a-4a08-9529-e452158c9881",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8189043451cb6ebf84725e3e5c4c52a6b6f108808f9b746ade07cb907a172e3d"
+  },
+  "id": "NYNsT1441l7SIn2i",
+  "tags": []
+}
