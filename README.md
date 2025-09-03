@@ -76,6 +76,7 @@
 | **可视化编排** | 节点连接、数据流 | n8n、Zapier |
 | **触发器** | Webhook、定时任务 | Cron、事件驱动 |
 | **集成能力** | API连接、数据转换 | HTTP请求、数据映射 |
+| **AI智能体** | 工具调用、对话管理 | LangChain、Gemini |
 
 #### 🎯 模型微调
 
@@ -349,6 +350,12 @@ python chapter01-llm-env/first_llm_app.py
 - **功能**: 文档检索、智能问答、上下文优化
 - **特色**: RAG技术在企业场景的完整应用
 
+#### 🤖 N8N AI智能体模板
+- **位置**: `chapter07-llm-n8n/template/101/`
+- **技术栈**: N8N、LangChain、Gemini、工具调用
+- **功能**: 可视化AI智能体构建、多工具集成、对话管理
+- **特色**: 零代码构建企业级AI智能体，支持天气查询、新闻获取等
+
 #### ⚖️ 智能法律咨询助手
 - **位置**: `chapter08-llm-project/legal_assistant/`
 - **技术栈**: 全技术栈融合、企业级架构
@@ -361,6 +368,17 @@ python chapter01-llm-env/first_llm_app.py
 2. **进阶阶段** (模块三~六): VLLM部署→ MCP实战 → RAG实战 → Agent开发
 3. **高级阶段** (模块七~八): 工作流自动化 → 模型微调
 4. **项目阶段** (模块九): 企业级项目设计与部署
+
+### 🚀 N8N AI智能体快速开始
+
+如果您想快速体验AI智能体开发，可以：
+
+1. **导入模板**: 使用 `chapter07-llm-n8n/template/101/` 中的N8N模板
+2. **配置API**: 获取Gemini API密钥并配置连接
+3. **激活工作流**: 启动智能体并开始对话
+4. **自定义扩展**: 添加更多工具和功能
+
+详细步骤请参考：[N8N AI智能体快速入门指南](chapter07-llm-n8n/template/101/quick-start.md)
 
 
 ### 🎓 学习成果

@@ -1,0 +1,388 @@
+{
+  "name": "N8N：构建你的第一个AI Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 开始体验！\n\n**启动您的第一个AI智能体——一个能够使用工具获取实时信息、发送邮件和自动化任务的聊天机器人。**\n\n### 开始使用：\n1.  **连接DeepSeek / 连接OpenAI**（请参考下方红色便签说明）\n2.  点击 **🗨 打开聊天** 按钮，尝试询问：\n    *   \"北京的天气怎么样？\"\n    *   \"给我最新的科技新闻\"\n    *   \"给我一些n8n AI智能体的创意想法\"\n\n",
+        "height": 332,
+        "width": 392
+      },
+      "id": "15c99c17-5ebb-4e59-aa11-122b99aa3f37",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "介绍说明",
+      "type": "n8n-nodes-base.stickyNote",
+      "creator": "Lucas Peyrin",
+      "position": [
+        352,
+        256
+      ],
+      "typeVersion": 1,
+      "notes": "© 2025 Lucas Peyrin"
+    },
+    {
+      "parameters": {
+        "content": "💡 点击右上角，激活此工作流并分享公共聊天URL，让其他人也能与您的AI智能体对话！",
+        "height": 252,
+        "width": 300,
+        "color": 7
+      },
+      "id": "ee91182d-c644-468a-a0ea-9918e3863811",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "便签12",
+      "type": "n8n-nodes-base.stickyNote",
+      "creator": "Lucas Peyrin",
+      "position": [
+        912,
+        96
+      ],
+      "typeVersion": 1,
+      "notes": "© 2025 Lucas Peyrin"
+    },
+    {
+      "parameters": {
+        "content": "您的AI智能体可以：\n1. **接收** 来自聊天的消息\n2. **选择** 合适的工具（例如：天气、新闻、邮件）\n3. **响应** 实时的、有用的答案\n\n\n**打开AI智能体节点** 并编辑 **系统消息** 来调整您的智能体的思维、行为和回复。\n\n\n\n\n\n\n\n\n\n\n",
+        "height": 348,
+        "width": 444,
+        "color": 7
+      },
+      "id": "5e320e34-f7ec-43d5-b98f-68b48d67051f",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "便签13",
+      "type": "n8n-nodes-base.stickyNote",
+      "creator": "Lucas Peyrin",
+      "position": [
+        1296,
+        16
+      ],
+      "typeVersion": 1,
+      "notes": "© 2025 Lucas Peyrin"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=<role>\n您是n8n演示AI智能体，一个友好且有用的助手，旨在展示n8n自动化平台中AI智能体的强大功能。您的个性是鼓励性的、略带教育性的，并对自动化充满热情。您的主要功能是通过使用可用工具回答用户问题和满足用户请求来展示您的能力。您善于对话交流。\n</role>\n\n<instructions>\n<goal>\n您的主要目标是作为使用n8n构建的AI智能体的现场演示。您将与用户互动，通过智能使用可用工具回答他们的问题，并解释AI智能体背后的概念，帮助他们理解其潜力。\n</goal>\n\n<context>\n### 我的工作原理\n我是一个在简单n8n工作流中运行的AI模型。这个工作流为我提供了两个关键要素：\n1.  **一套工具：** 这些是我可以调用来获取信息或执行操作的函数。\n2.  **简单记忆：** 我可以记住我们当前对话的最近历史，以理解上下文。\n\n### 我的目的\n我的主要目的是展示。我演示了如何为各种功能（我的工具）提供聊天界面，而无需复杂的UI。这是通过简单对话让任何人都能访问强大自动化的绝佳方式。\n\n### 我的工具使用说明\n如果用户的请求匹配某个工具的能力，您必须选择该工具之一。您无法自己执行这些操作；您必须调用工具。\n\n### 关于n8n中的AI智能体\n- **可靠性：** 虽然我可以一次有效地使用一个工具，但更高级的智能体可以执行多步骤任务。然而，对于复杂的关键任务流程，通常更可靠的是在n8n中构建结构化的、逐步的工作流，而不是仅仅依赖智能体的推理。智能体对于面向用户的交互非常出色，但结构化工作流是后端可靠性的王者。\n- **最佳实践：** 良好的做法是保持智能体的工具集专注，通常不超过10-15个工具，以确保可靠性并防止混淆。\n\n### 当前日期和时间\n{{ $now }}\n</context>\n\n<output_format>\n- 以友好、对话和有用的语调回应。\n- 当用户的请求需要工具时，首先选择适当的工具。然后，以清晰易懂的方式向用户展示工具执行的结果。\n- 积极主动。如果用户不确定要做什么，根据您的可用工具建议一些他们可以询问您的示例（例如，谈论您的工具和您对自己的了解）。\n</output_format>\n</instructions>"
+        }
+      },
+      "id": "e530d036-d968-4a0f-ba7b-3c36ca07bd82",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "您的第一个AI智能体",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "creator": "Lucas Peyrin",
+      "position": [
+        1376,
+        192
+      ],
+      "typeVersion": 2.2,
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "您好！👋",
+        "options": {
+          "inputPlaceholder": "在此输入您的消息...",
+          "showWelcomeScreen": false,
+          "subtitle": "这是演示用途。试试我吧！",
+          "title": "您的第一个AI智能体 🚀",
+          "responseMode": "lastNode"
+        }
+      },
+      "id": "ee482aae-16ac-4fc7-a200-180caee6a083",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "示例聊天",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "creator": "Lucas Peyrin",
+      "position": [
+        1008,
+        192
+      ],
+      "webhookId": "e5616171-e3b5-4c39-81d4-67409f9fa60a",
+      "typeVersion": 1.1,
+      "notes": "© 2025 Lucas Peyrin"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        912,
+        464
+      ],
+      "id": "c098f324-39c1-417c-8026-06c30abadc38",
+      "name": "连接OpenAI",
+      "notesInFlow": true,
+      "credentials": {
+        "openAiApi": {
+          "id": "ORekL7iEeoD8nB0O",
+          "name": "APIYI"
+        }
+      },
+      "notes": "OpenAI国内代理"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n1. 在[OpenAI国内代理平台](https://api.apiyi.com/token)中点击 **\"创建令牌\"** 并复制它。\n\n2. 打开 \"连接OpenAI兼容模型\" 节点：\n   * **选择凭据 → 创建新凭据**\n   * 粘贴到 **API密钥** 并 **保存**\n",
+        "height": 316,
+        "width": 294,
+        "color": 3
+      },
+      "id": "55527c4d-8382-41dc-acde-f12eb90dd44b",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "便签",
+      "type": "n8n-nodes-base.stickyNote",
+      "creator": "Lucas Peyrin",
+      "position": [
+        816,
+        432
+      ],
+      "typeVersion": 1,
+      "notes": "© 2025 Lucas Peyrin"
+    },
+    {
+      "parameters": {
+        "model": "deepseek-reasoner",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        464
+      ],
+      "id": "78d71183-9578-499f-b821-70c8f7848525",
+      "name": "连接DeepSeek",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "F0zIPTfXb0K6T0ww",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n1. 在[DeepSeek 开放平台](https://platform.deepseek.com/api_keys)中点击 **\"创建API密钥\"** 并复制它。\n\n2. 打开 \"连接DeepSeek\" 节点：\n   * **选择凭据 → 创建新凭据**\n   * 粘贴到 **API密钥** 并 **保存**\n",
+        "height": 316,
+        "width": 294,
+        "color": 3
+      },
+      "id": "1278ba72-c871-4c35-b530-e0ae640a7a95",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "便签1",
+      "type": "n8n-nodes-base.stickyNote",
+      "creator": "Lucas Peyrin",
+      "position": [
+        1136,
+        432
+      ],
+      "typeVersion": 1,
+      "notes": "© 2025 Lucas Peyrin"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 30
+      },
+      "id": "6855352a-685b-49a7-9be7-ab0b81d78a83",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "对话记忆",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "creator": "Lucas Peyrin",
+      "position": [
+        1616,
+        480
+      ],
+      "typeVersion": 1.3,
+      "notes": "© 2025 Lucas Peyrin"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n这些工具让您的智能体能够访问真实世界的数据或执行操作。添加更多工具来扩展其能力！\n\n点击智能体工具输入下方的 ➕ 来添加：\n- Google日历（获取即将到来的事件）\n- Gmail（发送邮件）",
+        "height": 324,
+        "width": 372,
+        "color": 7
+      },
+      "id": "edb04d55-ffca-4be8-9871-00e87bbce961",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "便签16",
+      "type": "n8n-nodes-base.stickyNote",
+      "creator": "Lucas Peyrin",
+      "position": [
+        1920,
+        432
+      ],
+      "typeVersion": 1,
+      "notes": "© 2025 Lucas Peyrin"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n此节点帮助您的智能体记住最近的几条消息，以保持话题的连贯性。",
+        "height": 324,
+        "width": 356,
+        "color": 7
+      },
+      "id": "9e28fbec-7deb-4209-9d5c-9d4c837c7b72",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "便签15",
+      "type": "n8n-nodes-base.stickyNote",
+      "creator": "Lucas Peyrin",
+      "position": [
+        1488,
+        432
+      ],
+      "typeVersion": 1,
+      "notes": "© 2025 Lucas Peyrin"
+    },
+    {
+      "parameters": {
+        "toolDescription": "随时随地获取天气预报。只需要位置（使用城市名称自动推断经纬度）和时间段（如果未指定则假设今天）",
+        "url": "https://api.open-meteo.com/v1/forecast",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "latitude",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `Latitude of the location, e.g. 45.75 for Lyon. Do not ask the user just infer it automatically.`, 'string') }}"
+            },
+            {
+              "name": "longitude",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `Longitude of the location, e.g. 4.85 for Lyon. Do not ask the user just infer it automatically.`, 'string') }}"
+            },
+            {
+              "name": "current",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `Comma-separated list of current weather variables (no whitespace).\n\nExample: temperature_2m,windspeed_10m,rain.\n\nOptions: temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weathercode,cloudcover_total,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m,windgusts_10m.`, 'string') }}"
+            },
+            {
+              "name": "hourly",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters3_Value', `Comma-separated list of hourly weather variables (no whitespace). Hourly is only useful to get one day's information. For weakly overview please use daily.\n\nExample: temperature_2m,precipitation.\n\nOptions: temperature_2m,relative_humidity_2m,dewpoint_2m,apparent_temperature,precipitation,rain,showers,snowfall,snow_depth,pressure_msl,surface_pressure,cloudcover_total,cloudcover_low,cloudcover_mid,cloudcover_high,windspeed_10m,winddirection_10m,windgusts_10m,visibility,is_day,sunshine_duration,soil_temperature,soil_moisture,PM10,PM2_5,carbon_monoxide,ozone,us_aqi,UV_index.`, 'string') }}"
+            },
+            {
+              "name": "daily",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters4_Value', `Comma-separated list of daily weather variables (no whitespace).\n\nExample: temperature_2m_max,precipitation_sum.\n\nOptions: weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_hours,sunrise,sunset,daylight_duration,sunshine_duration,pressure_msl_max,pressure_msl_min,surface_pressure_max,surface_pressure_min,windgusts_10m_max,windspeed_10m_max,winddirection_10m_dominant,shortwave_radiation_sum.`, 'string') }}"
+            },
+            {
+              "name": "start_date",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters5_Value', `Start date in YYYY-MM-DD format. Example: 2025-07-15`, 'string') }}"
+            },
+            {
+              "name": "end_date",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters6_Value', `End date in YYYY-MM-DD format. Must be after start_date. Example: 2025-07-18`, 'string') }}"
+            },
+            {
+              "name": "temperature_unit",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters7_Value', `Unit for temperature. Options: celsius (default), fahrenheit.`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4bde77d0-1e79-4a7e-8d74-366cc03d41f9",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "Get Weather",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "creator": "Lucas Peyrin",
+      "position": [
+        1968,
+        464
+      ],
+      "notesInFlow": true,
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "toolDescription": "获取任何RSS源的最新博客文章。",
+        "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `使用以下之一：\n- https://feeds.bbci.co.uk/news/world/rss.xml (BBC世界新闻 – 全球头条)\n- https://www.aljazeera.com/xml/rss/all.xml (半岛电视台英文 – 深度全球报道)\n- http://rss.cnn.com/rss/edition_world.rss (CNN世界 – 全球突发新闻)\n- https://techcrunch.com/feed/ (TechCrunch – 全球科技和创业新闻)\n- http://news.ycombinator.com/rss (Hacker News – 科技社区头条)\n- https://n8n.io/blog/rss (n8n博客 – 更新和教程)\n- https://www.bonappetit.com/feed/recipes-rss-feed/rss (Bon Appétit – 最新食谱列表)\n- https://www.endsreport.com/rss/news-and-analysis (ENDS报告 – 环境法律和政策新闻)\n- https://medlineplus.gov/groupfeeds/new.xml (MedlinePlus – 健康主题和健康更新)`, 'string') }}",
+        "options": {}
+      },
+      "id": "afe65df3-34b3-413e-96c2-109c065eb6c7",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "Get News",
+      "type": "n8n-nodes-base.rssFeedReadTool",
+      "creator": "Lucas Peyrin",
+      "position": [
+        2128,
+        464
+      ],
+      "typeVersion": 1.2,
+      "notes": "© 2025 Lucas Peyrin"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "示例聊天": {
+      "main": [
+        [
+          {
+            "node": "您的第一个AI智能体",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "连接OpenAI": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "您的第一个AI智能体",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "对话记忆": {
+      "ai_memory": [
+        [
+          {
+            "node": "您的第一个AI智能体",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Weather": {
+      "ai_tool": [
+        [
+          {
+            "node": "您的第一个AI智能体",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get News": {
+      "ai_tool": [
+        [
+          {
+            "node": "您的第一个AI智能体",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a72bdb61-1324-4bb8-8248-19e44c3d55f0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8189043451cb6ebf84725e3e5c4c52a6b6f108808f9b746ade07cb907a172e3d"
+  },
+  "id": "2B9MeE8Ee1nv8I6v",
+  "tags": []
+}
