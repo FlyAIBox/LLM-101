@@ -1,5 +1,5 @@
 {
-  "name": "N8N：个人旅游规划助手-comment",
+  "name": "My workflow 6",
   "nodes": [
     {
       "parameters": {
@@ -8,43 +8,43 @@
         "width": 446,
         "color": 3
       },
-      "id": "5bda7ace-c767-4bbb-b4f9-70d2bf17b55b",
+      "id": "2c3c859f-5a1d-4771-9299-07147cd7ebcd",
       "name": "工作流概览",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1872,
-        -432
+        -2784,
+        80
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
-        "content": "## 📝 用户输入处理模块\n\n**功能：** 收集用户的旅行需求信息\n\n### 关键节点：\n- **1-On form submission** - 表单触发器，收集用户输入\n- **Extract form submission to JSON** - 使用Gemini AI将表单数据转换为结构化JSON\n- **Parse JSON** - 解析AI返回的JSON数据\n\n### 处理的数据：\n- 出发地和目的地\n- 出发和返回日期\n- 成人和儿童数量\n- 宠物和房间需求\n- 旅行偏好描述",
+        "content": "## 📝 用户输入处理模块\n\n**功能：** 收集用户的旅行需求信息\n\n### 关键节点：\n- **On form submission** - 表单触发器，收集用户输入\n- **Extract form submission to JSON** - 使用Gemini AI将表单数据转换为结构化JSON\n- **Parse JSON** - 解析AI返回的JSON数据\n\n### 处理的数据：\n- 出发地和目的地\n- 出发和返回日期\n- 成人和儿童数量\n- 宠物和房间需求\n- 旅行偏好描述",
         "height": 552,
         "width": 988
       },
-      "id": "5bba059c-5aa8-4091-9497-b46677a55d9c",
+      "id": "a9c5a03c-41ce-4eaf-aeb7-37152cf53228",
       "name": "用户输入处理",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1872,
-        240
+        -2784,
+        752
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
-        "content": "## ✈️ 航班搜索模块\n\n**功能：** 搜索最佳航班选项\n\n### 关键节点：\n- **Google_flights search** - 使用SerpApi搜索Google Flights\n- **Take JSON key** - 提取航班数据的关键字段\n- **Extract JSON to flight recommendation email** - 使用Gemini AI生成航班推荐邮件\n- **Send Flight Recommendation** - 发送航班推荐邮件\n\n### 搜索参数：\n- 出发和到达机场代码\n- 航班日期和类型\n- 乘客数量和舱位等级",
+        "content": "## ✈️ 航班搜索模块\n\n**功能：** 搜索最佳航班选项\n\n### 关键节点：\n- **Google_flights search** - 使用[SerpApi](https://serpapi.com/search-api)搜索Google Flights\n- **Take JSON key** - 提取航班数据的关键字段\n- **Extract JSON to flight recommendation email** - 使用Gemini AI生成航班推荐邮件\n- **Send Flight Recommendation** - 发送航班推荐邮件\n\n### 搜索参数：\n- 出发和到达机场代码\n- 航班日期和类型\n- 乘客数量和舱位等级",
         "height": 424,
         "width": 652,
         "color": 4
       },
-      "id": "365f935e-3603-437f-aa99-c6f782a9bb59",
+      "id": "0bbf8153-c4ca-4bdd-8998-32e721d080e0",
       "name": "航班搜索模块",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -832,
-        -400
+        -1744,
+        112
       ],
       "typeVersion": 1
     },
@@ -55,12 +55,12 @@
         "width": 652,
         "color": 4
       },
-      "id": "2c995cf8-77e3-4907-a249-11319ab93d31",
+      "id": "1115f0ed-0a39-4b84-a409-beef0892d168",
       "name": "酒店搜索模块",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -816,
-        304
+        -1728,
+        816
       ],
       "typeVersion": 1
     },
@@ -71,12 +71,12 @@
         "width": 1228,
         "color": 4
       },
-      "id": "27431f6f-81bd-4766-9b17-45148f3d089f",
+      "id": "766c1d1d-c468-4e69-af06-1357fc66d1d3",
       "name": "异步数据处理",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        544,
-        112
+        -368,
+        624
       ],
       "typeVersion": 1
     },
@@ -87,12 +87,12 @@
         "width": 1132,
         "color": 4
       },
-      "id": "eaf9f252-7c43-4d21-ab51-48196f3f2531",
+      "id": "fca5d66a-311d-4ecf-ad71-53d4195aad70",
       "name": "AI智能推荐",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1792,
-        -224
+        896,
+        272
       ],
       "typeVersion": 1
     },
@@ -103,28 +103,28 @@
         "width": 780,
         "color": 4
       },
-      "id": "39d9c815-53b4-48a2-add7-bdb5c259aac7",
+      "id": "99bb0d5e-9620-451d-9f77-73f9e5fa848f",
       "name": "邮件发送模块",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        960,
-        -464
+        64,
+        48
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
-        "content": "## ⚙️ 技术架构说明\n\n### 使用的API和服务：\n- **Google Gemini AI** - 数据分析和推荐生成\n- **SerpApi** - Google Flights搜索\n- **BrightData** - 网页数据抓取\n- **Gmail API** - 邮件发送\n\n### 工作流特点：\n- **并行处理** - 同时搜索多个平台\n- **异步等待** - 智能等待数据准备\n- **错误处理** - 包含重试机制\n- **数据聚合** - 多源数据整合\n- **AI增强** - 智能推荐和个性化\n\n### 扩展建议：\n- 添加更多酒店平台\n- 集成天气和景点信息\n- 添加价格监控功能",
+        "content": "## ⚙️ 技术架构说明\n\n### 使用的API和服务：\n- **Google Gemini AI** - 数据分析和推荐生成\n- **[SerpApi](https://serpapi.com/search-api)** - Google Flights搜索\n- **[BrightData](https://docs.brightdata.com/api-reference/introduction)** - 网页数据抓取\n- **[Gmail API]()** - 邮件发送\n\n### 工作流特点：\n- **并行处理** - 同时搜索多个平台\n- **异步等待** - 智能等待数据准备\n- **错误处理** - 包含重试机制\n- **数据聚合** - 多源数据整合\n- **AI增强** - 智能推荐和个性化\n\n### 扩展建议：\n- 添加更多酒店平台\n- 集成天气和景点信息\n- 添加价格监控功能",
         "height": 480,
         "width": 414,
         "color": 3
       },
-      "id": "8c2c0c96-d730-4bf4-8b41-3e4759ba8032",
+      "id": "7af30ffe-567f-4ce0-856b-7bc553a86ea3",
       "name": "技术架构说明",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1376,
-        -416
+        -2288,
+        96
       ],
       "typeVersion": 1
     },
@@ -158,36 +158,36 @@
             {
               "fieldLabel": "Number of Adults",
               "fieldType": "number",
-              "placeholder": "Enter number of adults (age 13+)",
+              "placeholder": "请输入成人数量（13岁及以上）",
               "requiredField": true
             },
             {
               "fieldLabel": "Number of Children",
               "fieldType": "number",
-              "placeholder": "Enter number of children (ages 2–12)",
+              "placeholder": "请输入儿童数量（2–12岁）",
               "requiredField": true
             },
             {
               "fieldLabel": "Number of Infants",
               "fieldType": "number",
-              "placeholder": "Enter number of infants (under age 2)",
+              "placeholder": "请输入婴儿数量（2岁以下）",
               "requiredField": true
             },
             {
               "fieldLabel": "Number of Pets",
               "fieldType": "number",
-              "placeholder": "Enter number of pets",
+              "placeholder": "请输入携带宠物数量",
               "requiredField": true
             },
             {
               "fieldLabel": "Number of Rooms",
               "fieldType": "number",
-              "placeholder": "Enter number of rooms needed"
+              "placeholder": "请输入所需房间数量"
             },
             {
               "fieldLabel": "Travel Preferences",
               "fieldType": "textarea",
-              "placeholder": "Tell us about your trip (e.g., preferred accommodation type, activities, or special requests)"
+              "placeholder": "请描述此次行程偏好（如：偏好的住宿类型、活动或特殊需求）"
             }
           ]
         },
@@ -196,10 +196,10 @@
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2.2,
       "position": [
-        -1696,
-        496
+        -2608,
+        1008
       ],
-      "id": "ed2e98fe-d40c-45f9-9a39-bc928abf4747",
+      "id": "c70c2cf4-28ca-4811-bbee-c8a700817213",
       "name": "On form submission",
       "webhookId": "e07b905d-832e-474a-804e-ea65285712be"
     },
@@ -222,10 +222,10 @@
       "type": "n8n-nodes-serpapi.serpApi",
       "typeVersion": 1,
       "position": [
-        -368,
-        -160
+        -1280,
+        352
       ],
-      "id": "683b0ea4-c099-4445-aa36-0e0c7f3b28d1",
+      "id": "9f3784d3-85d7-4333-985e-a05a71eebb6c",
       "name": "Google_flights search",
       "credentials": {
         "serpApi": {
@@ -244,10 +244,10 @@
       "type": "@brightdata/n8n-nodes-brightdata.brightData",
       "typeVersion": 1,
       "position": [
-        2064,
-        176
+        1168,
+        688
       ],
-      "id": "448fa587-8a2a-4099-80dc-67b53edf574d",
+      "id": "c52caa2d-e2e6-47c5-b0f6-f1e7c7b73267",
       "name": "Download the snapshot content",
       "credentials": {
         "brightdataApi": {
@@ -284,10 +284,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1536,
-        336
+        640,
+        848
       ],
-      "id": "da39fd04-53e7-430f-b0a4-0861ceb7aa8b",
+      "id": "e9008689-6284-4b72-a4c4-d43950f99904",
       "name": "StatusCheck"
     },
     {
@@ -323,10 +323,10 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        -1392,
-        496
+        -2304,
+        1008
       ],
-      "id": "1b4973ef-d399-4074-995f-406ead40eeb8",
+      "id": "a943df83-1c02-4216-8db5-c043d189ea64",
       "name": "Extract form submission to JSON",
       "alwaysOutputData": true,
       "credentials": {
@@ -343,10 +343,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1040,
-        496
+        -1952,
+        1008
       ],
-      "id": "65050b9a-4371-4cbd-b91a-5bf70c826272",
+      "id": "d5542eaa-a8c1-494d-b3b3-72bbd2320244",
       "name": "Parse JSON"
     },
     {
@@ -397,10 +397,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -368,
-        304
+        -1280,
+        816
       ],
-      "id": "71526339-9be9-4a59-8aae-6f4453781861",
+      "id": "dbb95e28-ce89-4db9-a7d7-0ca53b8031a9",
       "name": "Bright data : Airbnb Properties Information - discover by location",
       "credentials": {
         "brightdataApi": {
@@ -457,10 +457,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -368,
-        512
+        -1280,
+        1024
       ],
-      "id": "5fd91002-8ea5-49fe-bb7e-e22d303aa4ec",
+      "id": "23803f5a-4e00-4949-993b-cfcebffc7879",
       "name": "Bright Data : Booking Hotel Listings with Pricing - discover by search input",
       "credentials": {
         "brightdataApi": {
@@ -478,10 +478,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        960,
-        320
+        64,
+        832
       ],
-      "id": "314a659f-62f2-48d7-8523-863080c093e9",
+      "id": "aa04294a-6558-4d5e-9610-50b47e54df6c",
       "name": "Sequential polling with loop"
     },
     {
@@ -494,10 +494,10 @@
       "type": "@brightdata/n8n-nodes-brightdata.brightData",
       "typeVersion": 1,
       "position": [
-        1264,
-        336
+        368,
+        848
       ],
-      "id": "16e6814d-0157-4116-afa8-7565ea706acd",
+      "id": "a21eacff-663a-47e3-82b5-d9492b196107",
       "name": "Check the status snapshot",
       "credentials": {
         "brightdataApi": {
@@ -552,10 +552,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -368,
-        720
+        -1280,
+        1232
       ],
-      "id": "3d6c39d4-e460-42b2-b9cc-a417f53cdd59",
+      "id": "d4528e48-f138-4403-b855-230af3d88fb6",
       "name": "Bright Data : Agoda Properties Listings with Pricing - discover by search input",
       "credentials": {
         "brightdataApi": {
@@ -571,10 +571,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        0,
-        480
+        -912,
+        992
       ],
-      "id": "8e36dda8-c264-4037-8f31-38e2088b59ed",
+      "id": "acdf9ec1-0064-4034-8ac8-36d15c6952a5",
       "name": "Combine to get a snapshot first"
     },
     {
@@ -584,10 +584,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        256,
-        288
+        -656,
+        800
       ],
-      "id": "2dbff7f5-45b1-4305-be32-7a313f3e405d",
+      "id": "e221a9b8-0976-4be3-a177-9568bdc3ab4d",
       "name": "Put airbnb snapshot_id"
     },
     {
@@ -597,10 +597,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        256,
-        496
+        -656,
+        1008
       ],
-      "id": "11e4e736-aaee-430e-8e23-4141116938dd",
+      "id": "42fe9a72-8f46-445e-937c-29ee6770eb5c",
       "name": "Put booking snapshot_id"
     },
     {
@@ -610,10 +610,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        256,
-        704
+        -656,
+        1216
       ],
-      "id": "7b5a6d1a-0ff2-4b29-abc8-3c9185a2fc7f",
+      "id": "6911153f-8402-4640-a919-818ea4bebcb5",
       "name": "Put agoda snapshot_id"
     },
     {
@@ -622,10 +622,10 @@
       "name": "Check snapshot again for success",
       "typeVersion": 1,
       "position": [
-        1536,
-        672
+        640,
+        1184
       ],
-      "id": "93974777-48f8-4328-9008-027e9a2ccbf4"
+      "id": "55f05984-dd0c-495c-9fed-82317d2c9e9d"
     },
     {
       "parameters": {
@@ -635,10 +635,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1840,
-        448
+        944,
+        960
       ],
-      "id": "53f7e533-471e-44c3-a884-723c0635597a",
+      "id": "d9ade0ac-c11e-466a-bbc3-212cde0e75a5",
       "name": "Wait loop",
       "webhookId": "32aa0c7c-6c62-487b-b733-5b0ff8870434"
     },
@@ -665,19 +665,13 @@
               "content": "## 任务：\n1. 分析与匹配：基于以下维度为每家酒店评分：\n   - 预算匹配度（是否在价格范围内）\n   - 位置匹配度\n   - 设施偏好匹配度\n   - 日期可用性\n   - 特殊需求匹配度\n\n2. 选择最优：挑选最符合需求的一家酒店作为推荐\n\n3. 生成 HTML 邮件：创建完整的 HTML 邮件内容，包括："
             },
             {
-              "content": "=### 邮件结构：\n- 主题：\"为 {{$json.user_submission.destination}} 精选的完美酒店——最佳匹配！\"\n- 问候：\"亲爱的 {{$json.user_submission.user_info.name}}，\"\n- 引言：引用其行程（{{$json.user_submission.check_in}} 至 {{$json.user_submission.check_out}}，{{$json.user_submission.guests}} 位客人）\n\n### 推荐酒店卡片：\n<div style=\"border:2px solid #2c5aa0;margin:20px 0;padding:25px;border-radius:12px;max-width:580px;background:linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);\">\n  <div style=\"text-align:center;margin-bottom:20px;\">\n    <h2 style=\"color:#2c5aa0;margin:0 0 5px 0;font-size:24px;\">🏆 我们的首选推荐</h2>\n    <h3 style=\"color:#2c5aa0;margin:0 0 10px 0;font-size:20px;\">[酒店名称]</h3>\n  </div>\n  <p style=\"color:#888;font-size:12px;margin:0 0 15px 0;text-align:center;\">⭐ 来源于 [平台名称] • 最符合您需求</p>\n  <p style=\"color:#666;margin:8px 0;\"><strong>📍 位置：</strong> [位置]</p>\n  <p style=\"color:#666;margin:8px 0;\"><strong>💰 价格：</strong> $[PRICE]/晚 | 总计：$[TOTAL_COST]</p>\n  <p style=\"color:#666;margin:8px 0;\"><strong>⭐ 评分：</strong> [星级]（[评分]/5）</p>\n  <p style=\"color:#666;margin:8px 0;\"><strong>✨ 设施：</strong> [关键设施]</p>\n  <p style=\"margin:15px 0;font-size:16px;line-height:1.6;\">[详细描述 + 为何这家最匹配]</p>\n  <div style=\"text-align:center;margin:20px 0;\">\n    <a href=\"[BOOKING_URL]\" style=\"background:#2c5aa0;color:white;padding:15px 30px;text-decoration:none;border-radius:8px;display:inline-block;font-size:16px;font-weight:bold;\">🔗 在 [平台] 上立即预订</a>\n  </div>\n</div>"
+              "content": "### 邮件结构要求：\n\n**重要：直接输出完整的HTML邮件，不要包含任何Markdown代码块、分隔符或额外文本！**\n\n邮件必须包含以下结构：\n\n1. **HTML文档结构**：\n```html\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <title>酒店推荐</title>\n</head>\n<body style=\"font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px;background-color:#f8f9fa;\">\n  [邮件内容]\n</body>\n</html>\n```\n\n2. **邮件头部**：\n- 标题：\"为 [目的地] 精选的完美酒店——最佳匹配！\"\n- 问候：\"亲爱的旅客，\"\n- 行程介绍：包含出发地、目的地、日期、人数等信息\n\n3. **推荐酒店卡片**：\n```html\n<div style=\"border:2px solid #2c5aa0;margin:20px 0;padding:25px;border-radius:12px;max-width:580px;background:linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);box-shadow:0 4px 6px rgba(0,0,0,0.1);\">\n  <div style=\"text-align:center;margin-bottom:20px;\">\n    <h2 style=\"color:#2c5aa0;margin:0 0 5px 0;font-size:24px;font-weight:bold;\">🏆 我们的首选推荐</h2>\n    <h3 style=\"color:#2c5aa0;margin:0 0 10px 0;font-size:20px;font-weight:normal;\">[酒店名称]</h3>\n  </div>\n  <p style=\"color:#888;font-size:12px;margin:0 0 15px 0;text-align:center;\">⭐ 来源于 [平台名称] • 最符合您需求</p>\n  <div style=\"background:#f8f9fa;padding:15px;border-radius:8px;margin:10px 0;\">\n    <p style=\"color:#666;margin:8px 0;font-size:14px;\"><strong>📍 位置：</strong> [具体位置]</p>\n    <p style=\"color:#666;margin:8px 0;font-size:14px;\"><strong>💰 价格：</strong> $[每晚价格]/晚 | 总计：$[总价]</p>\n    <p style=\"color:#666;margin:8px 0;font-size:14px;\"><strong>⭐ 评分：</strong> [评分] ([分数]/10)</p>\n    <p style=\"color:#666;margin:8px 0;font-size:14px;\"><strong>✨ 设施：</strong> [主要设施]</p>\n  </div>\n  <p style=\"margin:15px 0;font-size:16px;line-height:1.6;color:#333;\">[详细推荐理由和匹配说明]</p>\n  <div style=\"text-align:center;margin:20px 0;\">\n    <a href=\"[预订链接]\" style=\"background:#2c5aa0;color:white;padding:15px 30px;text-decoration:none;border-radius:8px;display:inline-block;font-size:16px;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.2);\">🔗 在 [平台名称] 上立即预订</a>\n  </div>\n</div>\n```\n\n4. **邮件页脚**：\n- 专业结束语\n- 联系信息\n- \"如有疑问，直接回复本邮件\"\n\n**输出要求：**\n- 直接输出完整HTML，不要任何```html```标记\n- 不要包含---分隔符\n- 确保所有内容居中对齐（除了卡片内的详细信息）\n- 使用统一的字体和颜色方案"
             },
             {
-              "content": "<!DOCTYPE html>\n<html>\n<head><meta charset=\"UTF-8\"><title>Hotel Recommendations</title></head>\n<body style=\"font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px;\">\n[COMPLETE EMAIL CONTENT HERE]\n</body>\n</html>"
+              "content": "样式规范：\n\n**整体布局：**\n- 最大宽度：600px\n- 居中对齐：margin: 0 auto\n- 内边距：20px\n- 背景色：#f8f9fa\n\n**字体规范：**\n- 主字体：Arial, sans-serif\n- 标题：24px, 20px\n- 正文：16px, 14px\n- 小字：12px\n- 行高：1.6\n\n**颜色方案：**\n- 主色调：#2c5aa0（蓝色）\n- 文字：#333（深灰）\n- 次要文字：#666（中灰）\n- 提示文字：#888（浅灰）\n\n**对齐要求：**\n- 邮件标题：居中\n- 问候语：居中\n- 行程信息：居中\n- 酒店卡片：居中\n- 卡片内详细信息：左对齐\n- 预订按钮：居中\n- 页脚：居中\n\n**重要提醒：**\n- 不要使用Markdown格式\n- 不要包含代码块标记\n- 不要添加分隔符\n- 确保HTML格式正确\n- 所有样式使用内联CSS"
             },
             {
-              "content": "邮件页脚：\n\n专业的结束语\n你的联系信息\n\"如有疑问，直接回复本邮件\"\n\n输出格式：\n仅返回完整的 HTML 邮件内容（不需要解释，不要使用 Markdown 代码块）。直接以 HTML 开头。"
-            },
-            {
-              "content": "样式要求：\n\n- 仅使用内联 CSS（邮件客户端友好）\n- 最大宽度：600px\n- 移动端友好\n- 专业的蓝/灰配色\n- 清晰的字体排版（Arial/Helvetica）\n- 20px 的边距/留白"
-            },
-            {
-              "content": "务必牢记：\n\n- 明确阐述为何该酒店匹配其需求\n- 包含总价计算\n- 仅选择最匹配的一家\n- 提供详细理由说明其为最佳选择\n- 突出直达原平台的预订链接\n- 确保可直接通过 Gmail 发送"
+              "content": "输出格式要求：\n\n**严格遵循以下规则：**\n\n1. **直接输出HTML**：不要包含```html```、```、---等任何标记\n2. **完整HTML文档**：从<!DOCTYPE html>开始，到</html>结束\n3. **内容居中**：除了卡片内的详细信息外，所有内容都要居中对齐\n4. **统一排版**：使用一致的字体大小、颜色和间距\n5. **移动端友好**：确保在手机上也能正常显示\n\n**禁止包含：**\n- Markdown代码块标记\n- 分隔符（---）\n- 多余的HTML标记\n- 不规范的缩进\n\n**必须包含：**\n- 完整的HTML文档结构\n- 专业的邮件样式\n- 居中对齐的布局\n- 清晰的酒店推荐信息\n- 可点击的预订链接\n\n**示例输出格式：**\n直接以<!DOCTYPE html>开头，以</html>结尾，中间包含完整的邮件内容，不要任何额外标记。"
             }
           ]
         },
@@ -686,10 +680,10 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        2304,
-        176
+        1408,
+        688
       ],
-      "id": "86e5f53d-aeaf-4c9c-ab48-14fb05aefeac",
+      "id": "0517862e-9234-4a8a-94d7-9904a263d318",
       "name": "Extract from scrape to email ready to send",
       "retryOnFail": true,
       "credentials": {
@@ -715,10 +709,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        2688,
-        176
+        1792,
+        688
       ],
-      "id": "a567e4b3-e33a-4e4c-a057-f373961b50b8",
+      "id": "fe8e27d2-c3ff-42b5-bc65-ccb2d5394174",
       "name": "Take AI result"
     },
     {
@@ -749,10 +743,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2288,
-        464
+        1392,
+        976
       ],
-      "id": "26ddfc24-2bb4-4f7b-92c4-064c8c02e6d2",
+      "id": "759841c8-415d-44eb-90bc-2c90067c5b26",
       "name": "Checking loop finish"
     },
     {
@@ -762,10 +756,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2096,
-        464
+        1200,
+        976
       ],
-      "id": "c577c0c4-d35e-45df-8d01-3b7483188f08",
+      "id": "5ea9c970-6383-4496-8f3b-87d8b510c4b5",
       "name": "Combine all AI result"
     },
     {
@@ -775,10 +769,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2528,
-        448
+        1632,
+        960
       ],
-      "id": "f8db0b90-ec0e-4fa3-83c0-3046ad94c704",
+      "id": "a83461e3-1263-4174-89b1-86bcf53c2171",
       "name": "Take hotel_recommendation in JSON to before send to email"
     },
     {
@@ -791,10 +785,10 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        2736,
-        448
+        1840,
+        960
       ],
-      "id": "a6d71455-75fb-4b95-9ebd-69f276546cf2",
+      "id": "14e77e9e-6d10-4e5c-90f3-7675ff731654",
       "name": "Send hotel recommendation",
       "webhookId": "5852d21c-bf4d-4668-81be-f3959dc15ccd",
       "credentials": {
@@ -814,10 +808,10 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1520,
-        -160
+        624,
+        352
       ],
-      "id": "ccaf46b8-e5b5-49d5-b369-f0ca6c1d39b3",
+      "id": "609c1264-4f5d-41b9-b5f8-4d66cc9edecf",
       "name": "Send Flight Recommendation",
       "webhookId": "5852d21c-bf4d-4668-81be-f3959dc15ccd",
       "credentials": {
@@ -834,10 +828,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1840,
-        176
+        944,
+        688
       ],
-      "id": "641400fd-4d69-453d-a832-08c2371032fe",
+      "id": "cb90f052-0afd-40a4-8569-446753c320ff",
       "name": "Wait before download the snapshot",
       "webhookId": "93b56a7d-0839-4747-869f-b6561eba0131"
     },
@@ -882,10 +876,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        0,
-        -160
+        -912,
+        352
       ],
-      "id": "93bf3e80-ad03-4e56-8f23-8782034dcce4",
+      "id": "67942e45-4565-4472-89eb-e7693eeefcf2",
       "name": "Take JSON key"
     },
     {
@@ -904,10 +898,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        576,
-        -160
+        -336,
+        352
       ],
-      "id": "6d76e1f6-b48a-4200-88c9-0d8c94aefec3",
+      "id": "46f24337-5a88-49ac-9f25-e230914b4098",
       "name": "Take AI result1"
     },
     {
@@ -930,13 +924,13 @@
               "content": "## 任务：\n1. 分析与匹配：基于以下维度为每个航班评分：\n   - 价格匹配度（是否在预算范围内）\n   - 时间偏好（起降时间）\n   - 总时长与经停次数\n   - 航司偏好\n   - 舱位要求\n   - 中转便利性\n\n2. 选择最佳：挑选最符合需求的一条航班方案\n\n3. 生成 HTML 邮件：创建完整的 HTML 邮件内容，包括："
             },
             {
-              "content": "### 邮件结构：\n- 主题：\"前往 {{$json.user_submission.destination}} 的最佳航班——为您精选！\"\n- 问候：\"亲爱的 {{$json.user_submission.user_info.name}}，\"\n- 引言：引用其行程日期与偏好"
+              "content": "### 航班推荐邮件结构要求：\n\n**重要：直接输出完整的HTML邮件，不要包含任何Markdown代码块、分隔符或额外文本！**\n\n邮件必须包含以下结构：\n\n1. **HTML文档结构**：\n```html\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <title>航班推荐</title>\n</head>\n<body style=\"font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px;background-color:#f8f9fa;\">\n  [邮件内容]\n</body>\n</html>\n```\n\n2. **邮件头部**：\n- 标题：\"前往 [目的地] 的最佳航班——为您精选！\"\n- 问候：\"亲爱的旅客，\"\n- 行程介绍：包含出发地、目的地、日期、人数等信息\n\n3. **推荐航班卡片**：\n```html\n<div style=\"border:2px solid #1e88e5;margin:20px 0;padding:25px;border-radius:12px;max-width:580px;background:linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);box-shadow:0 4px 6px rgba(0,0,0,0.1);\">\n  <div style=\"text-align:center;margin-bottom:20px;\">\n    <h2 style=\"color:#1e88e5;margin:0 0 5px 0;font-size:24px;font-weight:bold;\">✈️ 我们的航班首选推荐</h2>\n    <h3 style=\"color:#1e88e5;margin:0 0 10px 0;font-size:18px;font-weight:normal;\">[出发城市] → [到达城市]</h3>\n  </div>\n  \n  <!-- 去程航班 -->\n  <div style=\"background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;\">\n    <h4 style=\"color:#1e88e5;margin:0 0 10px 0;font-size:16px;\">🛫 去程 - [出发日期]</h4>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>航司：</strong> [航司名称] • 航班 [航班号]</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>起飞：</strong> [起飞时间] 于 [出发机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>到达：</strong> [到达时间] 于 [到达机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>时长：</strong> [飞行时长]</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>经停：</strong> [经停信息]</p>\n  </div>\n  \n  <!-- 返程航班（若为往返） -->\n  <div style=\"background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;\">\n    <h4 style=\"color:#1e88e5;margin:0 0 10px 0;font-size:16px;\">🛬 返程 - [返程日期]</h4>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>航司：</strong> [返程航司] • 航班 [返程航班号]</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>起飞：</strong> [返程起飞时间] 于 [返程出发机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>到达：</strong> [返程到达时间] 于 [返程到达机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>时长：</strong> [返程时长]</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>经停：</strong> [返程经停信息]</p>\n  </div>\n  \n  <div style=\"text-align:center;margin:20px 0;padding:15px;background:#fff3cd;border-radius:8px;\">\n    <p style=\"margin:0 0 10px 0;font-size:18px;font-weight:bold;\"><strong>💰 总价：$[总价]</strong></p>\n    <p style=\"margin:0;color:#666;font-size:14px;\">包含 [成人数量] 名成人 + [儿童数量] 名儿童</p>\n  </div>\n  \n  <p style=\"margin:15px 0;font-size:16px;line-height:1.6;color:#333;\">[详细说明为何该航班为最佳选择]</p>\n  \n  <div style=\"text-align:center;margin:20px 0;\">\n    <a href=\"[GOOGLE_FLIGHTS_URL]\" style=\"background:#1e88e5;color:white;padding:15px 30px;text-decoration:none;border-radius:8px;display:inline-block;font-size:16px;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.2);\">✈️ 前往 Google Flights 预订</a>\n  </div>\n</div>\n```\n\n4. **邮件页脚**：\n- 专业结束语\n- 联系信息\n- 旅行提示或预订提醒\n\n**输出要求：**\n- 直接输出完整HTML，不要任何```html```标记\n- 不要包含---分隔符\n- 确保所有内容居中对齐（除了卡片内的详细信息）\n- 使用统一的字体和颜色方案"
             },
             {
-              "content": "### 推荐航班卡片：\n<div style=\"border:2px solid #1e88e5;margin:20px 0;padding:25px;border-radius:12px;max-width:580px;background:linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);\">\n  <div style=\"text-align:center;margin-bottom:20px;\">\n    <h2 style=\"color:#1e88e5;margin:0 0 5px 0;font-size:24px;\">✈️ 我们的航班首选推荐</h2>\n    <h3 style=\"color:#1e88e5;margin:0 0 10px 0;font-size:18px;\">[出发城市] → [到达城市]</h3>\n  </div>\n  \n  <!-- 去程航班 -->\n  <div style=\"background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;\">\n    <h4 style=\"color:#1e88e5;margin:0 0 10px 0;\">🛫 去程 - [出发日期]</h4>\n    <p style=\"margin:5px 0;\"><strong>航司：</strong> [航司名称] • 航班 [航班号]</p>\n    <p style=\"margin:5px 0;\"><strong>起飞：</strong> [起飞时间] 于 [出发机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;\"><strong>到达：</strong> [到达时间] 于 [到达机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;\"><strong>时长：</strong> [飞行时长]</p>\n    <p style=\"margin:5px 0;\"><strong>经停：</strong> [经停信息]</p>\n  </div>\n  \n  <!-- 返程航班（若为往返） -->\n  <div style=\"background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;\">\n    <h4 style=\"color:#1e88e5;margin:0 0 10px 0;\">🛬 返程 - [返程日期]</h4>\n    <p style=\"margin:5px 0;\"><strong>航司：</strong> [返程航司] • 航班 [返程航班号]</p>\n    <p style=\"margin:5px 0;\"><strong>起飞：</strong> [返程起飞时间] 于 [返程出发机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;\"><strong>到达：</strong> [返程到达时间] 于 [返程到达机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;\"><strong>时长：</strong> [返程时长]</p>\n    <p style=\"margin:5px 0;\"><strong>经停：</strong> [返程经停信息]</p>\n  </div>\n  \n  <div style=\"text-align:center;margin:20px 0;padding:15px;background:#fff3cd;border-radius:8px;\">\n    <p style=\"margin:0 0 10px 0;font-size:18px;\"><strong>💰 总价：$[总价]</strong></p>\n    <p style=\"margin:0;color:#666;\">包含 [成人数量] 名成人 + [儿童数量] 名儿童</p>\n  </div>\n  \n  <p style=\"margin:15px 0;font-size:16px;line-height:1.6;\">[详细说明为何该航班为最佳选择]</p>\n  \n  <div style=\"text-align:center;margin:20px 0;\">\n    <a href=\"[GOOGLE_FLIGHTS_URL]\" style=\"background:#1e88e5;color:white;padding:15px 30px;text-decoration:none;border-radius:8px;display:inline-block;font-size:16px;font-weight:bold;\">✈️ 前往 Google Flights 预订</a>\n  </div>\n</div>"
+              "content": "航班推荐样式规范：\n\n**整体布局：**\n- 最大宽度：600px\n- 居中对齐：margin: 0 auto\n- 内边距：20px\n- 背景色：#f8f9fa\n\n**字体规范：**\n- 主字体：Arial, sans-serif\n- 标题：24px, 18px\n- 正文：16px, 14px\n- 行高：1.6\n\n**颜色方案：**\n- 主色调：#1e88e5（蓝色）\n- 文字：#333（深灰）\n- 次要文字：#666（中灰）\n- 价格背景：#fff3cd（浅黄）\n\n**对齐要求：**\n- 邮件标题：居中\n- 问候语：居中\n- 行程信息：居中\n- 航班卡片：居中\n- 卡片内详细信息：左对齐\n- 预订按钮：居中\n- 页脚：居中\n\n**分析指南：**\n- 权衡总旅行时间与价格\n- 考虑经停便利性与时长\n- 关注起降时间偏好\n- 考虑航司可靠性与口碑\n- 综合行李政策\n- 说明为何该航班优于替代方案\n- 考虑时区差异\n- 考虑机场通达性\n\n**重要提醒：**\n- 不要使用Markdown格式\n- 不要包含代码块标记\n- 不要添加分隔符\n- 确保HTML格式正确\n- 所有样式使用内联CSS"
             },
             {
-              "content": "邮件页脚：\n\n专业的结束语\n你的联系信息\n旅行提示或预订提醒\n\n输出格式：\n仅返回完整的 HTML 邮件内容（不需要解释，不要使用 Markdown 代码块）。直接以 HTML 开头。\n分析指南：\n\n权衡总旅行时间与价格\n考虑经停便利性与时长\n关注起降时间偏好\n考虑航司可靠性与口碑\n如涉及，综合行李政策\n说明为何该航班优于替代方案\n考虑时区差异\n考虑机场通达性\n\n样式要求：\n\n仅使用内联 CSS（邮件友好）\n最大宽度：600px\n移动端友好\n专业蓝色系（#1e88e5）\n清晰的信息层级\n易于扫描的时间轴风格\n突出显示价格"
+              "content": "航班推荐输出格式要求：\n\n**严格遵循以下规则：**\n\n1. **直接输出HTML**：不要包含```html```、```、---等任何标记\n2. **完整HTML文档**：从<!DOCTYPE html>开始，到</html>结束\n3. **内容居中**：除了卡片内的详细信息外，所有内容都要居中对齐\n4. **统一排版**：使用一致的字体大小、颜色和间距\n5. **移动端友好**：确保在手机上也能正常显示\n\n**禁止包含：**\n- Markdown代码块标记\n- 分隔符（---）\n- 多余的HTML标记\n- 不规范的缩进\n\n**必须包含：**\n- 完整的HTML文档结构\n- 专业的邮件样式\n- 居中对齐的布局\n- 清晰的航班推荐信息\n- 可点击的预订链接\n- 价格信息突出显示\n\n**示例输出格式：**\n直接以<!DOCTYPE html>开头，以</html>结尾，中间包含完整的邮件内容，不要任何额外标记。"
             }
           ]
         },
@@ -945,10 +939,10 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        224,
-        -160
+        -688,
+        352
       ],
-      "id": "22925537-0469-4dcc-8319-d7336a09ef6d",
+      "id": "09e084c1-2a90-4931-a704-30bd8a195dd0",
       "name": "将 JSON 提炼为航班推荐邮件",
       "credentials": {
         "googlePalmApi": {
@@ -1284,10 +1278,10 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "d89bc5db-29fa-4b6d-98d2-93fa5e52b621",
+  "versionId": "05f69346-0ff4-4634-a3e4-c722dc89f250",
   "meta": {
     "instanceId": "8189043451cb6ebf84725e3e5c4c52a6b6f108808f9b746ade07cb907a172e3d"
   },
-  "id": "1F8idACopoHaU9zk",
+  "id": "Z8LR11S5JGaqgymt",
   "tags": []
 }
