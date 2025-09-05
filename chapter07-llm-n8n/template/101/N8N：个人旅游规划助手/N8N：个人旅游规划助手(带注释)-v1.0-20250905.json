@@ -1,0 +1,1293 @@
+{
+  "name": "N8N：个人旅游规划助手-comment",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🎯 N8N个人旅游规划助手\n\n**这是一个完整的AI驱动的旅游规划系统，能够自动搜索航班和酒店，并生成个性化的推荐邮件。**\n\n### 工作流概览：\n1. **📝 用户输入** - 通过表单收集旅行需求\n2. **✈️ 航班搜索** - 使用Google Flights API搜索航班\n3. **🏨 酒店搜索** - 并行搜索Airbnb、Booking.com、Agoda\n4. **🤖 AI分析** - 使用Gemini AI分析并生成推荐\n5. **📧 邮件发送** - 发送个性化推荐邮件\n\n### 技术特点：\n- 多平台数据聚合\n- AI智能推荐\n- 异步数据处理\n- 循环状态检查\n- HTML邮件模板",
+        "height": 496,
+        "width": 446,
+        "color": 3
+      },
+      "id": "5bda7ace-c767-4bbb-b4f9-70d2bf17b55b",
+      "name": "工作流概览",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1872,
+        -432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 📝 用户输入处理模块\n\n**功能：** 收集用户的旅行需求信息\n\n### 关键节点：\n- **1-On form submission** - 表单触发器，收集用户输入\n- **Extract form submission to JSON** - 使用Gemini AI将表单数据转换为结构化JSON\n- **Parse JSON** - 解析AI返回的JSON数据\n\n### 处理的数据：\n- 出发地和目的地\n- 出发和返回日期\n- 成人和儿童数量\n- 宠物和房间需求\n- 旅行偏好描述",
+        "height": 552,
+        "width": 988
+      },
+      "id": "5bba059c-5aa8-4091-9497-b46677a55d9c",
+      "name": "用户输入处理",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1872,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## ✈️ 航班搜索模块\n\n**功能：** 搜索最佳航班选项\n\n### 关键节点：\n- **Google_flights search** - 使用SerpApi搜索Google Flights\n- **Take JSON key** - 提取航班数据的关键字段\n- **Extract JSON to flight recommendation email** - 使用Gemini AI生成航班推荐邮件\n- **Send Flight Recommendation** - 发送航班推荐邮件\n\n### 搜索参数：\n- 出发和到达机场代码\n- 航班日期和类型\n- 乘客数量和舱位等级",
+        "height": 424,
+        "width": 652,
+        "color": 4
+      },
+      "id": "365f935e-3603-437f-aa99-c6f782a9bb59",
+      "name": "航班搜索模块",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -832,
+        -400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🏨 酒店搜索模块\n\n**功能：** 并行搜索多个平台的酒店信息\n\n### 关键节点：\n- **Airbnb Properties** - 搜索Airbnb房源\n- **Booking Hotel Listings** - 搜索Booking.com酒店\n- **Agoda Properties** - 搜索Agoda酒店\n- **Combine to get a snapshot first** - 合并三个平台的搜索结果\n\n### 搜索平台：\n- Airbnb (民宿和短租)\n- Booking.com (酒店预订)\n- Agoda (亚洲酒店)\n\n### 数据抓取：\n使用BrightData进行网页数据抓取",
+        "height": 592,
+        "width": 652,
+        "color": 4
+      },
+      "id": "2c995cf8-77e3-4907-a249-11319ab93d31",
+      "name": "酒店搜索模块",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -816,
+        304
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🔄 异步数据处理循环\n\n**功能：** 处理异步数据抓取和状态检查\n\n### 关键节点：\n- **Sequential polling with loop** - 循环处理多个数据源\n- **Check the status snapshot** - 检查数据抓取状态\n- **StatusCheck** - 判断数据是否准备就绪\n- **Wait loop** - 等待数据准备完成\n\n### 循环逻辑：\n1. 启动三个平台的并行搜索\n2. 循环检查每个搜索的状态\n3. 等待所有数据准备完成\n4. 下载抓取的数据内容",
+        "height": 776,
+        "width": 1228,
+        "color": 4
+      },
+      "id": "27431f6f-81bd-4766-9b17-45148f3d089f",
+      "name": "异步数据处理",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        544,
+        112
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🤖 AI智能推荐模块\n\n**功能：** 使用AI分析数据并生成个性化推荐\n\n### 关键节点：\n- **Extract from scrape to email ready to send** - 使用Gemini AI分析酒店数据\n- **Take AI result** - 聚合AI分析结果\n- **Combine all AI result** - 合并所有推荐结果\n- **Take hotel_recommendation in JSON** - 格式化推荐数据\n\n### AI分析内容：\n- 价格匹配度分析\n- 位置和便利性评估\n- 设施和评价分析\n- 个性化推荐理由\n- HTML邮件模板生成",
+        "height": 872,
+        "width": 1132,
+        "color": 4
+      },
+      "id": "eaf9f252-7c43-4d21-ab51-48196f3f2531",
+      "name": "AI智能推荐",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1792,
+        -240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 📧 邮件发送模块\n\n**功能：** 发送个性化推荐邮件给用户\n\n### 关键节点：\n- **Send hotel recommendation** - 发送酒店推荐邮件\n- **Send Flight Recommendation** - 发送航班推荐邮件\n\n### 邮件特点：\n- HTML格式的专业邮件模板\n- 包含直接预订链接\n- 个性化推荐理由\n- 移动端友好的设计\n- 品牌化的视觉设计\n\n### 发送内容：\n- 最佳航班推荐\n- 最佳酒店推荐\n- 详细的价格和预订信息",
+        "height": 488,
+        "width": 780,
+        "color": 4
+      },
+      "id": "39d9c815-53b4-48a2-add7-bdb5c259aac7",
+      "name": "邮件发送模块",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        960,
+        -464
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## ⚙️ 技术架构说明\n\n### 使用的API和服务：\n- **Google Gemini AI** - 数据分析和推荐生成\n- **SerpApi** - Google Flights搜索\n- **BrightData** - 网页数据抓取\n- **Gmail API** - 邮件发送\n\n### 工作流特点：\n- **并行处理** - 同时搜索多个平台\n- **异步等待** - 智能等待数据准备\n- **错误处理** - 包含重试机制\n- **数据聚合** - 多源数据整合\n- **AI增强** - 智能推荐和个性化\n\n### 扩展建议：\n- 添加更多酒店平台\n- 集成天气和景点信息\n- 添加价格监控功能",
+        "height": 480,
+        "width": 414,
+        "color": 3
+      },
+      "id": "8c2c0c96-d730-4bf4-8b41-3e4759ba8032",
+      "name": "技术架构说明",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1376,
+        -416
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "formTitle": "规划你的完美旅程",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Departure City",
+              "placeholder": "请输入出发城市（例如：北京）"
+            },
+            {
+              "fieldLabel": "Destination City",
+              "placeholder": "请输入目的地（例如： 东京）"
+            },
+            {
+              "fieldLabel": "Email Address",
+              "fieldType": "email",
+              "placeholder": "请输入您的邮箱地址"
+            },
+            {
+              "fieldLabel": "Departure Date",
+              "fieldType": "date",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Return Date",
+              "fieldType": "date"
+            },
+            {
+              "fieldLabel": "Number of Adults",
+              "fieldType": "number",
+              "placeholder": "请输入成人数量（13岁及以上）",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Children",
+              "fieldType": "number",
+              "placeholder": "请输入儿童数量（2–12岁）",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Infants",
+              "fieldType": "number",
+              "placeholder": "请输入婴儿数量（2岁以下）",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Pets",
+              "fieldType": "number",
+              "placeholder": "请输入携带宠物数量",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Rooms",
+              "fieldType": "number",
+              "placeholder": "请输入所需房间数量"
+            },
+            {
+              "fieldLabel": "Travel Preferences",
+              "fieldType": "textarea",
+              "placeholder": "请描述此次行程偏好（如：偏好的住宿类型、活动或特殊需求）"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -1696,
+        496
+      ],
+      "id": "ed2e98fe-d40c-45f9-9a39-bc928abf4747",
+      "name": "On form submission",
+      "webhookId": "e07b905d-832e-474a-804e-ea65285712be"
+    },
+    {
+      "parameters": {
+        "operation": "google_flights",
+        "departure_id": "={{ $json.google_flights.departure_id }}",
+        "arrival_id": "={{ $json.google_flights.arrival_id }}",
+        "outbound_date": "={{ $json.google_flights.outbound_date }}",
+        "return_date": "={{ $json.google_flights.return_date }}",
+        "type": "={{ $json.google_flights.type }}",
+        "additionalFields": {
+          "travel_class": "={{ $json.google_flights.travel_class }}",
+          "adults": "={{ $json.google_flights.adults }}",
+          "children": "={{ $json.google_flights.children }}",
+          "infants_in_seat": "={{ $json.google_flights.infants_in_seat }}"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApi",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        -160
+      ],
+      "id": "683b0ea4-c099-4445-aa36-0e0c7f3b28d1",
+      "name": "Google_flights search",
+      "credentials": {
+        "serpApi": {
+          "id": "wCNryTzqLxK5N8t8",
+          "name": "SerpApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "webScrapper",
+        "operation": "downloadSnapshot",
+        "snapshot_id": "={{ $json.snapshot_id }}",
+        "requestOptions": {}
+      },
+      "type": "@brightdata/n8n-nodes-brightdata.brightData",
+      "typeVersion": 1,
+      "position": [
+        2064,
+        176
+      ],
+      "id": "448fa587-8a2a-4099-80dc-67b53edf574d",
+      "name": "Download the snapshot content",
+      "credentials": {
+        "brightdataApi": {
+          "id": "l65cHd8G2adHt8EF",
+          "name": "BrightData account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "05660868-de08-46e3-b771-78cd1bbf3296",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "ready",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1536,
+        336
+      ],
+      "id": "da39fd04-53e7-430f-b0a4-0861ceb7aa8b",
+      "name": "StatusCheck"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.0-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.0-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Below is data from form submission\n{{$json.toJsonString()}}"
+            },
+            {
+              "content": "You are given a travel form submission in JSON format from the n8n Form Trigger node.\nYour task is to transform this input into two JSON objects:\n\n- Google Flights SERP API (n8n verified node)\n- A Home Stay (Airbnb, Booking.com)"
+            },
+            {
+              "content": "=Input Fields from Form Submission Node\n- \"Departure City\" → Origin city/airport (string)\n- \"Destination City\" → Destination city/airport (string)\n- \"Departure Date\" → Departure date (date, required)\n- \"Return Date\" → Return date (date, optional)\n- \"Number of Adults\" → Number of adults (integer, required)\n- \"Number of Children\" → Number of children aged 13+ (integer, required)\n- \"Number of Infants\" → Number of children aged 2–12 (integer, required)\n- \"Number of Pets\" → Number of pets (integer, required — use only in Airbnb)\n- \"Travel Preferences\" → Free text description (string, optional, not used in output)"
+            },
+            {
+              "content": "=Transformation Rules\n\nGoogle Flights Object :\n- \"departure_id\" = Convert {{ $json[\"Departure City\"] }} city/airport → IATA code of main international airport.\n- \"arrival_id\" = Convert {{ $json[\"Destination City\"] }} city/airport → IATA code of main international airport.\n- \"outbound_date\" = {{ $json[\"Departure Date\"] }} (YYYY-MM-DD).\n- \"return_date\" = {{ $json[\"Return Date\"] }} (YYYY-MM-DD).\n- \"type\" values:\n  - 1 = roundtrip (if Return Date exists).\n  - 2 = one-way (if only Departure Date exists).\n  - 3 = multi-city (if multiple destinations are given).\n- \"travel_class\": always 1 (economy) unless stated otherwise.\n- \"currency\" = \"USD\".\n- \"adults\" = {{ $json[\"Number of Adults\"] }}.\n- \"children\" = {{ $json[\"Number of Children\"] }}.\n- \"infants_in_seat\" = {{ $json[\"Number of Infants\"] }}.\n- \"hl\" = \"en\".\n\n\nHome Stay Object :\n- \"location\" = {{ $json[\"Destination City\"] }}.\n- \"check_in\" = {{ $json[\"Departure Date\"] }} in full ISO format (YYYY-MM-DDT00:00:00.000Z).\n- \"check_out\" = {{ $json[\"Return Date\"] }} in full ISO format (YYYY-MM-DDT00:00:00.000Z).\n- \"num_of_adults\" = {{ $json[\"Number of Adults\"] }}.\n- \"num_of_children\" = {{ $json[\"Number of Children\"] }}.\n- \"num_of_infants\" = {{ $json[\"Number of Infants\"] }}.\n- \"num_of_pets\" = {{ $json[\"Number of Pets\"] }}.\n- \"num_of_rooms\" = {{ $json[\"Number of Rooms\"] }}.\n- \"country\" = \"US\"."
+            },
+            {
+              "content": "Output Format\n\nReturn the final answer as only JSON in the following structure (no explanation, no extra text):\n{\n  \"google_flights\": {\n    \"departure_id\": \"string(IATA code departure_id)\",\n    \"arrival_id\": \"string(IATA code arrival_id)\",\n    \"outbound_date\": \"string(outbound_date)\",\n    \"return_date\": \"string(return_date)\",\n    \"type\": number(type),\n    \"currency\": \"string(currency)\",\n    \"adults\": number(adults),\n    \"children\": number(children),\n    \"infants_in_seat\": number(infants_in_seat),\n    \"travel_class\": number(travel_class),\n    \"hl\": \"string(hl)\"\n  },\n  \"homestay_preferences\": {\n    \"location\": \"string(location)\",\n    \"check_in\": \"string(check_in)\",\n    \"check_out\": \"string(check_out)\",\n    \"num_of_adults\": number(num_of_adults),\n    \"num_of_children\": number(num_of_children),\n    \"num_of_infants\": number(num_of_infants),\n    \"num_of_pets\": number(num_of_pets),\n    \"num_of_rooms\": number(num_of_rooms),\n    \"country\": \"string(country)\"\n  }\n}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1392,
+        496
+      ],
+      "id": "1b4973ef-d399-4074-995f-406ead40eeb8",
+      "name": "Extract form submission to JSON",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "12KiryYsMrX43jr6",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return JSON.parse($input.first().json.content.parts[0].text)"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1040,
+        496
+      ],
+      "id": "65050b9a-4371-4cbd-b91a-5bf70c826272",
+      "name": "Parse JSON"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_ld7ll037kqy322v05&include_errors=true&type=discover_new&discover_by=location&limit_per_input=3",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "brightdataApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "location",
+              "value": "={{ $json.homestay_preferences.location }}"
+            },
+            {
+              "name": "=check_in",
+              "value": "={{ $json.homestay_preferences.check_in }}"
+            },
+            {
+              "name": "check_out",
+              "value": "={{ $json.homestay_preferences.check_out }}"
+            },
+            {
+              "name": "num_of_adults",
+              "value": "={{ $json.homestay_preferences.num_of_adults }}"
+            },
+            {
+              "name": "=num_of_infants",
+              "value": "={{ $json.homestay_preferences.num_of_infants }}"
+            },
+            {
+              "name": "num_of_children",
+              "value": "={{ $json.homestay_preferences.num_of_children }}"
+            },
+            {
+              "name": "num_of_pets",
+              "value": "={{ $json.homestay_preferences.num_of_pets }}"
+            },
+            {
+              "name": "country",
+              "value": "={{ $json.homestay_preferences.country }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -368,
+        304
+      ],
+      "id": "71526339-9be9-4a59-8aae-6f4453781861",
+      "name": "Bright data : Airbnb Properties Information - discover by location",
+      "credentials": {
+        "brightdataApi": {
+          "id": "l65cHd8G2adHt8EF",
+          "name": "BrightData account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_mdy9ld3p1e0oqlj9g4&include_errors=true&type=discover_new&discover_by=search_input&limit_per_input=3",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "brightdataApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "=https://www.booking.com"
+            },
+            {
+              "name": "location",
+              "value": "={{ $json.homestay_preferences.location }}"
+            },
+            {
+              "name": "check_in",
+              "value": "={{ $json.homestay_preferences.check_in }}"
+            },
+            {
+              "name": "adults",
+              "value": "={{ $json.homestay_preferences.num_of_adults }}"
+            },
+            {
+              "name": "children",
+              "value": "={{ $json.homestay_preferences.num_of_children }}"
+            },
+            {
+              "name": "country",
+              "value": "={{ $json.homestay_preferences.country }}"
+            },
+            {
+              "name": "rooms",
+              "value": "={{ $json.homestay_preferences.num_of_rooms }}"
+            },
+            {
+              "name": "check_out",
+              "value": "={{ $json.homestay_preferences.check_out }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -368,
+        512
+      ],
+      "id": "5fd91002-8ea5-49fe-bb7e-e22d303aa4ec",
+      "name": "Bright Data : Booking Hotel Listings with Pricing - discover by search input",
+      "credentials": {
+        "brightdataApi": {
+          "id": "l65cHd8G2adHt8EF",
+          "name": "BrightData account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": true
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        960,
+        320
+      ],
+      "id": "314a659f-62f2-48d7-8523-863080c093e9",
+      "name": "Sequential polling with loop"
+    },
+    {
+      "parameters": {
+        "resource": "webScrapper",
+        "operation": "monitorProgressSnapshot",
+        "snapshot_id": "={{ $json.snapshot_id }}",
+        "requestOptions": {}
+      },
+      "type": "@brightdata/n8n-nodes-brightdata.brightData",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        336
+      ],
+      "id": "16e6814d-0157-4116-afa8-7565ea706acd",
+      "name": "Check the status snapshot",
+      "credentials": {
+        "brightdataApi": {
+          "id": "l65cHd8G2adHt8EF",
+          "name": "BrightData account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_mdyifvvo181pcrpew6&include_errors=true&type=discover_new&discover_by=search_input&limit_per_input=3",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "brightdataApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "=https://www.agoda.com"
+            },
+            {
+              "name": "location",
+              "value": "={{ $json.homestay_preferences.location }}"
+            },
+            {
+              "name": "check_in",
+              "value": "={{ $json.homestay_preferences.check_in }}"
+            },
+            {
+              "name": "adults",
+              "value": "={{ $json.homestay_preferences.num_of_adults }}"
+            },
+            {
+              "name": "children",
+              "value": "={{ $json.homestay_preferences.num_of_children }}"
+            },
+            {
+              "name": "country",
+              "value": "={{ $json.homestay_preferences.country }}"
+            },
+            {
+              "name": "check_out",
+              "value": "={{ $json.homestay_preferences.check_out }}"
+            }
+          ]
+        },
+        "options": {
+          "lowercaseHeaders": false
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -368,
+        720
+      ],
+      "id": "3d6c39d4-e460-42b2-b9cc-a417f53cdd59",
+      "name": "Bright Data : Agoda Properties Listings with Pricing - discover by search input",
+      "credentials": {
+        "brightdataApi": {
+          "id": "l65cHd8G2adHt8EF",
+          "name": "BrightData account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        0,
+        480
+      ],
+      "id": "8e36dda8-c264-4037-8f31-38e2088b59ed",
+      "name": "Combine to get a snapshot first"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      source: 'airbnb',\n      snapshot_id: items[0].json.snapshot_id\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        288
+      ],
+      "id": "2dbff7f5-45b1-4305-be32-7a313f3e405d",
+      "name": "Put airbnb snapshot_id"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      source: 'booking',\n      snapshot_id: items[1].json.snapshot_id\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        496
+      ],
+      "id": "11e4e736-aaee-430e-8e23-4141116938dd",
+      "name": "Put booking snapshot_id"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      source: 'agoda',\n      snapshot_id: items[2].json.snapshot_id\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        704
+      ],
+      "id": "7b5a6d1a-0ff2-4b29-abc8-3c9185a2fc7f",
+      "name": "Put agoda snapshot_id"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Check snapshot again for success",
+      "typeVersion": 1,
+      "position": [
+        1536,
+        672
+      ],
+      "id": "93974777-48f8-4328-9008-027e9a2ccbf4"
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1840,
+        448
+      ],
+      "id": "53f7e533-471e-44c3-a884-723c0635597a",
+      "name": "Wait loop",
+      "webhookId": "32aa0c7c-6c62-487b-b733-5b0ff8870434"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.0-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.0-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "你是一名专业旅行顾问 AI。请基于提供的酒店数据与用户偏好，生成 TOP 3 酒店推荐，以 HTML 邮件格式呈现。"
+            },
+            {
+              "content": "=旅客偏好：\n出发地：{{ $('On form submission').first().json[\"Departure City\"] }}\n目的地：{{ $('On form submission').first().json[\"Destination City\"] }}\n出发日期：{{ $('On form submission').first().json[\"Departure Date\"] }}\n返程日期：{{ $('On form submission').first().json[\"Return Date\"] }}\n成人：{{ $('On form submission').first().json[\"Number of Adults\"] }}\n儿童：{{ $('On form submission').first().json[\"Number of Children\"] }}\n婴儿：{{ $('On form submission').first().json[\"Number of Infants\"] }}\n宠物：{{ $('On form submission').first().json[\"Number of Pets\"] }}\n出行描述：{{ $('On form submission').first().json[\"Travel Preferences\"] }}\n"
+            },
+            {
+              "content": "=酒店清单：\n{{ $json.toJsonString() }}\n\n*提示：酒店数据可能来自多个平台，包括 Airbnb、Booking.com 和 Agoda*"
+            },
+            {
+              "content": "## 任务：\n1. 分析与匹配：基于以下维度为每家酒店评分：\n   - 预算匹配度（是否在价格范围内）\n   - 位置匹配度\n   - 设施偏好匹配度\n   - 日期可用性\n   - 特殊需求匹配度\n\n2. 选择最优：挑选最符合需求的一家酒店作为推荐\n\n3. 生成 HTML 邮件：创建完整的 HTML 邮件内容，包括："
+            },
+            {
+              "content": "=### 邮件结构：\n- 主题：\"为 {{$json.user_submission.destination}} 精选的完美酒店——最佳匹配！\"\n- 问候：\"亲爱的 {{$json.user_submission.user_info.name}}，\"\n- 引言：引用其行程（{{$json.user_submission.check_in}} 至 {{$json.user_submission.check_out}}，{{$json.user_submission.guests}} 位客人）\n\n### 推荐酒店卡片：\n<div style=\"border:2px solid #2c5aa0;margin:20px 0;padding:25px;border-radius:12px;max-width:580px;background:linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);\">\n  <div style=\"text-align:center;margin-bottom:20px;\">\n    <h2 style=\"color:#2c5aa0;margin:0 0 5px 0;font-size:24px;\">🏆 我们的首选推荐</h2>\n    <h3 style=\"color:#2c5aa0;margin:0 0 10px 0;font-size:20px;\">[酒店名称]</h3>\n  </div>\n  <p style=\"color:#888;font-size:12px;margin:0 0 15px 0;text-align:center;\">⭐ 来源于 [PLATFORM_NAME] • 最符合您需求</p>\n  <p style=\"color:#666;margin:8px 0;\"><strong>📍 位置：</strong>  [LOCATION]</p>\n  <p style=\"color:#666;margin:8px 0;\"><strong>💰 价格：</strong> $[PRICE]/晚 | 总计：$[TOTAL_COST]</p>\n  <p style=\"color:#666;margin:8px 0;\"><strong>⭐ 评分：</strong> [STARS] ([RATING]/5)</p>\n  <p style=\"color:#666;margin:8px 0;\"><strong>✨ 设施：</strong>  [KEY_AMENITIES]</p>\n  <p style=\"margin:15px 0;font-size:16px;line-height:1.6;\">[详细描述 + 为何这家最匹配]</p>\n  <div style=\"text-align:center;margin:20px 0;\">\n    <a href=\"[BOOKING_URL]\" style=\"background:#2c5aa0;color:white;padding:15px 30px;text-decoration:none;border-radius:8px;display:inline-block;font-size:16px;font-weight:bold;\">🔗 在  [PLATFORM] 上立即预订</a>\n  </div>\n</div>"
+            },
+            {
+              "content": "<!DOCTYPE html>\n<html>\n<head><meta charset=\"UTF-8\"><title>Hotel Recommendations</title></head>\n<body style=\"font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px;\">\n[COMPLETE EMAIL CONTENT HERE]\n</body>\n</html>"
+            },
+            {
+              "content": "邮件页脚：\n\n专业的结束语\n你的联系信息\n\"如有疑问，直接回复本邮件\"\n\n输出格式：\n仅返回完整的 HTML 邮件内容（不需要解释，不要使用 Markdown 代码块）。"
+            },
+            {
+              "content": "样式要求：\n\n- 仅使用内联 CSS（邮件客户端友好）\n- 最大宽度：600px\n- 移动端友好\n- 专业的蓝/灰配色\n- 清晰的字体排版（Arial/Helvetica）\n- 20px 的边距/留白"
+            },
+            {
+              "content": "务必牢记：\n\n- 明确阐述为何该酒店匹配其需求\n- 包含总价计算\n- 仅选择最匹配的一家\n- 提供详细理由说明其为最佳选择\n- 突出直达原平台的预订链接\n- 确保可直接通过 Gmail 发送"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        2304,
+        176
+      ],
+      "id": "86e5f53d-aeaf-4c9c-ab48-14fb05aefeac",
+      "name": "Extract from scrape to email ready to send",
+      "retryOnFail": true,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "12KiryYsMrX43jr6",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "content.parts[0].text",
+              "renameField": true,
+              "outputFieldName": "hotel_recommendation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2688,
+        176
+      ],
+      "id": "a567e4b3-e33a-4e4c-a057-f373961b50b8",
+      "name": "Take AI result"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "17f93348-b3cd-416b-8748-2d3fd1507a4c",
+              "leftValue": "={{$input.all()}}",
+              "rightValue": "={{ Number(3) }}",
+              "operator": {
+                "type": "array",
+                "operation": "lengthEquals",
+                "rightType": "number"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2288,
+        464
+      ],
+      "id": "26ddfc24-2bb4-4f7b-92c4-064c8c02e6d2",
+      "name": "Checking loop finish"
+    },
+    {
+      "parameters": {
+        "jsCode": "let results = [],\n  i = 0;\n\ndo {\n  try {\n    results = results.concat($('Take AI result').all(0, i));\n  } catch (error) {\n    return results;\n  }\n  i++;\n} while (true);\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2096,
+        464
+      ],
+      "id": "c577c0c4-d35e-45df-8d01-3b7483188f08",
+      "name": "Combine all AI result"
+    },
+    {
+      "parameters": {
+        "jsCode": "let allHotels = [];\nitems.forEach(item => {\n  if (item.json.hotel_recommendation) {\n    allHotels.push(...item.json.hotel_recommendation);\n  }\n});\n\nreturn [{\n  json: {\n    emailBody: allHotels.join(\"\\n\\n---\\n\\n\")\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2528,
+        448
+      ],
+      "id": "f8db0b90-ec0e-4fa3-83c0-3046ad94c704",
+      "name": "Take hotel_recommendation in JSON to before send to email"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').first().json[\"Email Address\"] }}",
+        "subject": "Your Hotel Recommendation",
+        "message": "={{ $json.emailBody }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2736,
+        448
+      ],
+      "id": "a6d71455-75fb-4b95-9ebd-69f276546cf2",
+      "name": "Send hotel recommendation",
+      "webhookId": "5852d21c-bf4d-4668-81be-f3959dc15ccd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zq2VO4836Nm8fvsH",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').first().json[\"Email Address\"] }}",
+        "subject": "Your Flight Recommendation",
+        "message": "={{ $json.emailBody[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1520,
+        -160
+      ],
+      "id": "ccaf46b8-e5b5-49d5-b369-f0ca6c1d39b3",
+      "name": "Send Flight Recommendation",
+      "webhookId": "5852d21c-bf4d-4668-81be-f3959dc15ccd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zq2VO4836Nm8fvsH",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 45
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1840,
+        176
+      ],
+      "id": "641400fd-4d69-453d-a832-08c2371032fe",
+      "name": "Wait before download the snapshot",
+      "webhookId": "93b56a7d-0839-4747-869f-b6561eba0131"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bdb98b8b-8933-4703-b922-6e210886b981",
+              "name": "google_flights_url",
+              "value": "={{ $json.search_metadata.google_flights_url }}",
+              "type": "string"
+            },
+            {
+              "id": "adf4aabd-c788-4dba-b75d-37fcdd93fbd0",
+              "name": "parameters",
+              "value": "={{ $json.search_parameters }}",
+              "type": "object"
+            },
+            {
+              "id": "b6553536-8e6a-434b-862f-3497523b4a10",
+              "name": "best_flights",
+              "value": "={{ $json.best_flights }}",
+              "type": "array"
+            },
+            {
+              "id": "dad93317-f61a-47ef-aab5-c57bc04a55bc",
+              "name": "other_flights",
+              "value": "={{ $json.other_flights }}",
+              "type": "array"
+            },
+            {
+              "id": "c59c67ec-e417-461f-9ccf-20bd737184e1",
+              "name": "airports",
+              "value": "={{ $json.airports }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        -160
+      ],
+      "id": "93bf3e80-ad03-4e56-8f23-8782034dcce4",
+      "name": "Take JSON key"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "content.parts[0].text",
+              "renameField": true,
+              "outputFieldName": "emailBody"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        576,
+        -160
+      ],
+      "id": "6d76e1f6-b48a-4200-88c9-0d8c94aefec3",
+      "name": "Take AI result1"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=你是一名专业旅行顾问 AI。请基于提供的航班数据与用户偏好，生成 1 条最佳航班推荐（HTML 邮件格式）。"
+            },
+            {
+              "content": "=## 输入数据：\n可选航班：{{$json}}\n用户偏好：\n出发地：{{ $('On form submission').first().json[\"Departure City\"] }}\n目的地：{{ $('On form submission').first().json[\"Destination City\"] }}\n出发日期：{{ $('On form submission').first().json[\"Departure Date\"] }}\n返程日期：{{ $('On form submission').first().json[\"Return Date\"] }}\n成人：{{ $('On form submission').first().json[\"Number of Adults\"] }}\n儿童：{{ $('On form submission').first().json['Number of Children'] }}\n婴儿：{{ $('On form submission').first().json['Number of Infants'] }}\n宠物：{{ $('On form submission').first().json['Number of Pets'] }}\n出行描述：{{ $('On form submission').first().json[\"Travel Preferences\"] }}\nGoogle Flights 链接：\n{{ $json.google_flights_url }}\n\n*提示：航班数据来自 Google Flights*"
+            },
+            {
+              "content": "## 任务：\n1. 分析与匹配：基于以下维度为每个航班评分：\n   - 价格匹配度（是否在预算范围内）\n   - 时间偏好（起降时间）\n   - 总时长与经停次数\n   - 航司偏好\n   - 舱位要求\n   - 中转便利性\n\n2. 选择最佳：挑选最符合需求的一条航班方案\n\n3. 生成 HTML 邮件：创建完整的 HTML 邮件内容，包括："
+            },
+            {
+              "content": "### 邮件结构：\n- 主题：\"前往 {{$json.user_submission.destination}} 的最佳航班——为您精选！\"\n- 问候：\"亲爱的 {{$json.user_submission.user_info.name}}，\"\n- 引言：引用其行程日期与偏好"
+            },
+            {
+              "content": "### 推荐航班卡片：\n<div style=\"border:2px solid #1e88e5;margin:20px 0;padding:25px;border-radius:12px;max-width:580px;background:linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);\">\n  <div style=\"text-align:center;margin-bottom:20px;\">\n    <h2 style=\"color:#1e88e5;margin:0 0 5px 0;font-size:24px;\">✈️ 我们的航班首选推荐</h2>\n    <h3 style=\"color:#1e88e5;margin:0 0 10px 0;font-size:18px;\">[出发城市] → [到达城市]</h3>\n  </div>\n  \n  <!-- 去程航班 -->\n  <div style=\"background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;\">\n    <h4 style=\"color:#1e88e5;margin:0 0 10px 0;\">🛫 去程 - [出发日期]</h4>\n    <p style=\"margin:5px 0;\"><strong>航司：</strong> [航司名称] • 航班 [航班号]</p>\n    <p style=\"margin:5px 0;\"><strong>起飞：</strong> [起飞时间] 于 [出发机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;\"><strong>到达：</strong> [到达时间] 于 [到达机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;\"><strong>时长：</strong> [飞行时长]</p>\n    <p style=\"margin:5px 0;\"><strong>经停：</strong> [经停信息]</p>\n  </div>\n  \n  <!-- 返程航班（若为往返） -->\n  <div style=\"background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;\">\n    <h4 style=\"color:#1e88e5;margin:0 0 10px 0;\">🛬 返程 - [返程日期]</h4>\n    <p style=\"margin:5px 0;\"><strong>航司：</strong> [返程航司] • 航班 [返程航班号]</p>\n    <p style=\"margin:5px 0;\"><strong>起飞：</strong> [返程起飞时间] 于 [返程出发机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;\"><strong>到达：</strong> [返程到达时间] 于 [返程到达机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;\"><strong>时长：</strong> [返程时长]</p>\n    <p style=\"margin:5px 0;\"><strong>经停：</strong> [返程经停信息]</p>\n  </div>\n  \n  <div style=\"text-align:center;margin:20px 0;padding:15px;background:#fff3cd;border-radius:8px;\">\n    <p style=\"margin:0 0 10px 0;font-size:18px;\"><strong>💰 总价：$[总价]</strong></p>\n    <p style=\"margin:0;color:#666;\">包含 [成人数量] 名成人 + [儿童数量] 名儿童</p>\n  </div>\n  \n  <p style=\"margin:15px 0;font-size:16px;line-height:1.6;\">[详细说明为何该航班为最佳选择]</p>\n  \n  <div style=\"text-align:center;margin:20px 0;\">\n    <a href=\"[GOOGLE_FLIGHTS_URL]\" style=\"background:#1e88e5;color:white;padding:15px 30px;text-decoration:none;border-radius:8px;display:inline-block;font-size:16px;font-weight:bold;\">✈️ 前往 Google Flights 预订</a>\n  </div>\n</div>"
+            },
+            {
+              "content": "邮件页脚：\n\n专业的结束语\n你的联系信息\n旅行提示或预订提醒\n\n输出格式：\n仅返回完整的 HTML 邮件内容（不需要解释，不要使用 Markdown 代码块）。直接以 HTML 开头。\n分析指南：\n\n权衡总旅行时间与价格\n考虑经停便利性与时长\n关注起降时间偏好\n考虑航司可靠性与口碑\n如涉及，综合行李政策\n说明为何该航班优于替代方案\n考虑时区差异\n考虑机场通达性\n\n样式要求：\n\n仅使用内联 CSS（邮件友好）\n最大宽度：600px\n移动端友好\n专业蓝色系（#1e88e5）\n清晰的信息层级\n易于扫描的时间轴风格\n突出显示价格"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        224,
+        -160
+      ],
+      "id": "22925537-0469-4dcc-8319-d7336a09ef6d",
+      "name": "将 JSON 提炼为航班推荐邮件",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "12KiryYsMrX43jr6",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Extract form submission to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google_flights search": {
+      "main": [
+        [
+          {
+            "node": "Take JSON key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download the snapshot content": {
+      "main": [
+        [
+          {
+            "node": "Extract from scrape to email ready to send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "StatusCheck": {
+      "main": [
+        [
+          {
+            "node": "Wait before download the snapshot",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract form submission to JSON": {
+      "main": [
+        [
+          {
+            "node": "Parse JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse JSON": {
+      "main": [
+        [
+          {
+            "node": "Google_flights search",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Bright data : Airbnb Properties Information - discover by location",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Bright Data : Booking Hotel Listings with Pricing - discover by search input",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Bright Data : Agoda Properties Listings with Pricing - discover by search input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bright data : Airbnb Properties Information - discover by location": {
+      "main": [
+        [
+          {
+            "node": "Combine to get a snapshot first",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bright Data : Booking Hotel Listings with Pricing - discover by search input": {
+      "main": [
+        [
+          {
+            "node": "Combine to get a snapshot first",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Sequential polling with loop": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Check the status snapshot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check the status snapshot": {
+      "main": [
+        [
+          {
+            "node": "StatusCheck",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bright Data : Agoda Properties Listings with Pricing - discover by search input": {
+      "main": [
+        [
+          {
+            "node": "Combine to get a snapshot first",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Combine to get a snapshot first": {
+      "main": [
+        [
+          {
+            "node": "Put airbnb snapshot_id",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Put booking snapshot_id",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Put agoda snapshot_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Put airbnb snapshot_id": {
+      "main": [
+        [
+          {
+            "node": "Sequential polling with loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Put booking snapshot_id": {
+      "main": [
+        [
+          {
+            "node": "Sequential polling with loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Put agoda snapshot_id": {
+      "main": [
+        [
+          {
+            "node": "Sequential polling with loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check snapshot again for success": {
+      "main": [
+        [
+          {
+            "node": "Sequential polling with loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait loop": {
+      "main": [
+        [
+          {
+            "node": "Check snapshot again for success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from scrape to email ready to send": {
+      "main": [
+        [
+          {
+            "node": "Take AI result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Take AI result": {
+      "main": [
+        [
+          {
+            "node": "Combine all AI result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Checking loop finish": {
+      "main": [
+        [
+          {
+            "node": "Take hotel_recommendation in JSON to before send to email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine all AI result": {
+      "main": [
+        [
+          {
+            "node": "Checking loop finish",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Take hotel_recommendation in JSON to before send to email": {
+      "main": [
+        [
+          {
+            "node": "Send hotel recommendation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait before download the snapshot": {
+      "main": [
+        [
+          {
+            "node": "Download the snapshot content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Take JSON key": {
+      "main": [
+        [
+          {
+            "node": "将 JSON 提炼为航班推荐邮件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Take AI result1": {
+      "main": [
+        [
+          {
+            "node": "Send Flight Recommendation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "将 JSON 提炼为航班推荐邮件": {
+      "main": [
+        [
+          {
+            "node": "Take AI result1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6e56ea87-ba08-4355-a914-5bf087ba783c",
+  "meta": {
+    "instanceId": "8189043451cb6ebf84725e3e5c4c52a6b6f108808f9b746ade07cb907a172e3d"
+  },
+  "id": "1F8idACopoHaU9zk",
+  "tags": []
+}
