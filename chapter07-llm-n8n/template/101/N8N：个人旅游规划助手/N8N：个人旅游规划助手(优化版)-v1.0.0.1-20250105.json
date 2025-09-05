@@ -1,0 +1,409 @@
+{
+  "name": "N8N：个人旅游规划助手-优化版",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🎯 N8N个人旅游规划助手 - 优化版\n\n**这是一个完整的AI驱动的旅游规划系统，能够自动搜索航班和酒店，并生成个性化的推荐邮件。**\n\n### 工作流概览：\n1. **📝 用户输入** - 通过表单收集旅行需求\n2. **✈️ 航班搜索** - 使用Google Flights API搜索航班\n3. **🏨 酒店搜索** - 并行搜索Airbnb、Booking.com、Agoda\n4. **🤖 AI分析** - 使用Gemini AI分析并生成推荐\n5. **📧 邮件发送** - 发送个性化推荐邮件\n\n### 优化特点：\n- ✅ 修复邮件格式问题\n- ✅ 统一排版和对齐\n- ✅ 去除多余分隔符\n- ✅ 优化HTML邮件模板\n- ✅ 移动端友好设计",
+        "height": 496,
+        "width": 446,
+        "color": 3
+      },
+      "id": "5bda7ace-c767-4bbb-b4f9-70d2bf17b55b",
+      "name": "工作流概览",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1872,
+        -432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "formTitle": "规划你的完美旅程",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Departure City",
+              "placeholder": "请输入出发城市（例如：北京）"
+            },
+            {
+              "fieldLabel": "Destination City",
+              "placeholder": "请输入目的地（例如： 东京）"
+            },
+            {
+              "fieldLabel": "Email Address",
+              "fieldType": "email",
+              "placeholder": "请输入您的邮箱地址"
+            },
+            {
+              "fieldLabel": "Departure Date",
+              "fieldType": "date",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Return Date",
+              "fieldType": "date"
+            },
+            {
+              "fieldLabel": "Number of Adults",
+              "fieldType": "number",
+              "placeholder": "请输入成人数量（13岁及以上）",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Children",
+              "fieldType": "number",
+              "placeholder": "请输入儿童数量（2–12岁）",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Infants",
+              "fieldType": "number",
+              "placeholder": "请输入婴儿数量（2岁以下）",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Pets",
+              "fieldType": "number",
+              "placeholder": "请输入携带宠物数量",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Rooms",
+              "fieldType": "number",
+              "placeholder": "请输入所需房间数量"
+            },
+            {
+              "fieldLabel": "Travel Preferences",
+              "fieldType": "textarea",
+              "placeholder": "请描述此次行程偏好（如：偏好的住宿类型、活动或特殊需求）"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -1696,
+        496
+      ],
+      "id": "ed2e98fe-d40c-45f9-9a39-bc928abf4747",
+      "name": "On form submission",
+      "webhookId": "e07b905d-832e-474a-804e-ea65285712be"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.0-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.0-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Below is data from form submission\n{{$json.toJsonString()}}"
+            },
+            {
+              "content": "You are given a travel form submission in JSON format from the n8n Form Trigger node.\nYour task is to transform this input into two JSON objects:\n\n- Google Flights SERP API (n8n verified node)\n- A Home Stay (Airbnb, Booking.com)"
+            },
+            {
+              "content": "=Input Fields from Form Submission Node\n- \"Departure City\" → Origin city/airport (string)\n- \"Destination City\" → Destination city/airport (string)\n- \"Departure Date\" → Departure date (date, required)\n- \"Return Date\" → Return date (date, optional)\n- \"Number of Adults\" → Number of adults (integer, required)\n- \"Number of Children\" → Number of children aged 13+ (integer, required)\n- \"Number of Infants\" → Number of children aged 2–12 (integer, required)\n- \"Number of Pets\" → Number of pets (integer, required — use only in Airbnb)\n- \"Travel Preferences\" → Free text description (string, optional, not used in output)"
+            },
+            {
+              "content": "=Transformation Rules\n\nGoogle Flights Object :\n- \"departure_id\" = Convert {{ $json[\"Departure City\"] }} city/airport → IATA code of main international airport.\n- \"arrival_id\" = Convert {{ $json[\"Destination City\"] }} city/airport → IATA code of main international airport.\n- \"outbound_date\" = {{ $json[\"Departure Date\"] }} (YYYY-MM-DD).\n- \"return_date\" = {{ $json[\"Return Date\"] }} (YYYY-MM-DD).\n- \"type\" values:\n  - 1 = roundtrip (if Return Date exists).\n  - 2 = one-way (if only Departure Date exists).\n  - 3 = multi-city (if multiple destinations are given).\n- \"travel_class\": always 1 (economy) unless stated otherwise.\n- \"currency\" = \"USD\".\n- \"adults\" = {{ $json[\"Number of Adults\"] }}.\n- \"children\" = {{ $json[\"Number of Children\"] }}.\n- \"infants_in_seat\" = {{ $json[\"Number of Infants\"] }}.\n- \"hl\" = \"en\".\n\n\nHome Stay Object :\n- \"location\" = {{ $json[\"Destination City\"] }}.\n- \"check_in\" = {{ $json[\"Departure Date\"] }} in full ISO format (YYYY-MM-DDT00:00:00.000Z).\n- \"check_out\" = {{ $json[\"Return Date\"] }} in full ISO format (YYYY-MM-DDT00:00:00.000Z).\n- \"num_of_adults\" = {{ $json[\"Number of Adults\"] }}.\n- \"num_of_children\" = {{ $json[\"Number of Children\"] }}.\n- \"num_of_infants\" = {{ $json[\"Number of Infants\"] }}.\n- \"num_of_pets\" = {{ $json[\"Number of Pets\"] }}.\n- \"num_of_rooms\" = {{ $json[\"Number of Rooms\"] }}.\n- \"country\" = \"US\"."
+            },
+            {
+              "content": "Output Format\n\nReturn the final answer as only JSON in the following structure (no explanation, no extra text):\n{\n  \"google_flights\": {\n    \"departure_id\": \"string(IATA code departure_id)\",\n    \"arrival_id\": \"string(IATA code arrival_id)\",\n    \"outbound_date\": \"string(outbound_date)\",\n    \"return_date\": \"string(return_date)\",\n    \"type\": number(type),\n    \"currency\": \"string(currency)\",\n    \"adults\": number(adults),\n    \"children\": number(children),\n    \"infants_in_seat\": number(infants_in_seat),\n    \"travel_class\": number(travel_class),\n    \"hl\": \"string(hl)\"\n  },\n  \"homestay_preferences\": {\n    \"location\": \"string(location)\",\n    \"check_in\": \"string(check_in)\",\n    \"check_out\": \"string(check_out)\",\n    \"num_of_adults\": number(num_of_adults),\n    \"num_of_children\": number(num_of_children),\n    \"num_of_infants\": number(num_of_infants),\n    \"num_of_pets\": number(num_of_pets),\n    \"num_of_rooms\": number(num_of_rooms),\n    \"country\": \"string(country)\"\n  }\n}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1392,
+        496
+      ],
+      "id": "1b4973ef-d399-4074-995f-406ead40eeb8",
+      "name": "Extract form submission to JSON",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "12KiryYsMrX43jr6",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return JSON.parse($input.first().json.content.parts[0].text)"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1040,
+        496
+      ],
+      "id": "65050b9a-4371-4cbd-b91a-5bf70c826272",
+      "name": "Parse JSON"
+    },
+    {
+      "parameters": {
+        "operation": "google_flights",
+        "departure_id": "={{ $json.google_flights.departure_id }}",
+        "arrival_id": "={{ $json.google_flights.arrival_id }}",
+        "outbound_date": "={{ $json.google_flights.outbound_date }}",
+        "return_date": "={{ $json.google_flights.return_date }}",
+        "type": "={{ $json.google_flights.type }}",
+        "additionalFields": {
+          "travel_class": "={{ $json.google_flights.travel_class }}",
+          "adults": "={{ $json.google_flights.adults }}",
+          "children": "={{ $json.google_flights.children }}",
+          "infants_in_seat": "={{ $json.google_flights.infants_in_seat }}"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApi",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        -160
+      ],
+      "id": "683b0ea4-c099-4445-aa36-0e0c7f3b28d1",
+      "name": "Google_flights search",
+      "credentials": {
+        "serpApi": {
+          "id": "wCNryTzqLxK5N8t8",
+          "name": "SerpApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.0-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.0-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=你是一名专业旅行顾问 AI。请基于提供的酒店数据与用户偏好，生成 TOP 1 酒店推荐，以 HTML 邮件格式呈现。"
+            },
+            {
+              "content": "=旅客偏好：\n出发地：{{ $('On form submission').first().json[\"Departure City\"] }}\n目的地：{{ $('On form submission').first().json[\"Destination City\"] }}\n出发日期：{{ $('On form submission').first().json[\"Departure Date\"] }}\n返程日期：{{ $('On form submission').first().json[\"Return Date\"] }}\n成人：{{ $('On form submission').first().json[\"Number of Adults\"] }}\n儿童：{{ $('On form submission').first().json[\"Number of Children\"] }}\n婴儿：{{ $('On form submission').first().json[\"Number of Infants\"] }}\n宠物：{{ $('On form submission').first().json[\"Number of Pets\"] }}\n出行描述：{{ $('On form submission').first().json[\"Travel Preferences\"] }}\n"
+            },
+            {
+              "content": "=酒店清单：\n{{ $json.toJsonString() }}\n\n*提示：酒店数据可能来自多个平台，包括 Airbnb、Booking.com 和 Agoda*"
+            },
+            {
+              "content": "## 任务：\n1. 分析与匹配：基于以下维度为每家酒店评分：\n   - 预算匹配度（是否在价格范围内）\n   - 位置匹配度\n   - 设施偏好匹配度\n   - 日期可用性\n   - 特殊需求匹配度\n\n2. 选择最优：挑选最符合需求的一家酒店作为推荐\n\n3. 生成 HTML 邮件：创建完整的 HTML 邮件内容，包括："
+            },
+            {
+              "content": "### 邮件结构要求：\n\n**重要：直接输出完整的HTML邮件，不要包含任何Markdown代码块、分隔符或额外文本！**\n\n邮件必须包含以下结构：\n\n1. **HTML文档结构**：\n```html\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <title>酒店推荐</title>\n</head>\n<body style=\"font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px;background-color:#f8f9fa;\">\n  [邮件内容]\n</body>\n</html>\n```\n\n2. **邮件头部**：\n- 标题：\"为 [目的地] 精选的完美酒店——最佳匹配！\"\n- 问候：\"亲爱的旅客，\"\n- 行程介绍：包含出发地、目的地、日期、人数等信息\n\n3. **推荐酒店卡片**：\n```html\n<div style=\"border:2px solid #2c5aa0;margin:20px 0;padding:25px;border-radius:12px;max-width:580px;background:linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);box-shadow:0 4px 6px rgba(0,0,0,0.1);\">\n  <div style=\"text-align:center;margin-bottom:20px;\">\n    <h2 style=\"color:#2c5aa0;margin:0 0 5px 0;font-size:24px;font-weight:bold;\">🏆 我们的首选推荐</h2>\n    <h3 style=\"color:#2c5aa0;margin:0 0 10px 0;font-size:20px;font-weight:normal;\">[酒店名称]</h3>\n  </div>\n  <p style=\"color:#888;font-size:12px;margin:0 0 15px 0;text-align:center;\">⭐ 来源于 [平台名称] • 最符合您需求</p>\n  <div style=\"background:#f8f9fa;padding:15px;border-radius:8px;margin:10px 0;\">\n    <p style=\"color:#666;margin:8px 0;font-size:14px;\"><strong>📍 位置：</strong> [具体位置]</p>\n    <p style=\"color:#666;margin:8px 0;font-size:14px;\"><strong>💰 价格：</strong> $[每晚价格]/晚 | 总计：$[总价]</p>\n    <p style=\"color:#666;margin:8px 0;font-size:14px;\"><strong>⭐ 评分：</strong> [评分] ([分数]/10)</p>\n    <p style=\"color:#666;margin:8px 0;font-size:14px;\"><strong>✨ 设施：</strong> [主要设施]</p>\n  </div>\n  <p style=\"margin:15px 0;font-size:16px;line-height:1.6;color:#333;\">[详细推荐理由和匹配说明]</p>\n  <div style=\"text-align:center;margin:20px 0;\">\n    <a href=\"[预订链接]\" style=\"background:#2c5aa0;color:white;padding:15px 30px;text-decoration:none;border-radius:8px;display:inline-block;font-size:16px;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.2);\">🔗 在 [平台名称] 上立即预订</a>\n  </div>\n</div>\n```\n\n4. **邮件页脚**：\n- 专业结束语\n- 联系信息\n- \"如有疑问，直接回复本邮件\"\n\n**输出要求：**\n- 直接输出完整HTML，不要任何```html```标记\n- 不要包含---分隔符\n- 确保所有内容居中对齐（除了卡片内的详细信息）\n- 使用统一的字体和颜色方案"
+            },
+            {
+              "content": "样式规范：\n\n**整体布局：**\n- 最大宽度：600px\n- 居中对齐：margin: 0 auto\n- 内边距：20px\n- 背景色：#f8f9fa\n\n**字体规范：**\n- 主字体：Arial, sans-serif\n- 标题：24px, 20px\n- 正文：16px, 14px\n- 小字：12px\n- 行高：1.6\n\n**颜色方案：**\n- 主色调：#2c5aa0（蓝色）\n- 文字：#333（深灰）\n- 次要文字：#666（中灰）\n- 提示文字：#888（浅灰）\n\n**对齐要求：**\n- 邮件标题：居中\n- 问候语：居中\n- 行程信息：居中\n- 酒店卡片：居中\n- 卡片内详细信息：左对齐\n- 预订按钮：居中\n- 页脚：居中\n\n**重要提醒：**\n- 不要使用Markdown格式\n- 不要包含代码块标记\n- 不要添加分隔符\n- 确保HTML格式正确\n- 所有样式使用内联CSS"
+            },
+            {
+              "content": "输出格式要求：\n\n**严格遵循以下规则：**\n\n1. **直接输出HTML**：不要包含```html```、```、---等任何标记\n2. **完整HTML文档**：从<!DOCTYPE html>开始，到</html>结束\n3. **内容居中**：除了卡片内的详细信息外，所有内容都要居中对齐\n4. **统一排版**：使用一致的字体大小、颜色和间距\n5. **移动端友好**：确保在手机上也能正常显示\n\n**禁止包含：**\n- Markdown代码块标记\n- 分隔符（---）\n- 多余的HTML标记\n- 不规范的缩进\n\n**必须包含：**\n- 完整的HTML文档结构\n- 专业的邮件样式\n- 居中对齐的布局\n- 清晰的酒店推荐信息\n- 可点击的预订链接\n\n**示例输出格式：**\n直接以<!DOCTYPE html>开头，以</html>结尾，中间包含完整的邮件内容，不要任何额外标记。"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        2304,
+        176
+      ],
+      "id": "86e5f53d-aeaf-4c9c-ab48-14fb05aefeac",
+      "name": "Extract from scrape to email ready to send",
+      "retryOnFail": true,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "12KiryYsMrX43jr6",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.0-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.0-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=你是一名专业旅行顾问 AI。请基于提供的航班数据与用户偏好，生成 1 条最佳航班推荐（HTML 邮件格式）。"
+            },
+            {
+              "content": "=## 输入数据：\n可选航班：{{$json}}\n用户偏好：\n出发地：{{ $('On form submission').first().json[\"Departure City\"] }}\n目的地：{{ $('On form submission').first().json[\"Destination City\"] }}\n出发日期：{{ $('On form submission').first().json[\"Departure Date\"] }}\n返程日期：{{ $('On form submission').first().json[\"Return Date\"] }}\n成人：{{ $('On form submission').first().json[\"Number of Adults\"] }}\n儿童：{{ $('On form submission').first().json['Number of Children'] }}\n婴儿：{{ $('On form submission').first().json['Number of Infants'] }}\n宠物：{{ $('On form submission').first().json['Number of Pets'] }}\n出行描述：{{ $('On form submission').first().json[\"Travel Preferences\"] }}\nGoogle Flights 链接：\n{{ $json.google_flights_url }}\n\n*提示：航班数据来自 Google Flights*"
+            },
+            {
+              "content": "## 任务：\n1. 分析与匹配：基于以下维度为每个航班评分：\n   - 价格匹配度（是否在预算范围内）\n   - 时间偏好（起降时间）\n   - 总时长与经停次数\n   - 航司偏好\n   - 舱位要求\n   - 中转便利性\n\n2. 选择最佳：挑选最符合需求的一条航班方案\n\n3. 生成 HTML 邮件：创建完整的 HTML 邮件内容，包括："
+            },
+            {
+              "content": "### 航班推荐邮件结构要求：\n\n**重要：直接输出完整的HTML邮件，不要包含任何Markdown代码块、分隔符或额外文本！**\n\n邮件必须包含以下结构：\n\n1. **HTML文档结构**：\n```html\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <title>航班推荐</title>\n</head>\n<body style=\"font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px;background-color:#f8f9fa;\">\n  [邮件内容]\n</body>\n</html>\n```\n\n2. **邮件头部**：\n- 标题：\"前往 [目的地] 的最佳航班——为您精选！\"\n- 问候：\"亲爱的旅客，\"\n- 行程介绍：包含出发地、目的地、日期、人数等信息\n\n3. **推荐航班卡片**：\n```html\n<div style=\"border:2px solid #1e88e5;margin:20px 0;padding:25px;border-radius:12px;max-width:580px;background:linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);box-shadow:0 4px 6px rgba(0,0,0,0.1);\">\n  <div style=\"text-align:center;margin-bottom:20px;\">\n    <h2 style=\"color:#1e88e5;margin:0 0 5px 0;font-size:24px;font-weight:bold;\">✈️ 我们的航班首选推荐</h2>\n    <h3 style=\"color:#1e88e5;margin:0 0 10px 0;font-size:18px;font-weight:normal;\">[出发城市] → [到达城市]</h3>\n  </div>\n  \n  <!-- 去程航班 -->\n  <div style=\"background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;\">\n    <h4 style=\"color:#1e88e5;margin:0 0 10px 0;font-size:16px;\">🛫 去程 - [出发日期]</h4>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>航司：</strong> [航司名称] • 航班 [航班号]</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>起飞：</strong> [起飞时间] 于 [出发机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>到达：</strong> [到达时间] 于 [到达机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>时长：</strong> [飞行时长]</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>经停：</strong> [经停信息]</p>\n  </div>\n  \n  <!-- 返程航班（若为往返） -->\n  <div style=\"background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;\">\n    <h4 style=\"color:#1e88e5;margin:0 0 10px 0;font-size:16px;\">🛬 返程 - [返程日期]</h4>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>航司：</strong> [返程航司] • 航班 [返程航班号]</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>起飞：</strong> [返程起飞时间] 于 [返程出发机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>到达：</strong> [返程到达时间] 于 [返程到达机场]（[机场代码]）</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>时长：</strong> [返程时长]</p>\n    <p style=\"margin:5px 0;font-size:14px;\"><strong>经停：</strong> [返程经停信息]</p>\n  </div>\n  \n  <div style=\"text-align:center;margin:20px 0;padding:15px;background:#fff3cd;border-radius:8px;\">\n    <p style=\"margin:0 0 10px 0;font-size:18px;font-weight:bold;\"><strong>💰 总价：$[总价]</strong></p>\n    <p style=\"margin:0;color:#666;font-size:14px;\">包含 [成人数量] 名成人 + [儿童数量] 名儿童</p>\n  </div>\n  \n  <p style=\"margin:15px 0;font-size:16px;line-height:1.6;color:#333;\">[详细说明为何该航班为最佳选择]</p>\n  \n  <div style=\"text-align:center;margin:20px 0;\">\n    <a href=\"[GOOGLE_FLIGHTS_URL]\" style=\"background:#1e88e5;color:white;padding:15px 30px;text-decoration:none;border-radius:8px;display:inline-block;font-size:16px;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.2);\">✈️ 前往 Google Flights 预订</a>\n  </div>\n</div>\n```\n\n4. **邮件页脚**：\n- 专业结束语\n- 联系信息\n- 旅行提示或预订提醒\n\n**输出要求：**\n- 直接输出完整HTML，不要任何```html```标记\n- 不要包含---分隔符\n- 确保所有内容居中对齐（除了卡片内的详细信息）\n- 使用统一的字体和颜色方案"
+            },
+            {
+              "content": "航班推荐样式规范：\n\n**整体布局：**\n- 最大宽度：600px\n- 居中对齐：margin: 0 auto\n- 内边距：20px\n- 背景色：#f8f9fa\n\n**字体规范：**\n- 主字体：Arial, sans-serif\n- 标题：24px, 18px\n- 正文：16px, 14px\n- 行高：1.6\n\n**颜色方案：**\n- 主色调：#1e88e5（蓝色）\n- 文字：#333（深灰）\n- 次要文字：#666（中灰）\n- 价格背景：#fff3cd（浅黄）\n\n**对齐要求：**\n- 邮件标题：居中\n- 问候语：居中\n- 行程信息：居中\n- 航班卡片：居中\n- 卡片内详细信息：左对齐\n- 预订按钮：居中\n- 页脚：居中\n\n**分析指南：**\n- 权衡总旅行时间与价格\n- 考虑经停便利性与时长\n- 关注起降时间偏好\n- 考虑航司可靠性与口碑\n- 综合行李政策\n- 说明为何该航班优于替代方案\n- 考虑时区差异\n- 考虑机场通达性\n\n**重要提醒：**\n- 不要使用Markdown格式\n- 不要包含代码块标记\n- 不要添加分隔符\n- 确保HTML格式正确\n- 所有样式使用内联CSS"
+            },
+            {
+              "content": "航班推荐输出格式要求：\n\n**严格遵循以下规则：**\n\n1. **直接输出HTML**：不要包含```html```、```、---等任何标记\n2. **完整HTML文档**：从<!DOCTYPE html>开始，到</html>结束\n3. **内容居中**：除了卡片内的详细信息外，所有内容都要居中对齐\n4. **统一排版**：使用一致的字体大小、颜色和间距\n5. **移动端友好**：确保在手机上也能正常显示\n\n**禁止包含：**\n- Markdown代码块标记\n- 分隔符（---）\n- 多余的HTML标记\n- 不规范的缩进\n\n**必须包含：**\n- 完整的HTML文档结构\n- 专业的邮件样式\n- 居中对齐的布局\n- 清晰的航班推荐信息\n- 可点击的预订链接\n- 价格信息突出显示\n\n**示例输出格式：**\n直接以<!DOCTYPE html>开头，以</html>结尾，中间包含完整的邮件内容，不要任何额外标记。"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        224,
+        -160
+      ],
+      "id": "22925537-0469-4dcc-8319-d7336a09ef6d",
+      "name": "将 JSON 提炼为航班推荐邮件",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "12KiryYsMrX43jr6",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').first().json[\"Email Address\"] }}",
+        "subject": "Your Hotel Recommendation",
+        "message": "={{ $json.content.parts[0].text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2736,
+        176
+      ],
+      "id": "a6d71455-75fb-4b95-9ebd-69f276546cf2",
+      "name": "Send hotel recommendation",
+      "webhookId": "5852d21c-bf4d-4668-81be-f3959dc15ccd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zq2VO4836Nm8fvsH",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').first().json[\"Email Address\"] }}",
+        "subject": "Your Flight Recommendation",
+        "message": "={{ $json.content.parts[0].text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        576,
+        -160
+      ],
+      "id": "ccaf46b8-e5b5-49d5-b369-f0ca6c1d39b3",
+      "name": "Send Flight Recommendation",
+      "webhookId": "5852d21c-bf4d-4668-81be-f3959dc15ccd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zq2VO4836Nm8fvsH",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Extract form submission to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract form submission to JSON": {
+      "main": [
+        [
+          {
+            "node": "Parse JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse JSON": {
+      "main": [
+        [
+          {
+            "node": "Google_flights search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google_flights search": {
+      "main": [
+        [
+          {
+            "node": "将 JSON 提炼为航班推荐邮件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "将 JSON 提炼为航班推荐邮件": {
+      "main": [
+        [
+          {
+            "node": "Send Flight Recommendation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from scrape to email ready to send": {
+      "main": [
+        [
+          {
+            "node": "Send hotel recommendation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6e56ea87-ba08-4355-a914-5bf087ba783c",
+  "meta": {
+    "instanceId": "8189043451cb6ebf84725e3e5c4c52a6b6f108808f9b746ade07cb907a172e3d"
+  },
+  "id": "1F8idACopoHaU9zk",
+  "tags": []
+}
