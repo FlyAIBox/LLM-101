@@ -1,0 +1,516 @@
+<svg viewBox="0 0 1400 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title-text { font-family: 'Times New Roman', serif; font-size: 18px; font-weight: bold; fill: #2c3e50; }
+      .section-title { font-family: 'Times New Roman', serif; font-size: 14px; font-weight: bold; fill: #34495e; }
+      .node-text { font-family: 'Times New Roman', serif; font-size: 10px; fill: #2c3e50; }
+      .chinese-text { font-family: '宋体', serif; font-size: 10px; fill: #2c3e50; }
+      .formula { font-family: 'Times New Roman', serif; font-size: 9px; fill: #e74c3c; font-style: italic; }
+      .connection-line { stroke: #7f8c8d; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .data-flow { stroke: #3498db; stroke-width: 2; fill: none; stroke-dasharray: 2,2; }
+      .error-flow { stroke: #e74c3c; stroke-width: 2; fill: none; stroke-dasharray: 3,3; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7f8c8d"/>
+    </marker>
+    <linearGradient id="triggerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e67e22;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d35400;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dataGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2980b9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="logicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2ecc71;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#27ae60;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="outputGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9b59b6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8e44ad;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main Title -->
+  <text x="700" y="25" text-anchor="middle" class="title-text">n8n 工作流架构与核心概念结构图</text>
+  <text x="700" y="40" text-anchor="middle" class="chinese-text">N8N Workflow Architecture and Core Concepts</text>
+  
+  <!-- Trigger Layer -->
+  <g id="trigger-layer">
+    <rect x="50" y="60" width="280" height="100" rx="10" fill="url(#triggerGradient)" opacity="0.8"/>
+    <text x="190" y="80" text-anchor="middle" class="section-title">触发器层 (Trigger Layer)</text>
+    
+    <rect x="70" y="100" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="100" y="112" text-anchor="middle" class="node-text">Manual</text>
+    <text x="100" y="122" text-anchor="middle" class="chinese-text">手动触发</text>
+    
+    <rect x="140" y="100" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="170" y="112" text-anchor="middle" class="node-text">Webhook</text>
+    <text x="170" y="122" text-anchor="middle" class="chinese-text">网络钩子</text>
+    
+    <rect x="210" y="100" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="240" y="112" text-anchor="middle" class="node-text">Cron</text>
+    <text x="240" y="122" text-anchor="middle" class="chinese-text">定时任务</text>
+    
+    <text x="190" y="145" text-anchor="middle" class="formula">频率 = 1/间隔时间</text>
+  </g>
+  
+  <!-- Data Processing Layer -->
+  <g id="data-layer">
+    <rect x="360" y="60" width="520" height="100" rx="10" fill="url(#dataGradient)" opacity="0.8"/>
+    <text x="620" y="80" text-anchor="middle" class="section-title">数据处理层 (Data Processing Layer)</text>
+    
+    <rect x="380" y="100" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="410" y="112" text-anchor="middle" class="node-text">HTTP</text>
+    <text x="410" y="122" text-anchor="middle" class="chinese-text">API请求</text>
+    
+    <rect x="450" y="100" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="480" y="112" text-anchor="middle" class="node-text">Set</text>
+    <text x="480" y="122" text-anchor="middle" class="chinese-text">数据设置</text>
+    
+    <rect x="520" y="100" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="550" y="112" text-anchor="middle" class="node-text">Merge</text>
+    <text x="550" y="122" text-anchor="middle" class="chinese-text">数据合并</text>
+    
+    <rect x="590" y="100" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="620" y="112" text-anchor="middle" class="node-text">Split</text>
+    <text x="620" y="122" text-anchor="middle" class="chinese-text">数据分割</text>
+    
+    <rect x="660" y="100" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="690" y="112" text-anchor="middle" class="node-text">Filter</text>
+    <text x="690" y="122" text-anchor="middle" class="chinese-text">数据过滤</text>
+    
+    <rect x="730" y="100" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="760" y="112" text-anchor="middle" class="node-text">Transform</text>
+    <text x="760" y="122" text-anchor="middle" class="chinese-text">数据转换</text>
+    
+    <rect x="800" y="100" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="830" y="112" text-anchor="middle" class="node-text">Validate</text>
+    <text x="830" y="122" text-anchor="middle" class="chinese-text">数据验证</text>
+    
+    <text x="620" y="145" text-anchor="middle" class="formula">批次数 = ⌈总量/批次大小⌉</text>
+  </g>
+  
+  <!-- Logic Control Layer -->
+  <g id="logic-layer">
+    <rect x="50" y="190" width="380" height="100" rx="10" fill="url(#logicGradient)" opacity="0.8"/>
+    <text x="240" y="210" text-anchor="middle" class="section-title">逻辑控制层 (Logic Control Layer)</text>
+    
+    <rect x="70" y="230" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="100" y="242" text-anchor="middle" class="node-text">IF</text>
+    <text x="100" y="252" text-anchor="middle" class="chinese-text">条件判断</text>
+    
+    <rect x="140" y="230" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="170" y="242" text-anchor="middle" class="node-text">Switch</text>
+    <text x="170" y="252" text-anchor="middle" class="chinese-text">多分支</text>
+    
+    <rect x="210" y="230" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="240" y="242" text-anchor="middle" class="node-text">Function</text>
+    <text x="240" y="252" text-anchor="middle" class="chinese-text">函数处理</text>
+    
+    <rect x="280" y="230" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="310" y="242" text-anchor="middle" class="node-text">Code</text>
+    <text x="310" y="252" text-anchor="middle" class="chinese-text">代码执行</text>
+    
+    <rect x="350" y="230" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="380" y="242" text-anchor="middle" class="node-text">Loop</text>
+    <text x="380" y="252" text-anchor="middle" class="chinese-text">循环处理</text>
+    
+    <text x="240" y="275" text-anchor="middle" class="formula">复杂度 = 节点数 × 分支因子</text>
+  </g>
+  
+  <!-- Error Handling -->
+  <g id="error-layer">
+    <rect x="460" y="190" width="350" height="100" rx="10" fill="#e74c3c" opacity="0.8"/>
+    <text x="630" y="210" text-anchor="middle" class="section-title" fill="white">错误处理层 (Error Handling)</text>
+    
+    <rect x="500" y="230" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="530" y="242" text-anchor="middle" class="node-text">Try/Catch</text>
+    <text x="530" y="252" text-anchor="middle" class="chinese-text">异常捕获</text>
+    
+    <rect x="570" y="230" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="600" y="242" text-anchor="middle" class="node-text">NoOp</text>
+    <text x="600" y="252" text-anchor="middle" class="chinese-text">无操作</text>
+    
+    <rect x="640" y="230" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="670" y="242" text-anchor="middle" class="node-text">Wait</text>
+    <text x="670" y="252" text-anchor="middle" class="chinese-text">等待延时</text>
+    
+    <rect x="710" y="230" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+    <text x="740" y="242" text-anchor="middle" class="node-text">Retry</text>
+    <text x="740" y="252" text-anchor="middle" class="chinese-text">重试机制</text>
+    
+    <text x="620" y="275" text-anchor="middle" class="formula" fill="white" >错误率 = 失败次数/总执行次数</text>
+  </g>
+  
+  <!-- Output Layer -->
+  <g id="output-layer">
+    <rect x="50" y="320" width="760" height="100" rx="10" fill="url(#outputGradient)" opacity="0.8"/>
+    <text x="415" y="340" text-anchor="middle" class="section-title" fill="white">输出集成层 (Output Integration Layer)</text>
+    <rect x="100" y="360" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+  <text x="130" y="372" text-anchor="middle" class="node-text">Gmail</text>
+  <text x="130" y="382" text-anchor="middle" class="chinese-text">邮件发送</text>
+  
+  <rect x="170" y="360" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+  <text x="200" y="372" text-anchor="middle" class="node-text">Slack</text>
+  <text x="200" y="382" text-anchor="middle" class="chinese-text">消息推送</text>
+  
+  <rect x="240" y="360" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+  <text x="270" y="372" text-anchor="middle" class="node-text">Sheets</text>
+  <text x="270" y="382" text-anchor="middle" class="chinese-text">表格存储</text>
+  
+  <rect x="310" y="360" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+  <text x="340" y="372" text-anchor="middle" class="node-text">Database</text>
+  <text x="340" y="382" text-anchor="middle" class="chinese-text">数据库</text>
+  
+  <rect x="380" y="360" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+  <text x="410" y="372" text-anchor="middle" class="node-text">Webhook</text>
+  <text x="410" y="382" text-anchor="middle" class="chinese-text">回调接口</text>
+  
+  <rect x="450" y="360" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+  <text x="480" y="372" text-anchor="middle" class="node-text">File</text>
+  <text x="480" y="382" text-anchor="middle" class="chinese-text">文件存储</text>
+  
+  <rect x="520" y="360" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+  <text x="550" y="372" text-anchor="middle" class="node-text">API</text>
+  <text x="550" y="382" text-anchor="middle" class="chinese-text">接口调用</text>
+  
+  <rect x="590" y="360" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+  <text x="620" y="372" text-anchor="middle" class="node-text">LLM</text>
+  <text x="620" y="382" text-anchor="middle" class="chinese-text">大语言模型</text>
+  
+  <rect x="660" y="360" width="60" height="30" rx="5" fill="white" opacity="0.9"/>
+  <text x="690" y="372" text-anchor="middle" class="node-text">Cloud</text>
+  <text x="690" y="382" text-anchor="middle" class="chinese-text">云存储</text>
+  
+  <text x="425" y="405" text-anchor="middle" class="formula" fill="white">吞吐量 = 成功处理数/时间单位</text>
+    
+  </g>
+
+  
+  
+ <!-- Advanced Features -->
+  <g id="advanced-layer">
+    <rect x="870" y="60" width="480" height="360" rx="10" fill="#34495e" opacity="0.6"/>
+    <text x="1120" y="80" text-anchor="middle" class="section-title" fill="white">高级特性 (Advanced Features)</text>
+    
+    <!-- Sub-workflows -->
+    <rect x="890" y="100" width="140" height="50" rx="5" fill="white" opacity="0.9"/>
+    <text x="960" y="118" text-anchor="middle" class="section-title">子工作流</text>
+    <text x="960" y="130" text-anchor="middle" class="chinese-text">Sub-workflows</text>
+    <text x="960" y="142" text-anchor="middle" class="formula">复用度 = 调用次数/总流程数</text>
+    
+    <!-- Credentials -->
+    <rect x="1040" y="100" width="140" height="50" rx="5" fill="white" opacity="0.9"/>
+    <text x="1100" y="118" text-anchor="middle" class="section-title">凭证管理</text>
+    <text x="1100" y="130" text-anchor="middle" class="chinese-text">Credentials</text>
+    <text x="1100" y="142" text-anchor="middle" class="formula">安全级别 = 加密强度</text>
+    
+    <!-- Variables -->
+    <rect x="1190" y="100" width="140" height="50" rx="5" fill="white" opacity="0.9"/>
+    <text x="1240" y="118" text-anchor="middle" class="section-title">环境变量</text>
+    <text x="1240" y="130" text-anchor="middle" class="chinese-text">Variables</text>
+    <text x="1240" y="142" text-anchor="middle" class="formula">配置灵活性指数</text>
+    
+    <!-- Data Store -->
+    <rect x="890" y="170" width="140" height="50" rx="5" fill="white" opacity="0.9"/>
+    <text x="960" y="188" text-anchor="middle" class="section-title">数据存储</text>
+    <text x="960" y="200" text-anchor="middle" class="chinese-text">Data Store</text>
+    <text x="960" y="212" text-anchor="middle" class="formula">存储效率 = 数据量/存储空间</text>
+    
+    <!-- Cache -->
+    <rect x="1040" y="170" width="140" height="50" rx="5" fill="white" opacity="0.9"/>
+    <text x="1100" y="188" text-anchor="middle" class="section-title">缓存系统</text>
+    <text x="1100" y="200" text-anchor="middle" class="chinese-text">Cache System</text>
+    <text x="1100" y="212" text-anchor="middle" class="formula">命中率 = 缓存命中/总请求</text>
+    
+    <!-- Queue -->
+    <rect x="1190" y="170" width="140" height="50" rx="5" fill="white" opacity="0.9"/>
+    <text x="1240" y="188" text-anchor="middle" class="section-title">队列管理</text>
+    <text x="1240" y="200" text-anchor="middle" class="chinese-text">Queue System</text>
+    <text x="1240" y="212" text-anchor="middle" class="formula">队列长度 = 待处理任务数</text>
+    
+    <!-- Version Control -->
+    <rect x="890" y="240" width="140" height="50" rx="5" fill="white" opacity="0.9"/>
+    <text x="960" y="258" text-anchor="middle" class="section-title">版本控制</text>
+    <text x="960" y="270" text-anchor="middle" class="chinese-text">Version Control</text>
+    <text x="960" y="282" text-anchor="middle" class="formula">版本数 = 时间跨度 × 更新频率</text>
+    
+    <!-- Monitoring -->
+    <rect x="1040" y="240" width="140" height="50" rx="5" fill="white" opacity="0.9"/>
+    <text x="1100" y="258" text-anchor="middle" class="section-title">监控告警</text>
+    <text x="1100" y="270" text-anchor="middle" class="chinese-text">Monitoring</text>
+    <text x="1100" y="282" text-anchor="middle" class="formula">可用性 = 正常运行时间/总时间</text>
+    
+    <!-- Performance -->
+    <rect x="1190" y="240" width="140" height="50" rx="5" fill="white" opacity="0.9"/>
+    <text x="1240" y="258" text-anchor="middle" class="section-title">性能优化</text>
+    <text x="1240" y="270" text-anchor="middle" class="chinese-text">Performance</text>
+    <text x="1240" y="282" text-anchor="middle" class="formula">响应时间 = 处理时间 + 网络延迟</text>
+    
+    <!-- Webhooks Advanced -->
+    <rect x="890" y="310" width="140" height="50" rx="5" fill="white" opacity="0.9"/>
+    <text x="960" y="328" text-anchor="middle" class="section-title">高级钩子</text>
+    <text x="960" y="340" text-anchor="middle" class="chinese-text">Advanced Hooks</text>
+    <text x="960" y="352" text-anchor="middle" class="formula">响应速度 = 1/延迟时间</text>
+    
+    <!-- AI Integration -->
+    <rect x="1040" y="310" width="140" height="50" rx="5" fill="white" opacity="0.9"/>
+    <text x="1100" y="328" text-anchor="middle" class="section-title">AI集成</text>
+    <text x="1100" y="340" text-anchor="middle" class="chinese-text">AI Integration</text>
+    <text x="1100" y="352" text-anchor="middle" class="formula">智能化程度 = AI节点/总节点</text>
+    
+    <!-- Custom Nodes -->
+    <rect x="1190" y="310" width="140" height="50" rx="5" fill="white" opacity="0.9"/>
+    <text x="1240" y="328" text-anchor="middle" class="section-title">自定义节点</text>
+    <text x="1240" y="340" text-anchor="middle" class="chinese-text">Custom Nodes</text>
+    <text x="1240" y="352" text-anchor="middle" class="formula">扩展性 = 自定义功能数</text>
+  </g>
+  
+  <!-- Data Flow Connections -->
+  <g id="connections">
+    <!-- Main data flow -->
+    <path d="M 330 110 Q 350 110 380 115" class="connection-line"/>
+    <!-- <path d="M 440 115 Q 500 115 520 115" class="connection-line"/>
+    <path d="M 580 115 Q 650 115 730 115" class="connection-line"/> -->
+    
+    <!-- Vertical flow -->
+    <path d="M 190 160 Q 190 180 240 190" class="connection-line"/>
+    <path d="M 620 160 Q 620 180 600 190" class="connection-line"/>
+    
+    <!-- To logic layer -->
+    <path d="M 310 290 Q 350 310 395 320" class="connection-line"/>
+    <path d="M 580 290 Q 520 310 450 320" class="connection-line"/>
+    
+    <!-- Error handling flows -->
+    <path d="M 430 240 Q 450 240 480 245" class="error-flow"/>
+    <!-- <path d="M 540 245 Q 580 245 620 245" class="error-flow"/> -->
+    
+    <!-- Advanced features connections -->
+    <!-- <path d="M 740 140 Q 760 130 790 125" class="data-flow"/>
+    <path d="M 740 240 Q 760 230 790 195" class="data-flow"/>
+    <path d="M 740 380 Q 760 370 790 335" class="data-flow"/> -->
+  </g>
+  
+  <!-- Performance Metrics Box -->
+  <g id="metrics">
+    <rect x="50" y="450" width="690" height="120" rx="10" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2"/>
+    <text x="395" y="470" text-anchor="middle" class="section-title">核心性能指标 (Key Performance Metrics)</text>
+    
+    <!-- Throughput -->
+    <text x="80" y="490" class="node-text">吞吐量 (Throughput):</text>
+    <text x="80" y="502" class="formula">T = N/t，其中 N=处理项目数，t=时间</text>
+    
+    <!-- Latency -->
+    <text x="350" y="490" class="node-text">延迟 (Latency):</text>
+    <text x="350" y="502" class="formula">L = t₂ - t₁，响应时间差</text>
+    
+    <!-- Error Rate -->
+    <text x="550" y="490" class="node-text">错误率 (Error Rate):</text>
+    <text x="550" y="502" class="formula">E = F/T × 100%，F=失败次数，T=总次数</text>
+    
+    <!-- Resource Utilization -->
+    <text x="80" y="525" class="node-text">资源利用率 (Resource Usage):</text>
+    <text x="80" y="537" class="formula">U = (使用资源/总可用资源) × 100%</text>
+    
+    <!-- Scalability -->
+    <text x="350" y="525" class="node-text">可扩展性 (Scalability):</text>
+    <text x="350" y="537" class="formula">S = ΔT/ΔL，吞吐量变化/负载变化</text>
+    
+    <!-- Cache Hit Rate -->
+    <text x="550" y="525" class="node-text">缓存命中率 (Cache Hit Rate):</text>
+    <text x="550" y="537" class="formula">H = C/R × 100%，C=缓存命中，R=总请求</text>
+    
+    <!-- Success Rate -->
+    <text x="80" y="555" class="node-text">成功率 (Success Rate):</text>
+    <text x="80" y="567" class="formula">SR = S/T × 100%，S=成功次数，T=总次数</text>
+    
+    <!-- ROI -->
+    <text x="350" y="555" class="node-text">投资回报率 (ROI):</text>
+    <text x="350" y="567" class="formula">ROI = (收益 - 投资)/投资 × 100%</text>
+    
+    <!-- Availability -->
+    <text x="550" y="555" class="node-text">可用性 (Availability):</text>
+    <text x="550" y="567" class="formula">A = 运行时间/(运行时间 + 停机时间)</text>
+  </g>
+  
+  <!-- Best Practices Box -->
+  <g id="best-practices">
+    <rect x="770" y="450" width="580" height="280" rx="10" fill="#e8f5e8" stroke="#4caf50" stroke-width="2"/>
+    <text x="1060" y="470" text-anchor="middle" class="section-title">最佳实践原则 (Best Practices Principles)</text>
+    
+    <!-- Design Principles -->
+    <text x="790" y="495" class="section-title">设计原则 (Design Principles):</text>
+    <text x="790" y="510" class="node-text">• 单一职责: 每个节点专注单一功能</text>
+    <text x="790" y="522" class="node-text">• 模块化: 使用子工作流提高复用性</text>
+    <text x="790" y="534" class="node-text">• 幂等性: 重复执行产生相同结果</text>
+    <text x="790" y="546" class="node-text">• 松耦合: 减少节点间的直接依赖</text>
+    
+    <!-- Error Handling -->
+    <text x="790" y="570" class="section-title">错误处理 (Error Handling):</text>
+    <text x="790" y="585" class="node-text">• 优雅降级: 部分失败不影响整体</text>
+    <text x="790" y="597" class="node-text">• 重试机制: 指数退避算法</text>
+    <text x="790" y="609" class="formula">重试间隔 = base × 2ⁿ (n=重试次数)</text>
+    <text x="790" y="621" class="node-text">• 断路器模式: 防止级联故障</text>
+    
+    <!-- Performance -->
+    <text x="790" y="645" class="section-title">性能优化 (Performance Optimization):</text>
+    <text x="790" y="660" class="node-text">• 批处理: 减少API调用次数</text>
+    <text x="790" y="672" class="node-text">• 并行处理: 利用多线程能力</text>
+    <text x="790" y="684" class="node-text">• 缓存策略: 减少重复计算</text>
+    <text x="790" y="696" class="node-text">• 连接池: 复用数据库连接</text>
+    
+    <!-- Security -->
+    <text x="1100" y="495" class="section-title">安全考虑 (Security):</text>
+    <text x="1100" y="510" class="node-text">• 凭证管理: 使用OAuth2和加密存储</text>
+    <text x="1100" y="522" class="node-text">• 数据验证: 输入输出严格校验</text>
+    <text x="1100" y="534" class="node-text">• 访问控制: 基于角色的权限管理</text>
+    <text x="1100" y="546" class="node-text">• 日志审计: 记录所有操作轨迹</text>
+    
+    <!-- Monitoring -->
+    <text x="1100" y="570" class="section-title">监控告警 (Monitoring):</text>
+    <text x="1100" y="585" class="node-text">• 实时监控: 关键指标持续追踪</text>
+    <text x="1100" y="597" class="node-text">• 智能告警: 异常情况自动通知</text>
+    <text x="1100" y="609" class="node-text">• 性能分析: 瓶颈识别和优化建议</text>
+    <text x="1100" y="621" class="node-text">• 健康检查: 定期系统状态评估</text>
+    
+    <!-- Scalability -->
+    <text x="1100" y="645" class="section-title">可扩展性 (Scalability):</text>
+    <text x="1100" y="660" class="node-text">• 水平扩展: 增加更多工作流实例</text>
+    <text x="1100" y="672" class="node-text">• 垂直扩展: 提升单个实例性能</text>
+    <text x="1100" y="684" class="node-text">• 负载均衡: 合理分配处理任务</text>
+    <text x="1100" y="696" class="node-text">• 弹性伸缩: 根据负载自动调整</text>
+    
+    <!-- Development -->
+    <text x="790" y="720" class="section-title">开发规范 (Development Standards):</text>
+    <text x="1010" y="720" class="node-text">命名规范: 清晰一致的节点命名</text>
+  </g>
+  
+  <!-- Workflow Lifecycle -->
+  <g id="lifecycle">
+    <rect x="50" y="600" width="690" height="130" rx="10" fill="#fff3cd" stroke="#ffc107" stroke-width="2"/>
+    <text x="395" y="620" text-anchor="middle" class="section-title">工作流生命周期 (Workflow Lifecycle)</text>
+    
+    <!-- Phase 1: Design -->
+    <circle cx="120" cy="660" r="25" fill="#17a2b8" opacity="0.8"/>
+    <text x="120" y="657" text-anchor="middle" class="node-text" fill="white">设计</text>
+    <text x="120" y="667" text-anchor="middle" class="chinese-text" fill="white">Design</text>
+    <text x="120" y="695" text-anchor="middle" class="formula">需求分析 → 架构设计</text>
+    
+    <!-- Phase 2: Development -->
+    <circle cx="235" cy="660" r="25" fill="#28a745" opacity="0.8"/>
+    <text x="235" y="657" text-anchor="middle" class="node-text" fill="white">开发</text>
+    <text x="235" y="667" text-anchor="middle" class="chinese-text" fill="white">Develop</text>
+    <text x="235" y="695" text-anchor="middle" class="formula">编码 → 配置 → 集成</text>
+    
+    <!-- Phase 3: Testing -->
+    <circle cx="350" cy="660" r="25" fill="#ffc107" opacity="0.8"/>
+    <text x="350" y="657" text-anchor="middle" class="node-text">测试</text>
+    <text x="350" y="667" text-anchor="middle" class="chinese-text">Testing</text>
+    <text x="350" y="695" text-anchor="middle" class="formula">单元 → 集成 → 端到端</text>
+    
+    <!-- Phase 4: Deployment -->
+    <circle cx="465" cy="660" r="25" fill="#fd7e14" opacity="0.8"/>
+    <text x="465" y="657" text-anchor="middle" class="node-text" fill="white">部署</text>
+    <text x="465" y="667" text-anchor="middle" class="chinese-text" fill="white">Deploy</text>
+    <text x="465" y="695" text-anchor="middle" class="formula">发布 → 激活 → 监控</text>
+    
+    <!-- Phase 5: Maintenance -->
+    <circle cx="580" cy="660" r="25" fill="#6f42c1" opacity="0.8"/>
+    <text x="580" y="657" text-anchor="middle" class="node-text" fill="white">维护</text>
+    <text x="580" y="667" text-anchor="middle" class="chinese-text" fill="white">Maintain</text>
+    <text x="580" y="695" text-anchor="middle" class="formula">优化 → 更新 → 扩展</text>
+    
+    <!-- Phase 6: Evolution -->
+    <circle cx="670" cy="660" r="25" fill="#e83e8c" opacity="0.8"/>
+    <text x="670" y="657" text-anchor="middle" class="node-text" fill="white">演进</text>
+    <text x="670" y="667" text-anchor="middle" class="chinese-text" fill="white">Evolve</text>
+    <text x="670" y="695" text-anchor="middle" class="formula">重构 → 升级 → 迁移</text>
+    
+    <!-- Lifecycle arrows -->
+    <path d="M 145 660 L 210 660" class="connection-line"/>
+    <path d="M 260 660 L 325 660" class="connection-line"/>
+    <path d="M 375 660 L 440 660" class="connection-line"/>
+    <path d="M 490 660 L 555 660" class="connection-line"/>
+    <path d="M 605 660 L 645 660" class="connection-line"/>
+    
+    <!-- Success metrics -->
+    <text x="395" y="715" text-anchor="middle" class="formula">生命周期效率 = 各阶段时间优化比例之和</text>
+  </g>
+  
+  <!-- Architecture Patterns -->
+  <g id="patterns">
+    <rect x="50" y="760" width="690" height="100" rx="10" fill="#f0f8ff" stroke="#4169e1" stroke-width="2"/>
+    <text x="395" y="780" text-anchor="middle" class="section-title">常见架构模式 (Common Architecture Patterns)</text>
+    
+    <!-- Sequential Pattern -->
+    <rect x="70" y="800" width="90" height="35" rx="5" fill="white" stroke="#4169e1"/>
+    <text x="115" y="815" text-anchor="middle" class="node-text">顺序执行模式</text>
+    <text x="115" y="825" text-anchor="middle" class="chinese-text">Sequential Pattern</text>
+    
+    <!-- Parallel Pattern -->
+    <rect x="180" y="800" width="90" height="35" rx="5" fill="white" stroke="#4169e1"/>
+    <text x="225" y="815" text-anchor="middle" class="node-text">并行处理模式</text>
+    <text x="225" y="825" text-anchor="middle" class="chinese-text">Parallel Pattern</text>
+    
+    <!-- Fan-out Pattern -->
+    <rect x="290" y="800" width="90" height="35" rx="5" fill="white" stroke="#4169e1"/>
+    <text x="335" y="815" text-anchor="middle" class="node-text">扇出模式</text>
+    <text x="335" y="825" text-anchor="middle" class="chinese-text">Fan-out Pattern</text>
+    
+    <!-- Pipeline Pattern -->
+    <rect x="400" y="800" width="90" height="35" rx="5" fill="white" stroke="#4169e1"/>
+    <text x="445" y="815" text-anchor="middle" class="node-text">流水线模式</text>
+    <text x="445" y="825" text-anchor="middle" class="chinese-text">Pipeline Pattern</text>
+    
+    <!-- Event-driven Pattern -->
+    <rect x="510" y="800" width="90" height="35" rx="5" fill="white" stroke="#4169e1"/>
+    <text x="555" y="815" text-anchor="middle" class="node-text">事件驱动模式</text>
+    <text x="555" y="825" text-anchor="middle" class="chinese-text">Event-driven Pattern</text>
+    
+    <!-- Microservice Pattern -->
+    <rect x="620" y="800" width="90" height="35" rx="5" fill="white" stroke="#4169e1"/>
+    <text x="665" y="815" text-anchor="middle" class="node-text">微服务模式</text>
+    <text x="665" y="825" text-anchor="middle" class="chinese-text">Microservice Pattern</text>
+    
+    <text x="395" y="850" text-anchor="middle" class="formula">架构复杂度 = Σ(模式数量 × 交互复杂度)</text>
+  </g>
+  
+  <!-- Legend -->
+  <g id="legend">
+    <rect x="770" y="760" width="580" height="100" rx="5" fill="white" stroke="#666" stroke-width="1"/>
+    <text x="1060" y="780" text-anchor="middle" class="section-title">图例说明 (Legend)</text>
+    
+    <line x1="790" y1="800" x2="820" y2="800" class="connection-line"/>
+    <text x="830" y="805" class="node-text">主数据流 (Main Data Flow)</text>
+    
+    <line x1="1020" y1="800" x2="1050" y2="800" class="data-flow"/>
+    <text x="1060" y="805" class="node-text">异步数据流 (Async Data Flow)</text>
+    
+    <line x1="790" y1="820" x2="820" y2="820" class="error-flow"/>
+    <text x="830" y="825" class="node-text">错误处理流 (Error Flow)</text>
+    
+    <circle cx="1030" cy="820" r="8" fill="#17a2b8"/>
+    <text x="1060" y="825" class="node-text">生命周期阶段 (Lifecycle Phase)</text>
+    
+    <rect x="790" y="835" width="30" height="15" fill="url(#triggerGradient)" opacity="0.8"/>
+    <text x="830" y="845" class="node-text">功能层级 (Functional Layer)</text>
+    
+    <rect x="1020" y="835" width="30" height="15" fill="#34495e" opacity="0.8"/>
+    <text x="1060" y="845" class="node-text">高级特性 (Advanced Features)</text>
+  </g>
+  
+  <!-- Summary Box -->
+  <g id="summary">
+    <rect x="50" y="890" width="1300" height="80" rx="10" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2"/>
+    <text x="700" y="910" text-anchor="middle" class="section-title">核心要点总结 (Key Takeaways)</text>
+    
+    <text x="70" y="930" class="node-text">1. 模块化设计: 将复杂工作流分解为可复用的子组件</text>
+    <text x="70" y="945" class="node-text">2. 错误处理: 构建健壮的异常捕获和恢复机制</text>
+    <text x="70" y="960" class="node-text">3. 性能优化: 通过批处理、缓存和并行提升执行效率</text>
+    
+    <text x="700" y="930" class="node-text">4. 安全第一: 实施严格的凭证管理和数据验证</text>
+    <text x="700" y="945" class="node-text">5. 监控运维: 建立全面的监控告警和日志系统</text>
+    <text x="700" y="960" class="node-text">6. 持续改进: 基于指标反馈不断优化工作流程</text>
+  </g>
+</svg>
