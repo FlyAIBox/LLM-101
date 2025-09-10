@@ -1,0 +1,170 @@
+<svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: 'Times New Roman', serif; font-size: 24px; font-weight: bold; fill: #2c3e50; }
+      .subtitle { font-family: 'SimSun', '宋体', serif; font-size: 18px; fill: #34495e; font-weight: bold; }
+      .label { font-family: 'SimSun', '宋体', serif; font-size: 14px; fill: #2c3e50; }
+      .english-label { font-family: 'Times New Roman', serif; font-size: 12px; fill: #34495e; }
+      .formula { font-family: 'Times New Roman', serif; font-size: 11px; fill: #e74c3c; }
+      .langchain-color { fill: #3498db; stroke: #2980b9; }
+      .langgraph-color { fill: #9b59b6; stroke: #8e44ad; }
+      .comparison-bg { fill: #f8f9fa; stroke: #dee2e6; }
+      .highlight { fill: #fff3cd; stroke: #ffeaa7; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="800" fill="#ecf0f1"/>
+  
+  <!-- Title -->
+  <text x="500" y="40" class="title" text-anchor="middle">LangChain vs LangGraph 全面对比</text>
+  <text x="500" y="65" class="subtitle" text-anchor="middle">Comprehensive Comparison of AI Agent Frameworks</text>
+  
+  <!-- Left Side: LangChain -->
+  <rect x="50" y="100" width="400" height="300" rx="10" class="langchain-color" stroke-width="3"/>
+  <text x="250" y="130" class="subtitle" text-anchor="middle" fill="white">LangChain</text>
+  <text x="250" y="150" class="english-label" text-anchor="middle" fill="white">Chain-based Framework</text>
+  
+  <!-- LangChain Chain Visualization -->
+  <rect x="80" y="170" width="60" height="40" rx="5" fill="white" stroke="#2980b9" stroke-width="2"/>
+  <text x="110" y="195" class="label" text-anchor="middle">输入</text>
+  
+  <rect x="170" y="170" width="60" height="40" rx="5" fill="white" stroke="#2980b9" stroke-width="2"/>
+  <text x="200" y="195" class="label" text-anchor="middle">处理</text>
+  
+  <rect x="260" y="170" width="60" height="40" rx="5" fill="white" stroke="#2980b9" stroke-width="2"/>
+  <text x="290" y="195" class="label" text-anchor="middle">LLM</text>
+  
+  <rect x="350" y="170" width="60" height="40" rx="5" fill="white" stroke="#2980b9" stroke-width="2"/>
+  <text x="380" y="195" class="label" text-anchor="middle">输出</text>
+  
+  <!-- Chain arrows -->
+  <path d="M 140,190 L 170,190" stroke="#e74c3c" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 230,190 L 260,190" stroke="#e74c3c" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 320,190 L 350,190" stroke="#e74c3c" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <text x="110" y="240" class="formula">f₁ → f₂ → f₃ → f₄</text>
+  <text x="80" y="260" class="label" fill="white">• 线性流程</text>
+  <text x="80" y="280" class="label" fill="white">• 单向数据流</text>
+  <text x="80" y="300" class="label" fill="white">• 模块化组件</text>
+  <text x="80" y="320" class="label" fill="white">• 快速原型</text>
+  <text x="80" y="340" class="label" fill="white">• 隐式状态管理</text>
+  <text x="80" y="360" class="label" fill="white">• DAG结构</text>
+  
+  <!-- Right Side: LangGraph -->
+  <rect x="550" y="100" width="400" height="300" rx="10" class="langgraph-color" stroke-width="3"/>
+  <text x="750" y="130" class="subtitle" text-anchor="middle" fill="white">LangGraph</text>
+  <text x="750" y="150" class="english-label" text-anchor="middle" fill="white">Graph-based Framework</text>
+  
+  <!-- LangGraph Graph Visualization -->
+  <circle cx="650" cy="200" r="25" fill="white" stroke="#8e44ad" stroke-width="2"/>
+  <text x="650" y="205" class="label" text-anchor="middle">状态</text>
+  
+  <circle cx="750" cy="170" r="20" fill="white" stroke="#8e44ad" stroke-width="2"/>
+  <text x="750" y="175" class="label" text-anchor="middle">A₁</text>
+  
+  <circle cx="850" cy="200" r="20" fill="white" stroke="#8e44ad" stroke-width="2"/>
+  <text x="850" y="205" class="label" text-anchor="middle">A₂</text>
+  
+  <circle cx="750" cy="230" r="20" fill="white" stroke="#8e44ad" stroke-width="2"/>
+  <text x="750" y="235" class="label" text-anchor="middle">A₃</text>
+  
+  <!-- Graph connections -->
+  <path d="M 675,200 L 730,175" stroke="#27ae60" stroke-width="2" fill="none"/>
+  <path d="M 675,200 L 830,200" stroke="#27ae60" stroke-width="2" fill="none"/>
+  <path d="M 675,200 L 730,225" stroke="#27ae60" stroke-width="2" fill="none"/>
+  <path d="M 770,175 Q 890,150 850,180" stroke="#e74c3c" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 770,225 Q 890,250 850,220" stroke="#e74c3c" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <text x="720" y="260" class="formula">G = {V, E, S}</text>
+  <text x="580" y="280" class="label" fill="white">• 图结构支持循环</text>
+  <text x="580" y="300" class="label" fill="white">• 多智能体协作</text>
+  <text x="580" y="320" class="label" fill="white">• 显式状态管理</text>
+  <text x="580" y="340" class="label" fill="white">• 动态路由</text>
+  <text x="580" y="360" class="label" fill="white">• 人机交互循环</text>
+  
+  <!-- Arrow definitions -->
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+  </marker>
+
+  <!-- Comparison Table -->
+  <rect x="50" y="430" width="900" height="320" rx="10" class="comparison-bg" stroke-width="2"/>
+  <text x="500" y="455" class="subtitle" text-anchor="middle">详细特性对比表</text>
+  
+  <!-- Table Headers -->
+  <rect x="70" y="470" width="200" height="30" fill="#34495e"/>
+  <text x="170" y="490" class="label" text-anchor="middle" fill="white">对比维度</text>
+  
+  <rect x="270" y="470" width="330" height="30" class="langchain-color" stroke-width="1"/>
+  <text x="435" y="490" class="label" text-anchor="middle" fill="white">LangChain</text>
+  
+  <rect x="600" y="470" width="330" height="30" class="langgraph-color" stroke-width="1"/>
+  <text x="765" y="490" class="label" text-anchor="middle" fill="white">LangGraph</text>
+  
+  <!-- Row 1: Architecture -->
+  <rect x="70" y="500" width="200" height="30" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="170" y="520" class="label" text-anchor="middle">架构类型</text>
+  
+  <rect x="270" y="500" width="330" height="30" fill="#ffffff" stroke="#3498db" stroke-width="1"/>
+  <text x="435" y="520" class="label" text-anchor="middle">链式架构 (DAG)</text>
+  
+  <rect x="600" y="500" width="330" height="30" fill="#ffffff" stroke="#9b59b6" stroke-width="1"/>
+  <text x="765" y="520" class="label" text-anchor="middle">图架构 (Graph)</text>
+  
+  <!-- Row 2: State Management -->
+  <rect x="70" y="530" width="200" height="30" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="170" y="550" class="label" text-anchor="middle">状态管理</text>
+  
+  <rect x="270" y="530" width="330" height="30" fill="#ffffff" stroke="#3498db" stroke-width="1"/>
+  <text x="435" y="550" class="label" text-anchor="middle">隐式状态传递</text>
+  
+  <rect x="600" y="530" width="330" height="30" fill="#ffffff" stroke="#9b59b6" stroke-width="1"/>
+  <text x="765" y="550" class="label" text-anchor="middle">显式状态管理</text>
+  
+  <!-- Row 3: Workflow -->
+  <rect x="70" y="560" width="200" height="30" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="170" y="580" class="label" text-anchor="middle">工作流类型</text>
+  
+  <rect x="270" y="560" width="330" height="30" fill="#ffffff" stroke="#3498db" stroke-width="1"/>
+  <text x="435" y="580" class="label" text-anchor="middle">线性顺序流程</text>
+  
+  <rect x="600" y="560" width="330" height="30" fill="#ffffff" stroke="#9b59b6" stroke-width="1"/>
+  <text x="765" y="580" class="label" text-anchor="middle">动态非线性流程</text>
+  
+  <!-- Row 4: Learning Curve -->
+  <rect x="70" y="590" width="200" height="30" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="170" y="610" class="label" text-anchor="middle">学习难度</text>
+  
+  <rect x="270" y="590" width="330" height="30" fill="#d5f4e6" stroke="#27ae60" stroke-width="1"/>
+  <text x="435" y="610" class="label" text-anchor="middle">易学易用 ★★★★★</text>
+  
+  <rect x="600" y="590" width="330" height="30" fill="#fdeaa7" stroke="#f39c12" stroke-width="1"/>
+  <text x="765" y="610" class="label" text-anchor="middle">中等难度 ★★★☆☆</text>
+  
+  <!-- Row 5: Use Cases -->
+  <rect x="70" y="620" width="200" height="30" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="170" y="640" class="label" text-anchor="middle">适用场景</text>
+  
+  <rect x="270" y="620" width="330" height="30" fill="#ffffff" stroke="#3498db" stroke-width="1"/>
+  <text x="435" y="640" class="label" text-anchor="middle">RAG、问答、内容生成</text>
+  
+  <rect x="600" y="620" width="330" height="30" fill="#ffffff" stroke="#9b59b6" stroke-width="1"/>
+  <text x="765" y="640" class="label" text-anchor="middle">虚拟助手、任务管理</text>
+  
+  <!-- Row 6: Production Readiness -->
+  <rect x="70" y="650" width="200" height="30" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="170" y="670" class="label" text-anchor="middle">生产就绪</text>
+  
+  <rect x="270" y="650" width="330" height="30" fill="#fdeaa7" stroke="#f39c12" stroke-width="1"/>
+  <text x="435" y="670" class="label" text-anchor="middle">原型开发优先 ★★★☆☆</text>
+  
+  <rect x="600" y="650" width="330" height="30" fill="#d5f4e6" stroke="#27ae60" stroke-width="1"/>
+  <text x="765" y="670" class="label" text-anchor="middle">企业级部署 ★★★★★</text>
+  
+  <!-- Mathematical Formulas -->
+  <rect x="70" y="690" width="860" height="50" fill="#ffffff" stroke="#34495e" stroke-width="2"/>
+  <text x="80" y="710" class="label">核心公式对比:</text>
+  <text x="80" y="730" class="formula">LangChain: Output = f_n(f_{n-1}(...f_2(f_1(Input))...))</text>
+  <text x="500" y="730" class="formula">LangGraph: S_{t+1} = StateUpdate(S_t, NodeAction(input_t, S_t))</text>
+</svg>

@@ -1,0 +1,395 @@
+<svg viewBox="0 0 1400 1000" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="headerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a90e2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#357abd;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#00000020"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto" fill="#2c3e50">
+      <polygon points="0 0, 12 4, 0 8"/>
+    </marker>
+    <marker id="redArrow" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto" fill="#e74c3c">
+      <polygon points="0 0, 12 4, 0 8"/>
+    </marker>
+  </defs>
+  
+  <rect width="1400" height="1000" fill="url(#bgGradient)"/>
+  
+  <!-- 主标题区域 -->
+  <rect x="0" y="0" width="1400" height="80" fill="url(#headerGradient)" filter="url(#shadow)"/>
+  <text x="700" y="30" font-family="SimSun, serif" font-size="26" font-weight="bold" text-anchor="middle" fill="white">LangGraph 完整学习架构图</text>
+  <text x="700" y="55" font-family="SimSun, serif" font-size="16" text-anchor="middle" fill="#e8f4f8">AI Agent 开发框架 - 从入门到精通的完整指南</text>
+  
+  <!-- 第一层：基础概念理解 -->
+  <rect x="50" y="100" width="1300" height="180" fill="#fff3e0" stroke="#ff9800" stroke-width="2" rx="15" filter="url(#shadow)"/>
+  <text x="70" y="125" font-family="SimSun, serif" font-size="18" font-weight="bold" fill="#e65100">第一层：基础概念理解 (Fundamental Concepts)</text>
+  
+  <!-- 什么是 Agent -->
+  <rect x="70" y="140" width="200" height="120" fill="#ffcc80" stroke="#f57c00" stroke-width="2" rx="8"/>
+  <text x="170" y="160" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#bf360c">什么是 AI Agent？</text>
+  <text x="80" y="180" font-family="SimSun, serif" font-size="11" fill="#3e2723">• 自主决策的智能体</text>
+  <text x="80" y="195" font-family="SimSun, serif" font-size="11" fill="#3e2723">• 感知环境 → 推理 → 行动</text>
+  <text x="80" y="210" font-family="SimSun, serif" font-size="11" fill="#3e2723">• 具备记忆和学习能力</text>
+  <text x="80" y="225" font-family="Times New Roman, serif" font-size="10" fill="#5d4037">Agent = Perception + Reasoning</text>
+  <text x="80" y="240" font-family="Times New Roman, serif" font-size="10" fill="#5d4037">        + Action + Memory</text>
+  
+  <!-- 传统方法局限 -->
+  <rect x="290" y="140" width="200" height="120" fill="#ffab91" stroke="#ff5722" stroke-width="2" rx="8"/>
+  <text x="390" y="160" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#bf360c">传统方法的局限</text>
+  <text x="300" y="180" font-family="SimSun, serif" font-size="11" fill="#3e2723">• 黑盒架构难以调试</text>
+  <text x="300" y="195" font-family="SimSun, serif" font-size="11" fill="#3e2723">• 状态管理复杂</text>
+  <text x="300" y="210" font-family="SimSun, serif" font-size="11" fill="#3e2723">• 缺乏可视化控制</text>
+  <text x="300" y="225" font-family="SimSun, serif" font-size="11" fill="#3e2723">• 错误处理困难</text>
+  <text x="300" y="245" font-family="Times New Roman, serif" font-size="10" fill="#d84315">❌ 不可控 + 不可观测</text>
+  
+  <!-- LangGraph 解决方案 -->
+  <rect x="510" y="140" width="220" height="120" fill="#a5d6a7" stroke="#4caf50" stroke-width="2" rx="8"/>
+  <text x="620" y="160" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1b5e20">LangGraph 的解决方案</text>
+  <text x="520" y="180" font-family="SimSun, serif" font-size="11" fill="#2e7d32">• 状态图 (StateGraph) 架构</text>
+  <text x="520" y="195" font-family="SimSun, serif" font-size="11" fill="#2e7d32">• 显式状态管理</text>
+  <text x="520" y="210" font-family="SimSun, serif" font-size="11" fill="#2e7d32">• 可视化工作流</text>
+  <text x="520" y="225" font-family="SimSun, serif" font-size="11" fill="#2e7d32">• 人机交互节点</text>
+  <text x="520" y="245" font-family="Times New Roman, serif" font-size="10" fill="#388e3c">✅ 可控 + 可观测 + 可调试</text>
+  
+  <!-- 核心优势 -->
+  <rect x="750" y="140" width="200" height="120" fill="#bbdefb" stroke="#2196f3" stroke-width="2" rx="8"/>
+  <text x="850" y="160" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0d47a1">核心优势特性</text>
+  <text x="760" y="180" font-family="SimSun, serif" font-size="11" fill="#1565c0">• 流式处理 (Streaming)</text>
+  <text x="760" y="195" font-family="SimSun, serif" font-size="11" fill="#1565c0">• 检查点机制 (Checkpoints)</text>
+  <text x="760" y="210" font-family="SimSun, serif" font-size="11" fill="#1565c0">• 条件分支 (Conditionals)</text>
+  <text x="760" y="225" font-family="SimSun, serif" font-size="11" fill="#1565c0">• 循环控制 (Loops)</text>
+  <text x="760" y="245" font-family="Times New Roman, serif" font-size="10" fill="#1976d2">Performance = O(log n)</text>
+  
+  <!-- 学习路径 -->
+  <rect x="970" y="140" width="200" height="120" fill="#f8bbd9" stroke="#e91e63" stroke-width="2" rx="8"/>
+  <text x="1070" y="160" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#880e4f">推荐学习路径</text>
+  <text x="980" y="180" font-family="SimSun, serif" font-size="11" fill="#ad1457">1. 理解状态图概念</text>
+  <text x="980" y="195" font-family="SimSun, serif" font-size="11" fill="#ad1457">2. 掌握节点和边定义</text>
+  <text x="980" y="210" font-family="SimSun, serif" font-size="11" fill="#ad1457">3. 实践简单工作流</text>
+  <text x="980" y="225" font-family="SimSun, serif" font-size="11" fill="#ad1457">4. 进阶复杂场景</text>
+  <text x="980" y="245" font-family="Times New Roman, serif" font-size="10" fill="#c2185b">Learning_Rate = α × Practice</text>
+  
+  <!-- 实用工具 -->
+  <rect x="1190" y="140" width="140" height="120" fill="#d1c4e9" stroke="#9c27b0" stroke-width="2" rx="8"/>
+  <text x="1260" y="160" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#4a148c">必备工具</text>
+  <text x="1200" y="180" font-family="SimSun, serif" font-size="11" fill="#6a1b9a">• Python 3.10+</text>
+  <text x="1200" y="195" font-family="SimSun, serif" font-size="11" fill="#6a1b9a">• LangGraph Studio</text>
+  <text x="1200" y="210" font-family="SimSun, serif" font-size="11" fill="#6a1b9a">• Jupyter Notebook</text>
+  <text x="1200" y="225" font-family="SimSun, serif" font-size="11" fill="#6a1b9a">• VS Code</text>
+  <text x="1200" y="245" font-family="Times New Roman, serif" font-size="10" fill="#7b1fa2">pip install langgraph</text>
+  
+  <!-- 第二层：核心架构深入 -->
+  <rect x="50" y="300" width="1300" height="220" fill="#e8f5e8" stroke="#4caf50" stroke-width="2" rx="15" filter="url(#shadow)"/>
+  <text x="70" y="325" font-family="SimSun, serif" font-size="18" font-weight="bold" fill="#1b5e20">第二层：核心架构深入理解 (Core Architecture Deep Dive)</text>
+  
+  <!-- StateGraph 核心 -->
+  <rect x="70" y="340" width="250" height="160" fill="#c8e6c9" stroke="#388e3c" stroke-width="2" rx="8"/>
+  <text x="195" y="360" font-family="Times New Roman, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1b5e20">StateGraph 状态图</text>
+  
+  <!-- 状态图示例 -->
+  <circle cx="120" cy="380" r="15" fill="#66bb6a" stroke="#2e7d32" stroke-width="2"/>
+  <text x="120" y="385" font-family="SimSun, serif" font-size="9" text-anchor="middle" fill="white">开始</text>
+  
+  <rect x="160" y="365" width="40" height="30" fill="#81c784" stroke="#388e3c" stroke-width="2" rx="5"/>
+  <text x="180" y="383" font-family="SimSun, serif" font-size="8" text-anchor="middle" fill="white">分析</text>
+  
+  <rect x="220" y="365" width="40" height="30" fill="#81c784" stroke="#388e3c" stroke-width="2" rx="5"/>
+  <text x="240" y="383" font-family="SimSun, serif" font-size="8" text-anchor="middle" fill="white">决策</text>
+  
+  <rect x="270" y="365" width="40" height="30" fill="#81c784" stroke="#388e3c" stroke-width="2" rx="5"/>
+  <text x="290" y="383" font-family="SimSun, serif" font-size="8" text-anchor="middle" fill="white">执行</text>
+  
+  <!-- 连接箭头 -->
+  <path d="M 135 380 L 160 380" stroke="#2e7d32" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <path d="M 200 380 L 220 380" stroke="#2e7d32" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <path d="M 260 380 L 270 380" stroke="#2e7d32" stroke-width="1" marker-end="url(#arrowhead)"/>
+  
+  <!-- 状态定义 -->
+  <text x="80" y="415" font-family="SimSun, serif" font-size="11" fill="#2e7d32">状态结构定义：</text>
+  <text x="80" y="430" font-family="Times New Roman, serif" font-size="10" fill="#388e3c">class State(TypedDict):</text>
+  <text x="90" y="445" font-family="Times New Roman, serif" font-size="10" fill="#388e3c">messages: list[Message]</text>
+  <text x="90" y="460" font-family="Times New Roman, serif" font-size="10" fill="#388e3c">context: dict</text>
+  <text x="90" y="475" font-family="Times New Roman, serif" font-size="10" fill="#388e3c">step_count: int</text>
+  
+  <!-- 节点类型详解 -->
+  <rect x="340" y="340" width="280" height="160" fill="#bbdefb" stroke="#1976d2" stroke-width="2" rx="8"/>
+  <text x="480" y="360" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0d47a1">节点类型详解 (Node Types)</text>
+  
+  <!-- LLM 节点 -->
+  <rect x="350" y="375" width="60" height="25" fill="#42a5f5" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="380" y="390" font-family="Times New Roman, serif" font-size="9" text-anchor="middle" fill="white">LLM</text>
+  <text x="420" y="390" font-family="SimSun, serif" font-size="9" fill="#1565c0">大语言模型推理</text>
+  
+  <!-- Tool 节点 -->
+  <rect x="350" y="405" width="60" height="25" fill="#42a5f5" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="380" y="420" font-family="Times New Roman, serif" font-size="9" text-anchor="middle" fill="white">Tool</text>
+  <text x="420" y="420" font-family="SimSun, serif" font-size="9" fill="#1565c0">外部工具调用</text>
+  
+  <!-- Human 节点 -->
+  <rect x="350" y="435" width="60" height="25" fill="#42a5f5" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="380" y="450" font-family="Times New Roman, serif" font-size="9" text-anchor="middle" fill="white">Human</text>
+  <text x="420" y="450" font-family="SimSun, serif" font-size="9" fill="#1565c0">人机交互节点</text>
+  
+  <!-- Conditional 节点 -->
+  <rect x="350" y="465" width="60" height="25" fill="#42a5f5" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="380" y="480" font-family="Times New Roman, serif" font-size="9" text-anchor="middle" fill="white">Cond</text>
+  <text x="420" y="480" font-family="SimSun, serif" font-size="9" fill="#1565c0">条件分支节点</text>
+  
+  <!-- 代码示例 -->
+  <text x="500" y="385" font-family="Times New Roman, serif" font-size="9" fill="#1976d2">def llm_node(state):</text>
+  <text x="510" y="400" font-family="Times New Roman, serif" font-size="9" fill="#1976d2">response = llm.invoke(</text>
+  <text x="520" y="415" font-family="Times New Roman, serif" font-size="9" fill="#1976d2">state["messages"])</text>
+  <text x="510" y="430" font-family="Times New Roman, serif" font-size="9" fill="#1976d2">return {"messages": </text>
+  <text x="520" y="445" font-family="Times New Roman, serif" font-size="9" fill="#1976d2">[response]}</text>
+  
+  <!-- 边类型和条件 -->
+  <rect x="640" y="340" width="250" height="160" fill="#fff3e0" stroke="#ff9800" stroke-width="2" rx="8"/>
+  <text x="765" y="360" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#e65100">边类型和条件路由</text>
+  
+  <!-- 边类型图示 -->
+  <circle cx="660" cy="385" r="8" fill="#ff9800"/>
+  <path d="M 668 385 L 720 385" stroke="#ff9800" stroke-width="3"/>
+  <circle cx="720" cy="385" r="8" fill="#ff9800"/>
+  <text x="694" y="375" font-family="SimSun, serif" font-size="9" text-anchor="middle" fill="#ef6c00">直接边</text>
+  
+  <circle cx="660" cy="410" r="8" fill="#ff9800"/>
+  <path d="M 668 410 L 700 395" stroke="#ff9800" stroke-width="2"/>
+  <path d="M 668 410 L 700 425" stroke="#ff9800" stroke-width="2"/>
+  <circle cx="700" cy="395" r="6" fill="#ff9800"/>
+  <circle cx="700" cy="425" r="6" fill="#ff9800"/>
+  <text x="685" y="440" font-family="SimSun, serif" font-size="9" text-anchor="middle" fill="#ef6c00">条件边</text>
+  
+  <!-- 条件函数示例 -->
+  <text x="730" y="390" font-family="Times New Roman, serif" font-size="9" fill="#f57c00">def route_condition(state):</text>
+  <text x="740" y="405" font-family="Times New Roman, serif" font-size="9" fill="#f57c00">if state["step_count"] > 5:</text>
+  <text x="750" y="420" font-family="Times New Roman, serif" font-size="9" fill="#f57c00">return "end"</text>
+  <text x="740" y="435" font-family="Times New Roman, serif" font-size="9" fill="#f57c00">else:</text>
+  <text x="750" y="450" font-family="Times New Roman, serif" font-size="9" fill="#f57c00">return "continue"</text>
+  
+  <!-- 数学公式 -->
+  <text x="650" y="475" font-family="Times New Roman, serif" font-size="11" fill="#d84315">Route = f(State) → {Node₁, Node₂, ..., Nodeₙ}</text>
+  
+  <!-- 检查点机制 -->
+  <rect x="910" y="340" width="220" height="160" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" rx="8"/>
+  <text x="1020" y="360" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#4a148c">检查点机制详解</text>
+  
+  <!-- 检查点图示 -->
+  <rect x="920" y="375" width="15" height="15" fill="#ba68c8" stroke="#8e24aa" stroke-width="1"/>
+  <text x="940" y="387" font-family="SimSun, serif" font-size="9" fill="#7b1fa2">状态快照保存</text>
+  
+  <rect x="920" y="395" width="15" height="15" fill="#ba68c8" stroke="#8e24aa" stroke-width="1"/>
+  <text x="940" y="407" font-family="SimSun, serif" font-size="9" fill="#7b1fa2">错误恢复机制</text>
+  
+  <rect x="920" y="415" width="15" height="15" fill="#ba68c8" stroke="#8e24aa" stroke-width="1"/>
+  <text x="940" y="427" font-family="SimSun, serif" font-size="9" fill="#7b1fa2">断点续跑支持</text>
+  
+  <text x="920" y="450" font-family="Times New Roman, serif" font-size="10" fill="#8e24aa">checkpointer = MemorySaver()</text>
+  <text x="920" y="465" font-family="Times New Roman, serif" font-size="10" fill="#8e24aa">graph = graph.compile(</text>
+  <text x="930" y="480" font-family="Times New Roman, serif" font-size="10" fill="#8e24aa">checkpointer=checkpointer)</text>
+  
+  <!-- 持久化公式 -->
+  <text x="920" y="495" font-family="Times New Roman, serif" font-size="10" fill="#6a1b9a">Persistence = Serialize(State) + Store(Checkpoint)</text>
+  
+  <!-- 内存管理 -->
+  <rect x="1150" y="340" width="180" height="160" fill="#ffebee" stroke="#f44336" stroke-width="2" rx="8"/>
+  <text x="1240" y="360" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#c62828">内存和性能优化</text>
+  
+  <text x="1160" y="380" font-family="SimSun, serif" font-size="11" fill="#d32f2f">内存管理策略：</text>
+  <text x="1160" y="395" font-family="SimSun, serif" font-size="10" fill="#d32f2f">• 状态压缩算法</text>
+  <text x="1160" y="410" font-family="SimSun, serif" font-size="10" fill="#d32f2f">• 垃圾回收机制</text>
+  <text x="1160" y="425" font-family="SimSun, serif" font-size="10" fill="#d32f2f">• 流式处理优化</text>
+  
+  <text x="1160" y="445" font-family="Times New Roman, serif" font-size="10" fill="#c62828">Memory = O(State_Size × Depth)</text>
+  <text x="1160" y="460" font-family="Times New Roman, serif" font-size="10" fill="#c62828">Latency = Σ(Node_Time) + I/O</text>
+  <text x="1160" y="475" font-family="Times New Roman, serif" font-size="10" fill="#c62828">Throughput = Concurrent_Nodes</text>
+  <text x="1160" y="490" font-family="Times New Roman, serif" font-size="10" fill="#c62828">           / Bottleneck_Time</text>
+  
+  <!-- 第三层：实战开发指南 -->
+  <rect x="50" y="540" width="1300" height="200" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="15" filter="url(#shadow)"/>
+  <text x="70" y="565" font-family="SimSun, serif" font-size="18" font-weight="bold" fill="#0d47a1">第三层：实战开发指南 (Practical Development Guide)</text>
+  
+  <!-- 快速开始模板 -->
+  <rect x="70" y="580" width="300" height="140" fill="#e1f5fe" stroke="#0288d1" stroke-width="2" rx="8"/>
+  <text x="220" y="600" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#01579b">快速开始模板</text>
+  
+  <text x="80" y="620" font-family="Times New Roman, serif" font-size="10" fill="#0277bd">from langgraph.graph import StateGraph</text>
+  <text x="80" y="635" font-family="Times New Roman, serif" font-size="10" fill="#0277bd">from typing import TypedDict</text>
+  <text x="80" y="655" font-family="Times New Roman, serif" font-size="10" fill="#0277bd">class AgentState(TypedDict):</text>
+  <text x="90" y="670" font-family="Times New Roman, serif" font-size="10" fill="#0277bd">messages: list</text>
+  <text x="90" y="685" font-family="Times New Roman, serif" font-size="10" fill="#0277bd">next_step: str</text>
+  <text x="80" y="705" font-family="Times New Roman, serif" font-size="10" fill="#0277bd">workflow = StateGraph(AgentState)</text>
+  
+  <!-- 常见设计模式 -->
+  <rect x="390" y="580" width="300" height="140" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" rx="8"/>
+  <text x="540" y="600" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#4a148c">常见设计模式</text>
+  
+  <!-- 模式1: ReAct -->
+  <rect x="400" y="615" width="80" height="25" fill="#ba68c8" stroke="#8e24aa" stroke-width="1" rx="3"/>
+  <text x="440" y="630" font-family="Times New Roman, serif" font-size="9" text-anchor="middle" fill="white">ReAct</text>
+  <text x="485" y="630" font-family="SimSun, serif" font-size="9" fill="#7b1fa2">推理-行动循环</text>
+  
+  <!-- 模式2: Multi-Agent -->
+  <rect x="400" y="645" width="80" height="25" fill="#ba68c8" stroke="#8e24aa" stroke-width="1" rx="3"/>
+  <text x="440" y="660" font-family="Times New Roman, serif" font-size="9" text-anchor="middle" fill="white">Multi-Agent</text>
+  <text x="485" y="660" font-family="SimSun, serif" font-size="9" fill="#7b1fa2">多智能体协作</text>
+  
+  <!-- 模式3: Plan-Execute -->
+  <rect x="400" y="675" width="80" height="25" fill="#ba68c8" stroke="#8e24aa" stroke-width="1" rx="3"/>
+  <text x="440" y="690" font-family="Times New Roman, serif" font-size="9" text-anchor="middle" fill="white">Plan-Execute</text>
+  <text x="485" y="690" font-family="SimSun, serif" font-size="9" fill="#7b1fa2">计划-执行模式</text>
+  
+  <!-- 模式4: Human-in-Loop -->
+  <rect x="570" y="615" width="80" height="25" fill="#ba68c8" stroke="#8e24aa" stroke-width="1" rx="3"/>
+  <text x="610" y="630" font-family="Times New Roman, serif" font-size="9" text-anchor="middle" fill="white">Human-Loop</text>
+  <text x="655" y="630" font-family="SimSun, serif" font-size="9" fill="#7b1fa2">人机协作</text>
+  
+  <!-- 模式公式 -->
+  <text x="400" y="710" font-family="Times New Roman, serif" font-size="10" fill="#8e24aa">Pattern_Efficiency = Reusability × Maintainability</text>
+  
+  <!-- 调试技巧 -->
+  <rect x="710" y="580" width="300" height="140" fill="#fff8e1" stroke="#ffc107" stroke-width="2" rx="8"/>
+  <text x="860" y="600" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#f57f17">调试和监控技巧</text>
+  
+  <text x="720" y="620" font-family="SimSun, serif" font-size="11" fill="#ff8f00">可视化调试工具：</text>
+  <text x="720" y="635" font-family="SimSun, serif" font-size="10" fill="#ff8f00">• LangGraph Studio 实时预览</text>
+  <text x="720" y="650" font-family="SimSun, serif" font-size="10" fill="#ff8f00">• 状态追踪可视化</text>
+  <text x="720" y="665" font-family="SimSun, serif" font-size="10" fill="#ff8f00">• 断点调试支持</text>
+  <text x="720" y="680" font-family="SimSun, serif" font-size="10" fill="#ff8f00">• 性能分析报告</text>
+  
+  <text x="720" y="700" font-family="Times New Roman, serif" font-size="10" fill="#f57f17">Debug_Time = Log(Complexity) × Visibility</text>
+  <text x="720" y="715" font-family="Times New Roman, serif" font-size="10" fill="#f57f17">MTTR = Detection_Time + Fix_Time</text>
+  
+  <!-- 最佳实践 -->
+  <rect x="1030" y="580" width="300" height="140" fill="#e8f5e8" stroke="#4caf50" stroke-width="2" rx="8"/>
+  <text x="1180" y="600" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1b5e20">最佳实践指南</text>
+  
+  <text x="1040" y="620" font-family="SimSun, serif" font-size="11" fill="#2e7d32">架构设计原则：</text>
+  <text x="1040" y="635" font-family="SimSun, serif" font-size="10" fill="#2e7d32">• 单一职责：每节点专注一个功能</text>
+  <text x="1040" y="650" font-family="SimSun, serif" font-size="10" fill="#2e7d32">• 状态最小化：减少不必要的状态</text>
+  <text x="1040" y="665" font-family="SimSun, serif" font-size="10" fill="#2e7d32">• 错误边界：优雅的异常处理</text>
+  <text x="1040" y="680" font-family="SimSun, serif" font-size="10" fill="#2e7d32">• 可测试性：模块化设计便于测试</text>
+  
+  <text x="1040" y="700" font-family="Times New Roman, serif" font-size="10" fill="#388e3c">Quality = Σ(SOLID_Principles) / Complexity</text>
+  <text x="1040" y="715" font-family="Times New Roman, serif" font-size="10" fill="#388e3c">Maintainability ∝ Modularity × Documentation</text>
+  
+  <!-- 第四层：高级特性和企业级应用 -->
+  <rect x="50" y="760" width="1300" height="220" fill="#fce4ec" stroke="#e91e63" stroke-width="2" rx="15" filter="url(#shadow)"/>
+  <text x="70" y="785" font-family="SimSun, serif" font-size="18" font-weight="bold" fill="#880e4f">第四层：高级特性和企业级应用 (Advanced Features And Enterprise)</text>
+  
+  <!-- LangGraph Platform 详解 -->
+  <rect x="70" y="800" width="320" height="160" fill="#f8bbd9" stroke="#c2185b" stroke-width="2" rx="8"/>
+  <text x="230" y="820" font-family="Times New Roman, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#880e4f">LangGraph Platform 深度解析</text>
+  
+  <!-- 部署架构图 -->
+  <rect x="80" y="835" width="60" height="25" fill="#ec407a" stroke="#ad1457" stroke-width="1" rx="3"/>
+  <text x="110" y="850" font-family="SimSun, serif" font-size="9" text-anchor="middle" fill="white">开发环境</text>
+  
+  <path d="M 140 847 L 170 847" stroke="#ad1457" stroke-width="2" marker-end="url(#redArrow)"/>
+  
+  <rect x="170" y="835" width="60" height="25" fill="#ec407a" stroke="#ad1457" stroke-width="1" rx="3"/>
+  <text x="200" y="850" font-family="SimSun, serif" font-size="9" text-anchor="middle" fill="white">测试环境</text>
+  
+  <path d="M 230 847 L 260 847" stroke="#ad1457" stroke-width="2" marker-end="url(#redArrow)"/>
+  
+  <rect x="260" y="835" width="60" height="25" fill="#ec407a" stroke="#ad1457" stroke-width="1" rx="3"/>
+  <text x="290" y="850" font-family="SimSun, serif" font-size="9" text-anchor="middle" fill="white">生产环境</text>
+  
+  <!-- Platform 特性 -->
+  <text x="80" y="875" font-family="SimSun, serif" font-size="11" fill="#ad1457">企业级特性：</text>
+  <text x="80" y="890" font-family="SimSun, serif" font-size="10" fill="#ad1457">• 自动扩缩容</text>
+  <text x="80" y="905" font-family="SimSun, serif" font-size="10" fill="#ad1457">• 容错和重试机制</text>
+  <text x="80" y="920" font-family="SimSun, serif" font-size="10" fill="#ad1457">• 多租户隔离</text>
+  <text x="80" y="935" font-family="SimSun, serif" font-size="10" fill="#ad1457">• 监控和告警</text>
+  
+  <text x="200" y="890" font-family="SimSun, serif" font-size="10" fill="#ad1457">• API 限流和鉴权</text>
+  <text x="200" y="905" font-family="SimSun, serif" font-size="10" fill="#ad1457">• 数据持久化</text>
+  <text x="200" y="920" font-family="SimSun, serif" font-size="10" fill="#ad1457">• 定时任务调度</text>
+  <text x="200" y="935" font-family="SimSun, serif" font-size="10" fill="#ad1457">• 版本管理</text>
+  
+  <text x="80" y="955" font-family="Times New Roman, serif" font-size="10" fill="#c2185b">Availability = MTBF / (MTBF + MTTR)</text>
+  
+  <!-- 与 LangChain 生态集成 -->
+  <rect x="410" y="800" width="280" height="160" fill="#e1f5fe" stroke="#03a9f4" stroke-width="2" rx="8"/>
+  <text x="550" y="820" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#01579b">LangChain 生态集成详解</text>
+  
+  <!-- 集成组件图 -->
+  <rect x="420" y="835" width="70" height="30" fill="#29b6f6" stroke="#0288d1" stroke-width="1" rx="5"/>
+  <text x="455" y="852" font-family="Times New Roman, serif" font-size="10" text-anchor="middle" fill="white">LangChain</text>
+  
+  <rect x="510" y="835" width="70" height="30" fill="#26c6da" stroke="#00acc1" stroke-width="1" rx="5"/>
+  <text x="545" y="852" font-family="Times New Roman, serif" font-size="10" text-anchor="middle" fill="white">LangSmith</text>
+  
+  <rect x="600" y="835" width="70" height="30" fill="#26a69a" stroke="#00897b" stroke-width="1" rx="5"/>
+  <text x="635" y="852" font-family="Times New Roman, serif" font-size="10" text-anchor="middle" fill="white">LangServe</text>
+  
+  <!-- 连接线 -->
+  <path d="M 455 865 L 455 885" stroke="#0288d1" stroke-width="2"/>
+  <path d="M 545 865 L 545 885" stroke="#00acc1" stroke-width="2"/>
+  <path d="M 635 865 L 635 885" stroke="#00897b" stroke-width="2"/>
+  <path d="M 440 885 L 650 885" stroke="#01579b" stroke-width="3"/>
+  
+  <rect x="500" y="875" width="100" height="20" fill="#4fc3f7" stroke="#0288d1" stroke-width="1" rx="10"/>
+  <text x="550" y="887" font-family="Times New Roman, serif" font-size="10" text-anchor="middle" fill="white">LangGraph</text>
+  
+  <!-- 集成优势 -->
+  <text x="420" y="910" font-family="SimSun, serif" font-size="11" fill="#01579b">集成优势：</text>
+  <text x="420" y="925" font-family="SimSun, serif" font-size="10" fill="#01579b">• 统一的开发体验</text>
+  <text x="420" y="940" font-family="SimSun, serif" font-size="10" fill="#01579b">• 端到端的可观测性</text>
+  <text x="550" y="925" font-family="SimSun, serif" font-size="10" fill="#01579b">• 生产级部署能力</text>
+  <text x="550" y="940" font-family="SimSun, serif" font-size="10" fill="#01579b">• 丰富的组件生态</text>
+  
+  <text x="420" y="955" font-family="Times New Roman, serif" font-size="10" fill="#0277bd">Ecosystem_Value = Σ(Component_Benefits) × Synergy_Factor</text>
+  
+  <!-- 性能优化策略 -->
+  <rect x="710" y="800" width="300" height="160" fill="#fff3e0" stroke="#ff9800" stroke-width="2" rx="8"/>
+  <text x="860" y="820" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#e65100">性能优化深度策略</text>
+  
+  <!-- 优化技术栈 -->
+  <text x="720" y="840" font-family="SimSun, serif" font-size="11" fill="#ef6c00">并发和异步优化：</text>
+  <text x="720" y="855" font-family="Times New Roman, serif" font-size="10" fill="#f57c00">async def parallel_nodes():</text>
+  <text x="730" y="870" font-family="Times New Roman, serif" font-size="10" fill="#f57c00">tasks = [node1(), node2()]</text>
+  <text x="730" y="885" font-family="Times New Roman, serif" font-size="10" fill="#f57c00">results = await asyncio.gather(*tasks)</text>
+  
+  <text x="720" y="905" font-family="SimSun, serif" font-size="11" fill="#ef6c00">内存优化技术：</text>
+  <text x="720" y="920" font-family="SimSun, serif" font-size="10" fill="#f57c00">• 状态压缩算法 </text>
+  <text x="720" y="935" font-family="SimSun, serif" font-size="10" fill="#f57c00">• 惰性计算 </text>
+  <text x="720" y="950" font-family="SimSun, serif" font-size="10" fill="#f57c00">• 缓存策略</text>
+  
+  <!-- 性能公式 -->
+  <text x="800" y="905" font-family="Times New Roman, serif" font-size="10" fill="#ef6c00">Parallel_Speedup = T_sequential / T_parallel</text>
+  <text x="800" y="920" font-family="Times New Roman, serif" font-size="10" fill="#ef6c00">Cache_Hit_Rate = Cache_Hits / Total_Requests</text>
+  <text x="800" y="935" font-family="Times New Roman, serif" font-size="10" fill="#ef6c00">Memory_Efficiency = Used_Memory / Allocated</text>
+  <text x="800" y="950" font-family="Times New Roman, serif" font-size="10" fill="#ef6c00">Latency = Network_Time + Processing_Time</text>
+  
+  <!-- 安全和合规 -->
+  <rect x="1030" y="800" width="300" height="160" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" rx="8"/>
+  <text x="1180" y="820" font-family="SimSun, serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#4a148c">安全和合规框架</text>
+  
+  <text x="1040" y="840" font-family="SimSun, serif" font-size="11" fill="#6a1b9a">数据安全措施：</text>
+  <text x="1040" y="855" font-family="SimSun, serif" font-size="10" fill="#6a1b9a">• 端到端加密 (E2E Encryption)</text>
+  <text x="1040" y="870" font-family="SimSun, serif" font-size="10" fill="#6a1b9a">• 访问控制 (RBAC/ABAC)</text>
+  <text x="1040" y="885" font-family="SimSun, serif" font-size="10" fill="#6a1b9a">• 审计日志 (Audit Logging)</text>
+  <text x="1040" y="900" font-family="SimSun, serif" font-size="10" fill="#6a1b9a">• 数据脱敏 (Data Masking)</text>
+  
+  <text x="1200" y="855" font-family="SimSun, serif" font-size="10" fill="#6a1b9a">• GDPR 合规</text>
+  <text x="1200" y="870" font-family="SimSun, serif" font-size="10" fill="#6a1b9a">• SOC2 认证</text>
+  <text x="1200" y="885" font-family="SimSun, serif" font-size="10" fill="#6a1b9a">• 数据本地化</text>
+  <text x="1200" y="900" font-family="SimSun, serif" font-size="10" fill="#6a1b9a">• 零信任架构</text>
+  
+  <text x="1040" y="920" font-family="SimSun, serif" font-size="11" fill="#6a1b9a">安全评分公式：</text>
+  <text x="1040" y="935" font-family="Times New Roman, serif" font-size="10" fill="#8e24aa">Security_Score = (Encryption + Access_Control</text>
+  <text x="1070" y="950" font-family="Times New Roman, serif" font-size="10" fill="#8e24aa">+ Audit + Compliance) / 4</text>
+  
+  <!-- 流程连接箭头 -->
+  <!-- <path d="M 675 400 L 675 540" stroke="#4caf50" stroke-width="4" stroke-dasharray="8,4" marker-end="url(#arrowhead)"/>
+  <path d="M 675 720 L 675 760" stroke="#e91e63" stroke-width="4" stroke-dasharray="8,4" marker-end="url(#arrowhead)"/> -->
+  
+</svg>
+  

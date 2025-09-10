@@ -1,0 +1,117 @@
+<svg viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: 'Times New Roman', serif; font-size: 24px; font-weight: bold; fill: #2c3e50; }
+      .subtitle { font-family: 'SimSun', '宋体', serif; font-size: 16px; fill: #34495e; }
+      .label { font-family: 'SimSun', '宋体', serif; font-size: 14px; fill: #2c3e50; }
+      .english-label { font-family: 'Times New Roman', serif; font-size: 12px; fill: #34495e; }
+      .formula { font-family: 'Times New Roman', serif; font-size: 12px; fill: #e74c3c; }
+      .component { fill: #3498db; stroke: #2980b9; stroke-width: 2; }
+      .flow-arrow { stroke: #e74c3c; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+      .data-flow { stroke: #27ae60; stroke-width: 2; fill: none; stroke-dasharray: 5,5; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" fill="#ecf0f1"/>
+  
+  <!-- Title -->
+  <text x="500" y="40" class="title" text-anchor="middle">LangChain 链式架构</text>
+  <text x="500" y="65" class="subtitle" text-anchor="middle">Sequential Chain-based Framework</text>
+  
+  <!-- Core Formula -->
+  <text x="500" y="95" class="formula" text-anchor="middle">Chain = f₁ → f₂ → f₃ → ... → fₙ</text>
+  
+  <!-- Input Section -->
+  <rect x="50" y="130" width="120" height="60" rx="8" class="component"/>
+  <text x="110" y="150" class="label" text-anchor="middle">输入数据</text>
+  <text x="110" y="170" class="english-label" text-anchor="middle">Input Data</text>
+  
+  <!-- Document Loader -->
+  <rect x="220" y="130" width="140" height="60" rx="8" class="component"/>
+  <text x="290" y="150" class="label" text-anchor="middle">文档加载器</text>
+  <text x="290" y="170" class="english-label" text-anchor="middle">Document Loader</text>
+  
+  <!-- Text Splitter -->
+  <rect x="410" y="130" width="140" height="60" rx="8" class="component"/>
+  <text x="480" y="150" class="label" text-anchor="middle">文本分割器</text>
+  <text x="480" y="170" class="english-label" text-anchor="middle">Text Splitter</text>
+  
+  <!-- Vector Store -->
+  <rect x="600" y="130" width="140" height="60" rx="8" class="component"/>
+  <text x="670" y="150" class="label" text-anchor="middle">向量存储</text>
+  <text x="670" y="170" class="english-label" text-anchor="middle">Vector Store</text>
+  
+  <!-- Retriever -->
+  <rect x="790" y="130" width="140" height="60" rx="8" class="component"/>
+  <text x="860" y="150" class="label" text-anchor="middle">检索器</text>
+  <text x="860" y="170" class="english-label" text-anchor="middle">Retriever</text>
+  
+  <!-- Chain Flow Arrows -->
+  <line x1="170" y1="160" x2="220" y2="160" class="flow-arrow"/>
+  <line x1="360" y1="160" x2="410" y2="160" class="flow-arrow"/>
+  <line x1="550" y1="160" x2="600" y2="160" class="flow-arrow"/>
+  <line x1="740" y1="160" x2="790" y2="160" class="flow-arrow"/>
+  
+  <!-- Processing Layer -->
+  <rect x="200" y="250" width="600" height="120" rx="12" fill="#f8f9fa" stroke="#bdc3c7" stroke-width="2"/>
+  <text x="500" y="275" class="subtitle" text-anchor="middle">链式处理层 (Chain Processing Layer)</text>
+  
+  <!-- Prompt Template -->
+  <rect x="230" y="300" width="130" height="50" rx="6" fill="#9b59b6" stroke="#8e44ad" stroke-width="2"/>
+  <text x="295" y="320" class="label" text-anchor="middle" fill="white">提示模板</text>
+  <text x="295" y="335" class="english-label" text-anchor="middle" fill="white">Prompt</text>
+  
+  <!-- LLM -->
+  <rect x="390" y="300" width="130" height="50" rx="6" fill="#e67e22" stroke="#d35400" stroke-width="2"/>
+  <text x="455" y="320" class="label" text-anchor="middle" fill="white">大语言模型</text>
+  <text x="455" y="335" class="english-label" text-anchor="middle" fill="white">LLM</text>
+  
+  <!-- Memory -->
+  <rect x="550" y="300" width="130" height="50" rx="6" fill="#1abc9c" stroke="#16a085" stroke-width="2"/>
+  <text x="615" y="320" class="label" text-anchor="middle" fill="white">记忆组件</text>
+  <text x="615" y="335" class="english-label" text-anchor="middle" fill="white">Memory</text>
+  
+  <!-- Internal Processing Arrows -->
+  <line x1="360" y1="325" x2="390" y2="325" class="flow-arrow"/>
+  <line x1="520" y1="325" x2="550" y2="325" class="flow-arrow"/>
+  
+  <!-- Output Chain -->
+  <rect x="220" y="420" width="140" height="60" rx="8" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <text x="290" y="440" class="label" text-anchor="middle" fill="white">输出处理</text>
+  <text x="290" y="460" class="english-label" text-anchor="middle" fill="white">Output Parser</text>
+  
+  <rect x="410" y="420" width="140" height="60" rx="8" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <text x="480" y="440" class="label" text-anchor="middle" fill="white">格式化器</text>
+  <text x="480" y="460" class="english-label" text-anchor="middle" fill="white">Formatter</text>
+  
+  <rect x="600" y="420" width="140" height="60" rx="8" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <text x="670" y="440" class="label" text-anchor="middle" fill="white">最终结果</text>
+  <text x="670" y="460" class="english-label" text-anchor="middle" fill="white">Final Output</text>
+  
+  <!-- Output Flow Arrows -->
+  <line x1="360" y1="450" x2="410" y2="450" class="flow-arrow"/>
+  <line x1="550" y1="450" x2="600" y2="450" class="flow-arrow"/>
+  
+  <!-- Vertical Connections -->
+  <line x1="860" y1="190" x2="860" y2="230" class="flow-arrow"/>
+  <line x1="860" y1="230" x2="680" y2="300" class="flow-arrow"/>
+  <line x1="295" y1="350" x2="290" y2="420" class="flow-arrow"/>
+  
+  <!-- Key Features Box -->
+  <rect x="50" y="520" width="900" height="150" rx="10" fill="#ffffff" stroke="#34495e" stroke-width="2"/>
+  <text x="500" y="545" class="subtitle" text-anchor="middle">LangChain 核心特征</text>
+  
+  <text x="80" y="575" class="label">• 线性处理流程：f(x) = chain₁(chain₂(...chainₙ(x)))</text>
+  <text x="80" y="600" class="label">• 模块化设计：可重用组件库</text>
+  <text x="80" y="625" class="label">• 有向无环图(DAG)：单向数据流</text>
+  <text x="80" y="650" class="label">• 适用场景：RAG、问答系统、内容生成</text>
+  
+  <text x="520" y="575" class="label">• 隐式状态管理：自动传递中间结果</text>
+  <text x="520" y="600" class="label">• 快速原型开发：简单配置</text>
+  <text x="520" y="625" class="label">• 丰富的预构建组件</text>
+  <text x="520" y="650" class="label">• 易于学习和使用</text>
+</svg>

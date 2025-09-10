@@ -1,0 +1,127 @@
+<svg viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: 'Times New Roman', serif; font-size: 24px; font-weight: bold; fill: #2c3e50; }
+      .subtitle { font-family: 'SimSun', '宋体', serif; font-size: 16px; fill: #34495e; }
+      .label { font-family: 'SimSun', '宋体', serif; font-size: 14px; fill: #2c3e50; }
+      .english-label { font-family: 'Times New Roman', serif; font-size: 12px; fill: #34495e; }
+      .formula { font-family: 'Times New Roman', serif; font-size: 12px; fill: #e74c3c; }
+      .node { fill: #9b59b6; stroke: #8e44ad; stroke-width: 2; }
+      .state-node { fill: #f39c12; stroke: #e67e22; stroke-width: 2; }
+      .agent-node { fill: #3498db; stroke: #2980b9; stroke-width: 2; }
+      .flow-arrow { stroke: #e74c3c; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .bidirectional-arrow { stroke: #27ae60; stroke-width: 2; fill: none; marker-end: url(#greenarrow); marker-start: url(#greenarrow); }
+      .state-flow { stroke: #f39c12; stroke-width: 3; fill: none; stroke-dasharray: 8,4; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+    </marker>
+    <marker id="greenarrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#27ae60"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" fill="#ecf0f1"/>
+  
+  <!-- Title -->
+  <text x="500" y="40" class="title" text-anchor="middle">LangGraph 图架构</text>
+  <text x="500" y="65" class="subtitle" text-anchor="middle">Graph-based Stateful Framework</text>
+  
+  <!-- Core Formula -->
+  <text x="500" y="95" class="formula" text-anchor="middle">Graph = {Nodes, Edges, State} where S(t+1) = f(S(t), action)</text>
+  
+  <!-- Central State -->
+  <circle cx="500" cy="180" r="40" class="state-node"/>
+  <text x="500" y="175" class="label" text-anchor="middle" fill="white">全局状态</text>
+  <text x="500" y="190" class="english-label" text-anchor="middle" fill="white">Global State</text>
+  
+  <!-- Agent Nodes arranged in a circle -->
+  
+  <!-- Input Processing Node -->
+  <circle cx="350" cy="130" r="35" class="agent-node"/>
+  <text x="350" y="125" class="label" text-anchor="middle" fill="white">输入处理</text>
+  <text x="350" y="140" class="english-label" text-anchor="middle" fill="white">Input Node</text>
+  
+  <!-- Task Manager Agent -->
+  <circle cx="650" cy="130" r="35" class="agent-node"/>
+  <text x="650" y="125" class="label" text-anchor="middle" fill="white">任务管理</text>
+  <text x="650" y="140" class="english-label" text-anchor="middle" fill="white">Task Agent</text>
+  
+  <!-- Decision Node -->
+  <circle cx="300" cy="230" r="35" class="node"/>
+  <text x="300" y="225" class="label" text-anchor="middle" fill="white">决策节点</text>
+  <text x="300" y="240" class="english-label" text-anchor="middle" fill="white">Decision</text>
+  
+  <!-- Analysis Agent -->
+  <circle cx="700" cy="230" r="35" class="agent-node"/>
+  <text x="700" y="225" class="label" text-anchor="middle" fill="white">分析代理</text>
+  <text x="700" y="240" class="english-label" text-anchor="middle" fill="white">Analysis</text>
+  
+  <!-- Memory Node -->
+  <circle cx="350" cy="320" r="35" class="node"/>
+  <text x="350" y="315" class="label" text-anchor="middle" fill="white">记忆节点</text>
+  <text x="350" y="330" class="english-label" text-anchor="middle" fill="white">Memory</text>
+  
+  <!-- Output Node -->
+  <circle cx="650" cy="320" r="35" class="agent-node"/>
+  <text x="650" y="315" class="label" text-anchor="middle" fill="white">输出节点</text>
+  <text x="650" y="330" class="english-label" text-anchor="middle" fill="white">Output</text>
+  
+  <!-- State Connections (dotted lines to central state) -->
+  <line x1="460" y1="160" x2="385" y2="140" class="state-flow"/>
+  <line x1="540" y1="160" x2="615" y2="140" class="state-flow"/>
+  <line x1="465" y1="200" x2="335" y2="220" class="state-flow"/>
+  <line x1="535" y1="200" x2="665" y2="220" class="state-flow"/>
+  <line x1="465" y1="200" x2="385" y2="310" class="state-flow"/>
+  <line x1="535" y1="200" x2="615" y2="310" class="state-flow"/>
+  
+  <!-- Bidirectional Agent Communications -->
+  <line x1="385" y1="130" x2="615" y2="130" class="bidirectional-arrow"/>
+  <line x1="335" y1="230" x2="665" y2="230" class="bidirectional-arrow"/>
+  <line x1="385" y1="320" x2="615" y2="320" class="bidirectional-arrow"/>
+  
+  <!-- Cyclical flows -->
+  <path d="M 335,265 Q 280,300 300,195" class="flow-arrow"/>
+  <path d="M 665,265 Q 720,300 700,195" class="flow-arrow"/>
+  
+  <!-- Multi-Agent System Box -->
+  <rect x="100" y="380" width="800" height="120" rx="10" fill="#ffffff" stroke="#9b59b6" stroke-width="2"/>
+  <text x="500" y="405" class="subtitle" text-anchor="middle">多智能体协作系统</text>
+  
+  <!-- Agent Types -->
+  <rect x="130" y="425" width="150" height="35" rx="5" fill="#3498db" stroke="#2980b9" stroke-width="1"/>
+  <text x="205" y="445" class="label" text-anchor="middle" fill="white">任务创建代理</text>
+  
+  <rect x="300" y="425" width="150" height="35" rx="5" fill="#e67e22" stroke="#d35400" stroke-width="1"/>
+  <text x="375" y="445" class="label" text-anchor="middle" fill="white">调度代理</text>
+  
+  <rect x="470" y="425" width="150" height="35" rx="5" fill="#27ae60" stroke="#229954" stroke-width="1"/>
+  <text x="545" y="445" class="label" text-anchor="middle" fill="white">执行代理</text>
+  
+  <rect x="640" y="425" width="150" height="35" rx="5" fill="#8e44ad" stroke="#7d3c98" stroke-width="1"/>
+  <text x="715" y="445" class="label" text-anchor="middle" fill="white">监控代理</text>
+  
+  <!-- Communication arrows between agents -->
+  <line x1="280" y1="442" x2="300" y2="442" class="flow-arrow"/>
+  <line x1="450" y1="442" x2="470" y2="442" class="flow-arrow"/>
+  <line x1="620" y1="442" x2="640" y2="442" class="flow-arrow"/>
+  
+  <!-- State Management Formula -->
+  <text x="130" y="485" class="label">状态更新公式:</text>
+  <text x="250" y="485" class="formula">S(t+1) = StateUpdate(S(t), NodeAction(input, S(t)))</text>
+  
+  <!-- Key Features Box -->
+  <rect x="50" y="520" width="900" height="150" rx="10" fill="#ffffff" stroke="#34495e" stroke-width="2"/>
+  <text x="500" y="545" class="subtitle" text-anchor="middle">LangGraph 核心特征</text>
+  
+  <text x="80" y="575" class="label">• 图结构：支持循环和分支 G = (V, E, S)</text>
+  <text x="80" y="600" class="label">• 显式状态管理：持久化共享状态</text>
+  <text x="80" y="625" class="label">• 动态路由：条件分支和循环</text>
+  <text x="80" y="650" class="label">• 适用场景：虚拟助手、任务管理、多代理系统</text>
+  
+  <text x="520" y="575" class="label">• 人机交互循环：Human-in-the-loop</text>
+  <text x="520" y="600" class="label">• 实时流式处理：Streaming Support</text>
+  <text x="520" y="625" class="label">• 检查点机制：Checkpointing</text>
+  <text x="520" y="650" class="label">• 生产级部署：企业级可靠性</text>
+</svg>
