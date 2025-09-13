@@ -40,6 +40,31 @@
 | **模块七** | n8n工作流自动化实战 | 可视化工作流、API集成 | 社交媒体内容审核工作流 |
 | **模块八** | 大模型高效微调 | LoRA、Q-LoRA、LlamaFactory | 法律领域模型微调 |
 
+### 🐍 Python基础学习
+
+对于零基础的学习者，我们提供了完整的Python学习材料：
+
+#### 📖 学习资源
+- **📚 [Python 3 学习指南](chapter01-llm-env/python-base/01-Learning-Python3.md)** - 详细的学习指南和资源链接
+- **📓 [Python 3 交互式教程](chapter01-llm-env/python-base/learning-python3.ipynb)** - Jupyter Notebook格式的完整教程
+
+#### 🎯 学习内容
+- **基础语法**: 变量、数据类型、操作符、控制流
+- **数据结构**: 列表、字典、元组、集合的使用
+- **函数编程**: 函数定义、参数传递、作用域
+- **面向对象**: 类、对象、继承、多态
+- **异常处理**: try-except、错误处理最佳实践
+- **大模型应用**: 专门针对大模型开发的Python技能
+
+#### 🚀 快速开始
+```bash
+# 启动Jupyter Lab
+jupyter lab
+
+# 打开Python学习教程
+# 文件路径: chapter01-llm-env/python-base/learning-python3.ipynb
+```
+
 
 ### 🛠️ 课程技术栈
 
